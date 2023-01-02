@@ -23,10 +23,10 @@ model.add(Dense(1, input_dim=1))
 
 # 3. compile and training(best weight, minimum loss)
 model.compile(loss='mae', optimizer='adam')
-#mae: min absolute error, loss값을 최소로 하기위해 mae를 사용
-#adam: loss 최적화 = adam 사용
+# mae: min absolute error, loss값을 최소로 하기위해 mae를 사용
+# adam: loss 최적화 = adam 사용
 model.fit(x, y, epochs=10)
-#model.fit: training start
+# model.fit: training start
 # epochs: training 횟수(횟수가 너무 많아지면, 오히려 틀어지는 경우가 생길 수 있음)
 
 # execute: ctrl + F5
