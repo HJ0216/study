@@ -28,11 +28,11 @@ print(x.shape) # (10, 2)
 
 # 2. Model
 model = Sequential()
-model.add(Dense(5, input_dim=2))
+model.add(Dense(10, input_dim=2))
 # input_dim = 2 (입력값 기준으로 열의 개수, Input Layer), output = 5(hidden layer로 임의값 설정 가능)
-model.add(Dense(4))
-model.add(Dense(3))
-model.add(Dense(2))
+model.add(Dense(20))
+model.add(Dense(30))
+model.add(Dense(20))
 model.add(Dense(1))
 # output_dim = 1 (출력값 기준으로 열의 개수, Output Layer)
 
@@ -55,15 +55,16 @@ result = model.predict([[10, 1.4]])
 print("[10, 1.4] result: ", result)
 
 
+
 '''
 Result
 Epoch 100/100
-10/10 [==============================] - 0s 775us/step - loss: 0.1056
+10/10 [==============================] - 0s 667us/step - loss: 0.0817
 
 Evaluate
-1/1 [==============================] - 0s 90ms/step - loss: 0.1008
+1/1 [==============================] - 0s 98ms/step - loss: 0.1372
 
 Predict
-[10, 1.4] result:  [[19.88086]]
+[10, 1.4] result:  [[19.758385]]
 
 '''

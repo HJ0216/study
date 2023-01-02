@@ -39,7 +39,7 @@ model.add(Dense(1)) # output_dim = 1(출력값 기준으로 열의 개수, Outpu
 
 # 3. Compile
 model.compile(loss='mae', optimizer='adam')
-model.fit(x, y, epochs=5, batch_size=2)
+model.fit(x, y, epochs=300, batch_size=2)
 # 2행씩 훈련 5번(5/5)
 
 
@@ -47,3 +47,21 @@ model.fit(x, y, epochs=5, batch_size=2)
 loss = model.evaluate(x, y)
 print("loss: ", loss)
 
+result = model.predict([[10, 1.4, 0]])
+print("[10, 1.4, 0] result: ", result)
+
+
+
+'''
+Result
+model.fit(x, y, epochs=300, batch_size=2)
+Epoch 300/300
+5/5 [==============================] - 0s 750us/step - loss: 0.1140
+
+loss = model.evaluate(x, y)
+1/1 [==============================] - 0s 91ms/step - loss: 0.0352
+
+result = model.predict([[10, 1.4, 0]])
+[10, 1.4, 0] result:  [[20.014843]]
+
+'''
