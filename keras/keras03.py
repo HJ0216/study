@@ -1,7 +1,7 @@
 import numpy as np
 import tensorflow as tf
 
-# tensorflow version check
+# tensorflow version print
 print(tf.__version__) # 2.7.4
 
 # 1. 정제된 Data (정제된 데이터를 위해 전처리 필요)
@@ -20,6 +20,6 @@ model.add(Dense(1, input_dim=1))
 model.compile(loss='mae', optimizer='adam')
 model.fit(x, y, epochs=200)
 
-# 4. Valuation and Prediction
+# 4. Evaluation and Prediction
 results = model.predict([6])
 print('predict 6: ', results)

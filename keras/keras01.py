@@ -1,4 +1,5 @@
 import tensorflow as tf
+# tf version print
 print(tf.__version__)
 
 import numpy as np
@@ -37,7 +38,7 @@ model.fit(x, y, epochs=10)
 model.fit(x, y, epochs=100)
 # 초기 랜덤값이 다르므로 epochs 마다 loss가 달라짐
 
-# 4. Valuation and Prediction
+# 4. Evaluation and Prediction
 result = model.predict([4])
 print('Result: ', result)
 # print('문자 인식', 실제 출력 값)

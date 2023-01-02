@@ -26,6 +26,6 @@ model.add(Dense(1, input_dim=1))
 model.compile(loss='mae', optimizer='adam')
 model.fit(x, y, epochs=2000)
 
-# 4. Valuation and Prediction
+# 4. Evaluation and Prediction
 result = model.predict([13])
 print('Result: ', result)
