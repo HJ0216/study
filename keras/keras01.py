@@ -30,23 +30,47 @@ model.fit(x, y, epochs=10)
 # model.fit: training start
 # epochs: training 횟수(횟수가 너무 많아지면, 오히려 틀어지는 경우가 생길 수 있음)
 
-# execute: ctrl + F5
-# Result
-# Epoch 1/10 : 실행 횟수 현황
-# 1/1 [==============================] - 0s 200ms/step - loss: 4.4002 : loss가 실행 시 마다 줄어감
-
 model.fit(x, y, epochs=100)
-# 초기 랜덤값이 다르므로 epochs 마다 loss가 달라짐
+# 초기 랜덤값이 다르므로 실행 시 마다 loss가 달라짐
+
 
 # 4. Evaluation and Prediction
 result = model.predict([4])
-print('Result: ', result)
+print('Result1: ', result)
 # print('문자 인식', 실제 출력 값)
 
+# 5. ect
 model.fit(x, y, epochs=1000)
 result = model.predict([4])
+# result 값이 덮어씌어짐
 print('Result2: ', result)
 
 model.fit(x, y, epochs=3000)
 result = model.predict([4])
 print('Result3: ', result)
+
+
+
+'''
+Result1
+
+Epoch 100/100
+1/1 [==============================] - 0s 2ms/step - loss: 8.6560e-04
+Result1:  [[4.001488]]
+
+
+Result2
+
+Epoch 1000/1000
+1/1 [==============================] - 0s 999us/step - loss: 0.0035
+Result2:  [[3.9903853]]
+
+
+Result3
+
+Epoch 3000/3000
+1/1 [==============================] - 0s 1ms/step - loss: 2.3774e-04
+Result3:  [[4.000531]]
+
+
+'''
