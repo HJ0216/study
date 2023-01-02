@@ -8,6 +8,7 @@ x = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
 # numpy library의 array function: array(object(array))
 y = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
 
+
 # 2. Model Construction(y=ax+b를 구현하기 위해 import)
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
@@ -18,14 +19,31 @@ from tensorflow.keras.layers import Dense
 model = Sequential()
 # Creates a Sequential model instance.
 # Sequential: provides training and inference(추론) features on this model.
+# layer를 순서대로 쌓아줌
 
 model.add(Dense(1, input_dim=1))
 # dense(첫번째 인자 : 출력 뉴런의 수,  input_dim : 입력 뉴런의 수)
+
 
 # 3. compile and training(best weight, minimum loss)
 model.compile(loss='mae', optimizer='adam')
 model.fit(x, y, epochs=2000)
 
+
 # 4. Evaluation and Prediction
 result = model.predict([13])
-print('Result: ', result)
+print("Prediction[13] Result: ", result)
+
+
+
+'''
+Result
+
+model.fit(x, y, epochs=2000)
+Epoch 2000/2000
+1/1 [==============================] - 0s 1ms/step - loss: 4.7467e-04
+
+result = model.predict([13])
+Prediction[13] Result:  [[13.000946]]
+
+'''
