@@ -1,4 +1,5 @@
 import tensorflow as tf
+# tf version 출력
 print(tf.__version__)
 
 import numpy as np
