@@ -4,11 +4,11 @@ from tensorflow.keras.layers import Dense
 
 # 1. Data
 x = np.array([[1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-             [1, 1, 1, 1, 2, 1.3, 1.4, 1.5, 1.6, 1.4]]) # input_dim = 10
+             [1, 1, 1, 1, 2, 1.3, 1.4, 1.5, 1.6, 1.4]]) # input_dim = 10(행렬에서 열 기준)
 # np.array([[element1], [element2]]): 다중 배열을 만들 경우, element1과 element2의 개수를 일치 시켜야 함
 y = np.array([2, 4, 6, 8, 10, 12, 14, 16, 18, 20]) # output_dim = 1
 
-# Data.shape: (행, 열)
+# Data.shape: (행: 데이터 개수, 열: 데이터 요소)
 print(x.shape) # (2, 10)
 print(y.shape) # (10, ) -> keras08 확인
 # Data.T 행렬 전환
@@ -25,21 +25,27 @@ print(x.shape) # (10, 2)
 #              [9, 1.6], 
 #              [10, 1.4])
 
+
 # 2. Model
 model = Sequential()
-model.add(Dense(5, input_dim=2)) # input_dim = 2(입력값 기준으로 열의 개수, Input Layer), output = 5(hidden layer로 임의값 설정 가능)
+model.add(Dense(5, input_dim=2))
+# input_dim = 2 (입력값 기준으로 열의 개수, Input Layer), output = 5(hidden layer로 임의값 설정 가능)
 model.add(Dense(4))
 model.add(Dense(3))
 model.add(Dense(2))
-model.add(Dense(1)) # output_dim = 1(출력값 기준으로 열의 개수, Output Layer)
+model.add(Dense(1))
+# output_dim = 1 (출력값 기준으로 열의 개수, Output Layer)
+
 
 # 3. Compile
 model.compile(loss='mae', optimizer='adam')
 model.fit(x, y, epochs=100, batch_size=1)
 # batch를 자르는 기준은 총 data 개수가 아니라, 행으로 표시된 데이터 개수를 기준으로 함
 
+
 # 4. Evaluate and Predict
-loss = model.evaluate(x, y) # 훈련한 값(x, y)을 evaluate로 집어넣음
+loss = model.evaluate(x, y)
+# 훈련한 값(x, y)을 evaluate로 집어넣음
 # 1/1 [==============================] - 0s 90ms/step - loss: 0.1008
 # 평가도 훈련(model.fit)과 동일한 방식으로 수행
 print("loss: ", loss)

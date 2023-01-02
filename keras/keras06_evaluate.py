@@ -30,3 +30,7 @@ print("6의 결과: ", result)
 
 # 문제: loss와 result 중 어떤 값을 중심으로 예측치의 좋고 나쁨을 평가할 수 있을까
 # -> loss가 낮을수록 최적의 weight에 가까워지므로 predict가 아닌 loss로 판단
+
+
+'''
+'''
