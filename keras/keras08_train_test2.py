@@ -3,17 +3,22 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 
 # 1. Data
-# x = np.array([1,2,3,4,5,6,7,8,9,10])
-# y = np.array(range(10)) # 0~9
-# train set과 test set을 구분
+x = np.array([1,2,3,4,5,6,7,8,9,10])
+y = np.array(range(10)) # 0~9
 
-# feature가 동일하므로 train data와 test data의 데이터 개수가 달라도 문제되지 않음
-x_train = np.array([1, 2, 3, 4, 5, 6, 7]) # (7, )
-x_test = np.array([8, 9, 10]) # (3, )
+# numpy data 나누기(train:test)
+# train, test set의 범위를 편향되게 할 경우, train or test에 유불리한 결과가 나올 수 있음
+# 그렇다고 시작과 끝을 맞춰서 같은 범위 내에서 돌아가게 할 필요는 X (시작과 끝의 데이터를 선택해서 넣게되는 문제가 발생하므로)
+x_train = x[:7] # 시작 생략 가능
+x_test = x[7:] # 끝 생략 가능
+y_train = y[:7]
+y_test = y[7:]
+print(x_train, x_test, y_train, y_test)
 
-y_train = np.array(range(7)) # 0~6
-y_test = np.array(range(7, 10)) # 7~9
-
+# -로 위치 표현하는 방법
+x_train2 = x[:-3]
+x_test2 = x[-3:]
+print(x_train2, x_test2)
 
 # 2. Model Construction
 model = Sequential()
