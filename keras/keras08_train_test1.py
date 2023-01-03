@@ -3,11 +3,10 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 
 # 1. Data
-# x = np.array([1,2,3,4,5,6,7,8,9,10])
-# y = np.array(range(10)) # 0~9
+x = np.array([1,2,3,4,5,6,7,8,9,10])
+y = np.array(range(10)) # 0~9
 # train set과 test set을 구분
 
-# feature가 동일하므로 train data와 test data의 데이터 개수가 달라도 문제되지 않음
 x_train = np.array([1, 2, 3, 4, 5, 6, 7]) # (7, )
 x_test = np.array([8, 9, 10]) # (3, )
 
