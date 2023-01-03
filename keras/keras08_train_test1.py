@@ -4,7 +4,7 @@ from tensorflow.keras.layers import Dense
 
 # 1. Data
 x = np.array([1,2,3,4,5,6,7,8,9,10])
-y = np.array(range(10)) # 0~9
+y = np.array(range(10)) # [0,1,2,3,4,5,6,7,8,9]
 # train set과 test set을 구분
 
 x_train = np.array([1, 2, 3, 4, 5, 6, 7]) # (7, )

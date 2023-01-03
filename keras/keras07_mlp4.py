@@ -3,7 +3,8 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 
 # 1. Data
-x = np.array([range(10)]) # (10, )-최종 Vector (10, 1)-최종 Metirx 동일하게 취급
+x = np.array([range(10)])
+# range(10): [0,1,2,3,4,5,6,7,8,9] 1 vector 창출
 y = np.array([[1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
              [1, 1, 1, 1, 2, 1.3, 1.4, 1.5, 1.6, 1.4],
              [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]]) # (3, 10)
