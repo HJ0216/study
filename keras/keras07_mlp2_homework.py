@@ -54,7 +54,7 @@ print("[10, 1.4, 0] result: ", result)
 
 
 '''
-Result
+# Result
 
 model.fit(x, y, epochs=300, batch_size=2)
 Epoch 300/300

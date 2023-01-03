@@ -45,10 +45,11 @@ model.fit(x, y, epochs=100, batch_size=1)
 
 # 4. Evaluate and Predict
 loss = model.evaluate(x, y)
-# 훈련한 값(x, y)을 evaluate로 집어넣음
+# 문제: 훈련한 값(x, y)을 evaluate로 집어넣음
 # 1/1 [==============================] - 0s 90ms/step - loss: 0.1008
 # 평가도 훈련(model.fit)과 동일한 방식으로 수행
 print("loss: ", loss)
+# 해결: 훈련 데이터(Tranin Set)와 평가(Test Set) 데이터를 나누기
 
 result = model.predict([[10, 1.4]])
 # predict(x1, x2)에서 x2 값을 알 수 없으므로 우선 훈련값(x1, x2)을 넣어서 y와 유사한지 학인
@@ -57,7 +58,7 @@ print("[10, 1.4] result: ", result)
 
 
 '''
-Result
+# Result
 
 Epoch 100/100
 10/10 [==============================] - 0s 667us/step - loss: 0.0817

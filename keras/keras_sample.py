@@ -16,7 +16,7 @@ f = np.array([[[1, 2, 3],[4, 5, 6]],
               [[11, 22, 33],[44, 55, 66]],
               [[111, 222, 333],[444, 555, 666]]])
 g = np.array([[[1, 2], [3, 4], [5, 6]],
-             [[1, 2], [3, 4], [5, 6]]])
+             [[11, 22], [33, 44], [55, 66]]])
 h = np.array([[[[1], [2], [3]],[[4], [5], [6]]],
               [[[11], [22], [33]],[[44], [55], [66]]]])
 i = np.array([[[[1, 2], [3, 4], [5, 6], [7, 8]],
@@ -31,13 +31,27 @@ print("b.shape: ", b.shape) # Metrix: (3, 1)
 print("c.shape: ", c.shape) # Metirx: (1, 3)
 print("d.shape: ", d.shape) # Metrix: (3, 2)
 print("e.shape: ", e.shape) # Metrix: (3, 4)
-print("f.shape: ", f.shape) 
-print("g.shape: ", g.shape)
-print("h.shape: ", h.shape)
-print("i.shape: ", i.shape)
-print("j.shape: ", j.shape)
+print("f.shape: ", f.shape) # Tensor: (3, 2, 3)
+print("g.shape: ", g.shape) # Tensor: (2, 3, 2)
+print("h.shape: ", h.shape) # Tensor: (2, 2, 3, 1)
+print("i.shape: ", i.shape) # Tensor: (2, 2, 4, 2)
+print("j.shape: ", j.shape) # Tensor: (1, 1, 1, 2)
 # print("z.shape: ", z.shape)
 
 
-model = Sequential()
-model.add(Dense(10, input_dim=3)) # input_dim = 3
+
+'''
+# Result
+
+a.shape:  (3,)
+b.shape:  (3, 1)
+c.shape:  (1, 3)
+d.shape:  (3, 2)
+e.shape:  (3, 4)
+f.shape:  (3, 2, 3)
+g.shape:  (2, 3, 2)
+h.shape:  (2, 2, 3, 1)
+i.shape:  (2, 2, 4, 2)
+j.shape:  (1, 1, 1, 2)
+
+'''
