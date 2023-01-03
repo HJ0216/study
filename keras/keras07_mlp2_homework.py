@@ -9,10 +9,11 @@ x = np.array([[1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
              [9, 8, 7, 6, 5, 4, 3 ,2, 1, 0]])
 y = np.array([2, 4, 6, 8, 10, 12, 14, 16, 18, 20])
 
-print(x.shape)
-print(y.shape)
+print(x.shape) # (3,10)
+print(y.shape) # (10,)
 
 x = x.T
+# Data의 특성은 열(특성, feature, column)값으로 들어가야해서 행렬 변환
 
 print(x.shape)
 # x = np.array([1,1,9], 
