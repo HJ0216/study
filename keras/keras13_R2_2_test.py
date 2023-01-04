@@ -44,7 +44,7 @@ model.add(Dense(1))
 
 
 # 3. compile and train
-model.compile(loss='mae')
+model.compile(loss='mae', optimizer = 'adam')
 model.fit(x_train, y_train, epochs=100, batch_size=1)
 
 
