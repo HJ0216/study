@@ -15,20 +15,13 @@ public class Ex3_1{
         // System.out.println(++y); // 6
         // System.out.println(y); // 6
         System.out.println(x+=2); // 변수를 계속 이용하는 경우는 값이 덮어쓰기 됨(x=3)
-        System.out.println(!('A'<c && c<='Z')); // false
-        System.out.println('C'-c); // 0
-        System.out.println('5'-'0');
-
-
-
-
-
-
-
-
-
-
-
+        System.out.println(!('A'<c && c<='Z')); // !false
+        System.out.println('C'-c); // 2
+        System.out.println('5'-'0'); // 5
+        System.out.println(c+1); // c=65
+        System.out.println(++c); // B
+        System.out.println(c++); // B
+        System.out.println(c); // C
 
         // int j = 1;
         // System.out.println(j<<2); // 1*2^2
