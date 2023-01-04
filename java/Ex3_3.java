@@ -1,13 +1,8 @@
 public class Ex3_3 {
-    public void main(String[] args) {
+    public static void main(String[] args) {
         int num = 10;
-        String s = (num > 0) ? "양수" : "음수" 
-        
-        
-        
-        
-        System.out.println(s); 
-        );
+        // String s = (num > 0) ? "양수" : s2 = (num<0) ? "음수" : "0";
+                
     }
 
 }
