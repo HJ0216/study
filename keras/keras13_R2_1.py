@@ -36,11 +36,11 @@ loss = model.evaluate(x_test, y_test)
 print("Loss: ", loss)
 
 y_predict = model.predict(x_test)
+
 print("============")
 print(y_test)
 print(y_predict)
 print("============")
-# y_predict: parameter로 x_test를 대입하여 나온 y_predict값과 y_test 값을 비교
 
 
 
@@ -59,30 +59,23 @@ Result
 
 
 
-from sklearn.metrics import mean_squared_error
+from sklearn.metrics import mean_squared_error, r2_score
 def RMSE (y_test, y_predict):
     return np.sqrt(mean_squared_error(y_test, y_predict))
 # def 함수_이름(para1, para2):
-    # return np.sqrt(mse), root(MSE)
-
+    # return np.sqrt(mse)
 print("RMSE: ", RMSE(y_test, y_predict))
 
-'''
-RMSE:  3.8499891113446925
-RMSE:  3.858623138575582
-RMSE:  3.857018758234503
-'''
+r2 = r2_score(y_test, y_predict)
+print("R: ", r2)
 
 
 
 '''
 Result
 
-(28) model.compile(loss='rmse', optimizer='adam', metrics=['mae'])
-(31) model.fit(x_train, y_train, epochs=200, batch_size=1)
-
-Error Location: File "c:\study\keras\keras12_RMSE.py", line 31
--> 오류가 발생한 위치의 근처를 안내
-ValueError: Unknown loss function -> loss type에는 rmse가 없음
-
+RMSE:  3.8482795786702315
+-> loss이므로 낮을수록 성능이 좋음
+R:  0.6485608399723322
+-> accuracy이므로 높을수록 성능이 좋음
 '''

@@ -1,6 +1,8 @@
 import numpy as np
+
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
+
 from sklearn.model_selection import train_test_split
 
 
@@ -27,14 +29,12 @@ model.add(Dense(1))
 # 3. compile and train
 model.compile(loss='mse', optimizer='adam',
               metrics=['mae', 'mse', 'accuracy', 'acc']) # accuracy = acc
-# []: list, [] 안에는 2개 이상의 요소 대입 가능
 # metrics 안에는 loss에 1개의 지표밖에 사용하지 못하므로 추가적으로 loss 타입을 사용하고 싶을 때 사용
 model.fit(x_train, y_train, epochs=200, batch_size=1)
 
 
 # 4. Evalueate and Predict
 loss = model.evaluate(x_test, y_test)
-# 최종 training을 기준으로 값이 나오는 게 아니므로 evalueate가 fit의 결과보다 안좋음
 print("Loss: ", loss)
 
 
