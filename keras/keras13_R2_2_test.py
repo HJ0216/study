@@ -25,21 +25,29 @@ x_train, x_test, y_train, y_test = train_test_split(
     x, y,
     train_size=0.7,
     shuffle=True,
+    random_state=42
 )
 
 
 # 2. Model Construction
 model = Sequential()
-model.add(Dense(5, input_dim=1))
-model.add(Dense(3))
-model.add(Dense(5))
-model.add(Dense(1))
-model.add(Dense(1))
+model.add(Dense(1, input_dim=1))
+model.add(Dense(100))
+model.add(Dense(10))
+model.add(Dense(10))
+model.add(Dense(1000))
+model.add(Dense(10))
+model.add(Dense(1000))
+model.add(Dense(10))
+model.add(Dense(1000))
+model.add(Dense(10))
+model.add(Dense(10))
+model.add(Dense(100))
 model.add(Dense(1))
 
 
 # 3. compile and train
-model.compile(loss='mae', optimizer='adam')
+model.compile(loss='mae')
 model.fit(x_train, y_train, epochs=100, batch_size=1)
 
 
@@ -54,19 +62,18 @@ print(y_test)
 print(y_predict)
 print("============")
 
-
-
 '''
 Result
+
 ============
-[ 9  7  5 23  8  3]
-[[14.496417]
- [ 6.170927]
- [ 5.245874]
- [17.271582]
- [ 8.94609 ]
- [ 8.021036]]
- ============
+[ 1 18 16  2  9  6]
+[[ 1.4867625]
+ [19.201803 ]
+ [17.117676 ]
+ [ 2.5288236]
+ [ 9.823254 ]
+ [ 6.697069 ]]
+============
 '''
 
 
@@ -81,13 +88,3 @@ print("RMSE: ", RMSE(y_test, y_predict))
 r2 = r2_score(y_test, y_predict)
 print("R: ", r2)
 
-
-
-'''
-Result
-
-RMSE:  3.8482795786702315
--> loss이므로 낮을수록 성능이 좋음
-R:  0.6485608399723322
--> accuracy이므로 높을수록 성능이 좋음
-'''

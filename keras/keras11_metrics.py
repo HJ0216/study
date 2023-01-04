@@ -28,7 +28,7 @@ model.add(Dense(1))
 
 # 3. compile and train
 model.compile(loss='mse', optimizer='adam',
-              metrics=['mae', 'mse', 'accuracy', 'acc']) # accuracy = acc
+              metrics=['mae', 'accuracy', 'acc']) # accuracy = acc
 # metrics 안에는 loss에 1개의 지표밖에 사용하지 못하므로 추가적으로 loss 타입을 사용하고 싶을 때 사용
 model.fit(x_train, y_train, epochs=200, batch_size=1)
 
@@ -42,10 +42,11 @@ print("Loss: ", loss)
 '''
 Result
 
-model.compile(loss='mse', optimizer='adam', metrics=['mae', 'mse'])
+model.compile(loss='mse', optimizer='adam', metrics=['mae', 'accuracy', 'acc']) # accuracy = acc
+
 Epoch 200/200
-14/14 [==============================] - 0s 2ms/step - loss: 9.5809 - mae: 2.0824 - mse: 9.5809
-1/1 [==============================] - 0s 118ms/step - loss: 14.9538 - mae: 3.0450 - mse: 14.9538
-Loss:  [14.953765869140625, 3.045029401779175, 14.953765869140625]
+14/14 [==============================] - 0s 695us/step - loss: 10.3352 - mae: 2.1783 - accuracy: 0.0714 - acc: 0.0714 
+1/1 [==============================] - 0s 126ms/step - loss: 15.0868 - mae: 3.0703 - accuracy: 0.0000e+00 - acc: 0.0000e+00
+Loss:  [15.086791038513184, 3.0702998638153076, 0.0, 0.0]
 
 '''

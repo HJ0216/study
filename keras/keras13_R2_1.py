@@ -37,16 +37,14 @@ print("Loss: ", loss)
 
 y_predict = model.predict(x_test)
 
-print("============")
+print("==========")
 print(y_test)
 print(y_predict)
-print("============")
-
-
+print("==========")
 
 '''
 Result
-============
+==========
 [ 9  7  5 23  8  3]
 [[14.496417]
  [ 6.170927]
@@ -54,12 +52,13 @@ Result
  [17.271582]
  [ 8.94609 ]
  [ 8.021036]]
- ============
+ ==========
 '''
 
 
 
 from sklearn.metrics import mean_squared_error, r2_score
+# class 삽입 시, ','로 다중 삽입 가능
 def RMSE (y_test, y_predict):
     return np.sqrt(mean_squared_error(y_test, y_predict))
 # def 함수_이름(para1, para2):
@@ -78,4 +77,5 @@ RMSE:  3.8482795786702315
 -> loss이므로 낮을수록 성능이 좋음
 R:  0.6485608399723322
 -> accuracy이므로 높을수록 성능이 좋음
+
 '''

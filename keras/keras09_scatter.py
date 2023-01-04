@@ -14,11 +14,13 @@ x_train, x_test, y_train, y_test = train_test_split(
     shuffle=True,
     random_state=123
 )
+
 '''
 Data를 Train set과 Test set으로 구분하는 이유
 모든 데이터를 Train에만 사용 할 경우, Overfit(과적합: 학습 데이터에 대해 과하게 학습하여 실제 데이터에 대한 오차가 증가하는 현상) 문제가 발생할 수 있음
 
 '''
+
 
 # 2. Model Construction
 model = Sequential()
