@@ -61,8 +61,6 @@ from sklearn.metrics import mean_squared_error, r2_score
 # class 삽입 시, ','로 다중 삽입 가능
 def RMSE (y_test, y_predict):
     return np.sqrt(mean_squared_error(y_test, y_predict))
-# def 함수_이름(para1, para2):
-    # return np.sqrt(mse)
 print("RMSE: ", RMSE(y_test, y_predict))
 
 r2 = r2_score(y_test, y_predict)

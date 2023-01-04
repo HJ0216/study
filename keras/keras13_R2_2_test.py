@@ -34,14 +34,11 @@ model = Sequential()
 model.add(Dense(1, input_dim=1))
 model.add(Dense(100))
 model.add(Dense(10))
+model.add(Dense(100))
 model.add(Dense(10))
-model.add(Dense(1000))
+model.add(Dense(100))
 model.add(Dense(10))
-model.add(Dense(1000))
-model.add(Dense(10))
-model.add(Dense(1000))
-model.add(Dense(10))
-model.add(Dense(10))
+model.add(Dense(100))
 model.add(Dense(100))
 model.add(Dense(1))
 
@@ -81,10 +78,15 @@ Result
 from sklearn.metrics import mean_squared_error, r2_score
 def RMSE (y_test, y_predict):
     return np.sqrt(mean_squared_error(y_test, y_predict))
-# def 함수_이름(para1, para2):
-    # return np.sqrt(mse)
 print("RMSE: ", RMSE(y_test, y_predict))
 
 r2 = r2_score(y_test, y_predict)
 print("R: ", r2)
 
+
+'''
+Result
+
+RMSE:  0.3096209736011438
+R:  0.9977114421070464
+'''
