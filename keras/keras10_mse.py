@@ -1,6 +1,7 @@
+import numpy as np
+
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
-import numpy as np
 from sklearn.model_selection import train_test_split
 
 
@@ -25,8 +26,7 @@ model.add(Dense(1))
 
 
 # 3. compile and train
-model.compile(loss='mae', optimizer='adam')
-# loss의 'mae: Mean Absolute Error'
+model.compile(loss='mse', optimizer='adam')
 model.fit(x_train, y_train, epochs=200, batch_size=1)
 # Overfit(과적합: 학습 데이터에 대해 과하게 학습하여 실제 데이터에 대한 오차가 증가하는 현상)
 
@@ -36,44 +36,24 @@ loss = model.evaluate(x_test, y_test)
 # 최종 training을 기준으로 값이 나오는 게 아니므로 evalueate가 fit의 결과보다 안좋음
 print("Loss: ", loss)
 
-y_predict = model.predict(x)
-# predict 대입 값의 훈련 값 전체 대입
-# fit의 훈련 결과를 predict에 사용
-print("Result: ", y_predict)
-
-import matplotlib.pyplot as plt
-plt.scatter(x, y)
-plt.plot(x, y_predict, color="red")
-plt.show()
-
 
 
 '''
-Result
+# Result
 
-Epoch 200/200
-14/14 [==============================] - 0s 617us/step - loss: 1.9601
-1/1 [==============================] - 0s 101ms/step - loss: 3.0334
-Loss:  3.033447265625
-Result:  [[ 1.0241305]
- [ 2.037987 ]
- [ 3.051844 ]
- [ 4.0657005]
- [ 5.079557 ]
- [ 6.0934143]
- [ 7.1072702]
- [ 8.121127 ]
- [ 9.134985 ]
- [10.14884  ]
- [11.162696 ]
- [12.176556 ]
- [13.19041  ]
- [14.204266 ]
- [15.218123 ]
- [16.23198  ]
- [17.245836 ]
- [18.259693 ]
- [19.27355  ]
- [20.287403 ]]
- 
+Hyper parameter tuning
+mae: 3.1052515506744385
+mse: 15.402148246765137
+
+# 데이터의 모형에 따라 mae, mse 선택
+
+mae: 이상치에 민감하지 않음
+mse: 이상치에 민감함
+
+데이터 모형의 범위가 크게 분산되어 있을 때, mae
+->
+데이터 모형의 범위가 좁을 때, mse
+-> 과측정 방지
+
+
 '''
