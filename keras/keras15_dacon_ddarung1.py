@@ -34,10 +34,11 @@ print(train_csv.info())
 # 결측치: 총 데이터 수 - Non-Null (수집못한 데이터)
 # 결측치 처리 1. 주변 평균값 2. 0 3. 근처값과 동일 4. 임의의 값 5. 삭제
 print(test_csv.info())
-
 print(train_csv.describe()) # sklearn.DESC
 
-x = train_csv.drop(['count'], axis=1) # count column axis=1인 col 삭제
+x = train_csv.drop(['count'], axis=1)
+# count column axis=1인 col 삭제
+
 print(x) # [1459 rows x 9 columns]
 
 y = train_csv['count']

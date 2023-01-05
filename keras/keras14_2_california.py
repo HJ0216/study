@@ -44,8 +44,13 @@ model.add(Dense(1))
 
 
 # 3. compile and train
+import time
 model.compile(loss='mse', optimizer = 'adam', metrics=['mae'])
-model.fit(x_train, y_train, epochs=500, batch_size=100)
+
+start = time.time()
+model.fit(x_train, y_train, epochs=1000, batch_size=32)
+end = time.time()
+
 
 
 # 4. evaluate and predict
@@ -65,10 +70,16 @@ print("RMSE: ", RMSE(y_test, y_predict))
 
 r2 = r2_score(y_test, y_predict)
 print("R2: ", r2)
+print("소요 시간: ", end - start)
 
 
 
 '''
 RMSE:  0.7833732396652231
 R2:  0.5506119270660563
+
+
+걸린시간
+cpu: 소요 시간:  352.6150553226471
+gpu: 소요 시간:  1283.045045375824
 '''

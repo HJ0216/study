@@ -79,10 +79,12 @@ model.add(Dense(1)) # output_dim = 1
 
 
 # 3. compile and train
+import time
 model.compile(loss='mse', optimizer='adam')
 # RMSE가 평가지표이므로 유사한 mse 사용
-model.fit(x_train, y_train, epochs=500, batch_size=16)
-
+start = time.time()
+model.fit(x_train, y_train, epochs=100, batch_size=32)
+end = time.time()
 
 # 4. evaluate and predict
 loss = model.evaluate(x_test, y_test)
@@ -100,6 +102,12 @@ def RMSE (y_test, y_predict):
 rmse = RMSE(y_test, y_predict)
 print("RMSE: ", rmse)
 
+print("소요 시간: ", end - start)
+
+'''
+(tf27) cpu 소요 시간:  59.87569808959961
+(tf274gpu) gpu 소요 시간:  179.78400087356567
+'''
 
 # for submission
 y_submit = model.predict(test_csv)
@@ -112,3 +120,4 @@ print(submission)
 # pandas(submission['count'])에 numpy(y_submit)를 직접 대입시키면 numpy가 pandas가 됨
 
 submission.to_csv(path+'submission_01050251.csv')
+
