@@ -66,26 +66,24 @@ model.compile(loss='mse', optimizer='adam')
 model.fit(x_train, y_train, epochs=1, batch_size=32)
 # x_train: x = train_csv.drop(['count'], axis=1)
 # y_train: y = train_csv['count']
-# Raw Data에는 결측치(Missing Value) 존재 -> loss가 nan으로 추출되고 예측치에도 nan이 나오는 오류가 발생하게 됨
+# Raw Data에는 결측치(Missing Value) 존재
+# -> loss가 nan으로 추출되고 예측치에도 nan이 나오는 오류가 발생하게 됨
 
 
 # 4. evaluate and predict
 loss = model.evaluate(x_test, y_test)
 print("Loss: ", loss)
 
-# y_predict = model.predict(x_test)
-# print(y_predict)
+y_predict = model.predict(x_test)
+print(y_predict)
 
-# from sklearn.metrics import mean_squared_error, r2_score
-# def RMSE (y_test, y_predict):
-#     return np.sqrt(mean_squared_error(y_test, y_predict))
+from sklearn.metrics import mean_squared_error, r2_score
+def RMSE (y_test, y_predict):
+    return np.sqrt(mean_squared_error(y_test, y_predict))
 
-# rmse = RMSE(y_test, y_predict)
-# print("RMSE: ", rmse)
-
-
-# # for submission
-# y_submit = model.predict(test_csv)
+rmse = RMSE(y_test, y_predict)
+print("RMSE: ", rmse)
 
 
-
+# for submission
+y_submit = model.predict(test_csv)

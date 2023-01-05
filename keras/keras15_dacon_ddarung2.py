@@ -81,7 +81,7 @@ model.add(Dense(1)) # output_dim = 1
 # 3. compile and train
 model.compile(loss='mse', optimizer='adam')
 # RMSE가 평가지표이므로 유사한 mse 사용
-model.fit(x_train, y_train, epochs=1000, batch_size=5)
+model.fit(x_train, y_train, epochs=500, batch_size=16)
 
 
 # 4. evaluate and predict
