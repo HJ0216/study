@@ -4,6 +4,9 @@ R2 0.62 이상
 
 '''
 
+import sklearn as sk
+print(sk.__version__)
+
 import numpy as np
 
 from tensorflow.keras.models import Sequential
