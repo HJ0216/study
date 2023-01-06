@@ -8,6 +8,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, r2_score
 
 
+
 # 1. Data
 path = './_data/ddarung/'
 # 동일한 경로의 파일을 여러번 당겨올 경우, 변수를 지정해서 사용
@@ -18,9 +19,7 @@ path = './_data/ddarung/'
 train_csv = pd.read_csv(path+'train.csv', index_col=0)
 # path + 'train.csv': ./_data/ddarung/train.csv
 # index_col을 입력하지 않을 경우 idx도 데이터로 인식하게 됨 (0번째 column은 data가 아닌 idx임을 안내)
-# print(train_csv) [1459 rows x 10 columns]
-# -> input_dim =10 -> count 제외 input_dim=9
-# print(train_csv.shape) (1459, 10)
+print(train_csv) # [1459 rows x 10 columns]
 # index_col=0 미 입력시, train_csv = pd.read_csv(path + 'train.csv') print(train_csv) [1459 rows x 11 columns]
 
 test_csv = pd.read_csv(path+'test.csv', index_col=0)
@@ -44,8 +43,7 @@ train_csv = train_csv.dropna()
 print(train_csv.isnull().sum())
 # pandas.isnull(): null 값 출력
 # pandas.isnull().sum(): null 값 총계 출력
-print(train_csv.shape) # (1328, 10)
-
+print(train_csv.shape) # (1459, 10) -> (1328, 10)
 
 '''
 info -> null이 아닌 값(Non-Null) 출력
@@ -53,10 +51,12 @@ isnull -> 결측치(Null) 값 총계 출력
 '''
 
 
+
 x = train_csv.drop(['count'], axis=1)
-# column 명이 'count'인 column(axis=1) 삭제
+# column 명이 'count'인 column 삭제
+# axis = 0: idx, axis = 1: column
 print(x)
-# [1459 rows x 9 columns] -> dropna로 인한 변경
+# [1459 rows x 9 columns]: dropna() count column 삭제
 
 y = train_csv['count']
 # train_csv에서 col 명이 count인 data set 출력
@@ -68,7 +68,7 @@ x_train, x_test, y_train, y_test = train_test_split(
     x, y,
     shuffle=True,
     train_size=0.7,
-    random_state=1234
+    random_state=111
 )
 
 print(x_train.shape, x_test.shape) # (929, 9) (399, 9)
@@ -77,9 +77,9 @@ print(y_train.shape, y_test.shape) # (929,) (399,)
 
 # 2. model
 model = Sequential()
-model.add(Dense(32, input_dim=9)) # input_dim = 9
-model.add(Dense(16))
-model.add(Dense(1)) # output_dim = 1
+model.add(Dense(64, input_dim=9))
+model.add(Dense(64))
+model.add(Dense(1))
 
 
 # 3. compile and train
@@ -87,7 +87,7 @@ import time
 model.compile(loss='mse', optimizer='adam')
 # RMSE가 평가지표이므로 유사한 mse 사용
 start = time.time()
-model.fit(x_train, y_train, epochs=100, batch_size=32)
+model.fit(x_train, y_train, epochs=500, batch_size=32)
 end = time.time()
 
 
@@ -96,11 +96,8 @@ loss = model.evaluate(x_test, y_test)
 print("Loss: ", loss)
 
 y_predict = model.predict(x_test)
-# test는 y값이 없으므로 train 파일 사용
 print(y_predict)
-# 결측치의 문제로 loss = nan
 
-from sklearn.metrics import mean_squared_error, r2_score
 def RMSE (y_test, y_predict):
     return np.sqrt(mean_squared_error(y_test, y_predict))
 
@@ -125,9 +122,19 @@ print(submission)
 # pandas(submission['count'])에 numpy(y_submit)를 직접 대입시키면 numpy가 pandas가 됨
 
 submission.to_csv(path+'submission_01050251.csv')
+# (pandas)submission을 cvs로 변환(경로+'파일명.cvs'에 저장)
+r2 = r2_score(y_test, y_predict)
+print("R2: ", r2)
+
 
 '''
 Result
 
 RMSE:  67.0261917455131
+
+
+Updated Result
+
+RMSE:  60.13453670580413
+R2:  0.5102647475435887
 '''

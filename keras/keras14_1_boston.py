@@ -28,8 +28,8 @@ from sklearn.metrics import mean_squared_error, r2_score
 
 # 1. Data
 dataset = load_boston()
-x = dataset.data # home
-y = dataset.target # home_price
+x = dataset.data
+y = dataset.target
 
 '''
 print(x.shape) # (506, 13)
