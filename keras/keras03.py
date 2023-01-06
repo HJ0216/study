@@ -1,20 +1,21 @@
 import numpy as np
 import tensorflow as tf
 
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
+
+
 # tensorflow version print
 print(tf.__version__) # 2.7.4
 
 
-# 1. 정제된 Data (정제된 데이터를 위해 전처리 필요)
+# 1. Refined Data
+# 데이터 전처리(Data Preprocessing): data를 일관된 형태로 전환하는 모든 과정
 x = np.array([1, 2, 3, 4, 5])
-print(x) # [1 2 3 4 5]
 y = np.array([1, 2, 3, 5, 4])
 
 
 # 2. Model Construction (y=wx+b 구축)
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense
-
 model = Sequential()
 model.add(Dense(1, input_dim=1))
 
