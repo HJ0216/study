@@ -7,7 +7,6 @@ import numpy as np
 import pandas as pd
 import time
 
-
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 
@@ -36,12 +35,13 @@ x = train_csv.drop(['casual', 'registered', 'count'], axis=1)
 # axis: 0-index처럼 인식, 1-column처럼 인식
 
 # drop으로 column을 삭제하는 이유
-# evaluate에 필요한 test_cvs와 동일한 형태를 
+# 'casual', 'registered', 'count'를 예측해도 evaluate할 때 필요가 없으므르 column 삭제
 
 print(x)
-# [10886 rows x 8 columns] -> dropna로 인한 변경
+# [10886 rows x 8 columns] -> dropna && drop로 인한 변경
 
 y = train_csv['count']
+# train_csv에서 count col 추출 - pandas의 기능
 print(y) # Length: 10886
 
 
@@ -58,12 +58,11 @@ print(y_train.shape, y_test.shape) # (7620,), (3266,)
 
 # 2. model
 model = Sequential()
-model.add(Dense(32, input_dim=8, activation='relu'))
-model.add(Dense(32, activation='relu'))
+model.add(Dense(32, input_dim=8, activation='linear'))
+model.add(Dense(32, activation='sigmoid'))
 model.add(Dense(16, activation='relu'))
-model.add(Dense(1, activation='relu')) # output_dim = 1
+model.add(Dense(1)) # output_dim = 1
 # Activation default: linear
-
 # output_dim에서 activation을 'sigmoid'를 사용할 경우, return value가 0(predict값이 0.5미만일 경우) or 1(predict값이 0.5이상일 경우)로만 반환하게 됨
 # -> 이진 분류에서만 sigmoid를 마지막에 사용
 # Hidden Layer에서 sigmoid를 사용할 수 있으나, 값이 너무 한정적으로 변하기때문에 이진 분류를 제외한 곳에서 사용을 권장하지 않음
@@ -90,6 +89,7 @@ RMES: 153.59232454754982
 
 '''
 
+
 # 3. compile and train
 model.compile(loss='mse', optimizer='adam')
 # RMSE가 평가지표이므로 유사한 mse 사용
@@ -100,19 +100,20 @@ end = time.time()
 
 # 4. evaluate and predict
 loss = model.evaluate(x_test, y_test)
+# train data 중 test set를 evaluate -> loss 판단
 print("Loss: ", loss)
 
 y_predict = model.predict(x_test)
-# test는 y값이 없으므로 train file의 x_test로 splited된 파일 사용
+# train data 중 test set를 predict -> y_predict
 print(y_predict)
 
 from sklearn.metrics import mean_squared_error, r2_score
+
 def RMSE (y_test, y_predict):
     return np.sqrt(mean_squared_error(y_test, y_predict))
 
 rmse = RMSE(y_test, y_predict)
 print("RMSE: ", rmse)
-
 print("소요 시간: ", end - start)
 
 '''
@@ -122,6 +123,7 @@ print("소요 시간: ", end - start)
 
 # for submission
 y_submit = model.predict(test_csv)
+# test data를 predict -> y_submit
 print(y_submit)
 print(y_submit.shape) # (6493, 1)
 

@@ -125,3 +125,9 @@ print(submission)
 # pandas(submission['count'])에 numpy(y_submit)를 직접 대입시키면 numpy가 pandas가 됨
 
 submission.to_csv(path+'submission_01050251.csv')
+
+'''
+Result
+
+RMSE:  67.0261917455131
+'''
