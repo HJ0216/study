@@ -53,13 +53,15 @@ isnull -> 결측치(Null) 값 총계 출력
 '''
 
 
-x = train_csv.drop(['count'], axis=1) # column 명이 count(axis=1)인 column 삭제
+x = train_csv.drop(['count'], axis=1)
+# column 명이 'count'인 column(axis=1) 삭제
 print(x)
 # [1459 rows x 9 columns] -> dropna로 인한 변경
 
 y = train_csv['count']
+# train_csv에서 col 명이 count인 data set 출력
 print(y)
-print(y.shape)
+print(y.shape) # (1328,)
 
 
 x_train, x_test, y_train, y_test = train_test_split(
@@ -69,8 +71,8 @@ x_train, x_test, y_train, y_test = train_test_split(
     random_state=1234
 )
 
-print(x_train.shape, x_test.shape) #(1021, 9) (438, 9)
-print(y_train.shape, y_test.shape) #
+print(x_train.shape, x_test.shape) # (929, 9) (399, 9)
+print(y_train.shape, y_test.shape) # (929,) (399,)
 
 
 # 2. model
@@ -87,6 +89,7 @@ model.compile(loss='mse', optimizer='adam')
 start = time.time()
 model.fit(x_train, y_train, epochs=100, batch_size=32)
 end = time.time()
+
 
 # 4. evaluate and predict
 loss = model.evaluate(x_test, y_test)
@@ -122,4 +125,3 @@ print(submission)
 # pandas(submission['count'])에 numpy(y_submit)를 직접 대입시키면 numpy가 pandas가 됨
 
 submission.to_csv(path+'submission_01050251.csv')
-
