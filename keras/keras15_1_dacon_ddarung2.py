@@ -31,7 +31,7 @@ print(train_csv.columns) # sklearn.feature_names, column name
 print(train_csv.info())
 # null 값 제외 출력
 # Int64Index: 715 entries, 총 데이터 수
-# 결측치: 총 데이터 수 - Non-Null (수집못한 데이터)
+# 결측치(Missing Value): 총 데이터 수 - Non-Null (수집못한 데이터)
 print(test_csv.info())
 print(train_csv.describe()) # sklearn.DESC
 
@@ -46,10 +46,12 @@ print(train_csv.isnull().sum())
 # pandas.isnull().sum(): null 값 총계 출력
 print(train_csv.shape) # (1328, 10)
 
+
 '''
 info -> null이 아닌 값(Non-Null) 출력
 isnull -> 결측치(Null) 값 총계 출력
 '''
+
 
 x = train_csv.drop(['count'], axis=1) # column 명이 count(axis=1)인 column 삭제
 print(x)
@@ -93,7 +95,7 @@ print("Loss: ", loss)
 y_predict = model.predict(x_test)
 # test는 y값이 없으므로 train 파일 사용
 print(y_predict)
-# 결측치의 문제로 loss = non
+# 결측치의 문제로 loss = nan
 
 from sklearn.metrics import mean_squared_error, r2_score
 def RMSE (y_test, y_predict):

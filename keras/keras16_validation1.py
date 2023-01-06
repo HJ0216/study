@@ -30,7 +30,7 @@ model.compile(loss='mse', optimizer='adam')
 model.fit(x_train, y_train, epochs=500, batch_size=8,
           validation_data=(x_validation, y_validation))
 # validation_data를 통해서 val_loss 추가
-# 훈련 + '검증' + 평가 (fit + 'validation'+ evaluate)
+# 훈련 + '검증(Validation)' + 평가 (fit + 'validation'+ evaluate)
 
 
 # 4. evaluate and predict
