@@ -36,11 +36,8 @@ loss = model.evaluate(x_test, y_test)
 print("Loss: ", loss)
 
 y_predict = model.predict(x_test)
-print("==========")
 print(y_test)
 print(y_predict)
-print("==========")
-# y_predict: parameter로 x_test를 대입하여 나온 y_predict값과 y_test 값을 비교
 
 
 
@@ -64,7 +61,7 @@ from sklearn.metrics import mean_squared_error
 
 def RMSE (y_test, y_predict):
     return np.sqrt(mean_squared_error(y_test, y_predict))
-# def 함수_이름(para1, para2):
+# def 함수_이름(parameter1, parameter2):
     # return np.sqrt(mse), root(MSE)
 
 print("RMSE: ", RMSE(y_test, y_predict))

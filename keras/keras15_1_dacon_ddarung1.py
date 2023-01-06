@@ -37,19 +37,17 @@ print(test_csv.info())
 print(train_csv.describe()) # sklearn.DESC
 
 x = train_csv.drop(['count'], axis=1)
-# count column axis=1인 col 삭제
-
+# count column 삭제(axis=0: idx, axis=1: col)
 print(x) # [1459 rows x 9 columns]
 
 y = train_csv['count']
 print(y) # [1459 rows x 9 columns]
-print(y.shape)
 
 x_train, x_test, y_train, y_test = train_test_split(
     x, y,
     shuffle=True,
     train_size=0.7,
-    random_state=1234
+    random_state=111
 )
 
 print(x_train.shape, x_test.shape) # (1021, 9) (438, 9)

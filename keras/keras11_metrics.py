@@ -29,7 +29,7 @@ model.add(Dense(1))
 # 3. compile and train
 model.compile(loss='mse', optimizer='adam',
               metrics=['mae', 'accuracy', 'acc']) # accuracy = acc
-# metrics 안에는 loss에 1개의 지표밖에 사용하지 못하므로 추가적으로 loss 타입을 사용하고 싶을 때 사용
+# metrics: loss에 1개의 지표밖에 사용하지 못하므로 추가적으로 loss 타입을 사용하고 싶을 때 사용
 model.fit(x_train, y_train, epochs=200, batch_size=1)
 
 

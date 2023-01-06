@@ -3,6 +3,7 @@ practice
 R2: 0.55 이상
 '''
 
+import time
 import numpy as np
 
 from tensorflow.keras.models import Sequential
@@ -10,6 +11,8 @@ from tensorflow.keras.layers import Dense
 
 from sklearn.datasets import fetch_california_housing
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error, r2_score
+
 
 
 # 1. Data
@@ -20,6 +23,7 @@ y = datasets.target
 x_train, x_test, y_train, y_test = train_test_split(
     x, y,
     train_size=0.7
+    random_state=111
 )
 
 '''
@@ -44,13 +48,11 @@ model.add(Dense(1))
 
 
 # 3. compile and train
-import time
 model.compile(loss='mse', optimizer = 'adam', metrics=['mae'])
 
 start = time.time()
-model.fit(x_train, y_train, epochs=1000, batch_size=32)
+model.fit(x_train, y_train, epochs=500, batch_size=16)
 end = time.time()
-
 
 
 # 4. evaluate and predict
@@ -58,12 +60,9 @@ loss = model.evaluate(x_test, y_test)
 print("Loss: ", loss)
 
 y_predict = model.predict(x_test)
-print("============")
 print(y_test)
 print(y_predict)
-print("============")
 
-from sklearn.metrics import mean_squared_error, r2_score
 def RMSE (y_test, y_predict):
     return np.sqrt(mean_squared_error(y_test, y_predict))
 print("RMSE: ", RMSE(y_test, y_predict))
@@ -75,8 +74,13 @@ print("소요 시간: ", end - start)
 
 
 '''
+Result
 RMSE:  0.7833732396652231
 R2:  0.5506119270660563
+
+Updated Result
+RMSE:  0.8095353801159251
+R2:  0.5118656898498388
 
 
 걸린시간

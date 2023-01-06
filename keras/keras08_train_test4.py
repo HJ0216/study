@@ -103,21 +103,22 @@ y_test:
  [[5.  1.  8. ]
  [2.  1.  1.5]]
  
-이렇게 해서 modeling을 구축하게되면 예측 x 값에 scalar 7개가 들어가 줘야 함
-predict에서 넣고 싶은 것은 한 열의 모든 요소가 아닌 각 열의 한 요소씩 넣고 싶은 것이므로 회전 없이 진행해야 함
+input_dim 기준: 데이터의 특징 = 열(column)
+x_train = x_train.T 할 경우, 데이터의 특징인 열이 input_dim으로 들어가는 것이 아니라 한 특징의 데이터의 요소가 대입됨
+데이터를 predict할 때도 각 특징별 데이터가 아닌 한 열의 데이터 값만 들어가게 됨
 '''
 
 
 # 2. Model
 model = Sequential()
-model.add(Dense(10, input_dim=3)) # input_dim = 3
+model.add(Dense(10, input_dim=3))
 model.add(Dense(30))
 model.add(Dense(50))
 model.add(Dense(70))
 model.add(Dense(50))
 model.add(Dense(30))
 model.add(Dense(10))
-model.add(Dense(2)) # output_dim = 2
+model.add(Dense(2))
 
 
 # 3. Compile

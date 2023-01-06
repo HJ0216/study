@@ -45,8 +45,6 @@ predict 전 evaluate를 활용하여 과적합 문제가 발생하였는지 선�
 '''
 
 y_predict = model.predict(x)
-# predict 대입 값의 훈련 값 전체 대입
-# fit의 훈련 결과를 predict에 사용
 print("Result: ", y_predict)
 
 

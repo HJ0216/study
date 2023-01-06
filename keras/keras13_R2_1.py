@@ -4,6 +4,8 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error, r2_score
+# class 삽입 시, ','로 다중 삽입 가능
 
 
 # 1. Data
@@ -57,8 +59,6 @@ Result
 
 
 
-from sklearn.metrics import mean_squared_error, r2_score
-# class 삽입 시, ','로 다중 삽입 가능
 def RMSE (y_test, y_predict):
     return np.sqrt(mean_squared_error(y_test, y_predict))
 print("RMSE: ", RMSE(y_test, y_predict))
@@ -73,7 +73,7 @@ Result
 
 RMSE:  3.8482795786702315
 -> loss이므로 낮을수록 성능이 좋음
-R:  0.6485608399723322
+R2:  0.6485608399723322
 -> accuracy이므로 높을수록 성능이 좋음
 
 '''
