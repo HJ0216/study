@@ -30,7 +30,12 @@ train_csv = train_csv.dropna()
 print(train_csv.shape) # (10886, 11)
 
 x = train_csv.drop(['casual', 'registered', 'count'], axis=1)
-# column 명이 casual, registered 'count'(axis=1)인 column 삭제
+# column 명이 casual, registered 'count'인 column(axis=1) 삭제
+# drop function: df.drop(labels=None, axis=0, index=None, columns=None, level=None, inplace=False, errors='raise')
+# labels : 삭제할 레이블명
+# axis: 0-index처럼 인식, 1-column처럼 인식
+
+# drop으로 column을 삭제하는 이유
 # evaluate에 필요한 test_cvs와 동일한 형태를 
 
 print(x)
@@ -55,8 +60,8 @@ print(y_train.shape, y_test.shape) # (7620,), (3266,)
 model = Sequential()
 model.add(Dense(32, input_dim=8, activation='relu'))
 model.add(Dense(32, activation='relu'))
-model.add(Dense(16))
-model.add(Dense(1)) # output_dim = 1
+model.add(Dense(16, activation='relu'))
+model.add(Dense(1, activation='relu')) # output_dim = 1
 # Activation default: linear
 
 # output_dim에서 activation을 'sigmoid'를 사용할 경우, return value가 0(predict값이 0.5미만일 경우) or 1(predict값이 0.5이상일 경우)로만 반환하게 됨
@@ -64,21 +69,24 @@ model.add(Dense(1)) # output_dim = 1
 # Hidden Layer에서 sigmoid를 사용할 수 있으나, 값이 너무 한정적으로 변하기때문에 이진 분류를 제외한 곳에서 사용을 권장하지 않음
 # relu도 hidden layer에서만 사용 권장, output_dim에서 사용 시, 음수값이 왜곡될 가능성이 있음
 
+
 '''
 Case1
 activation = linear
-RMSE
+RMSE: 157.4314181642394
+소요 시간: 18.172726154327393
 
 
 Case2
 activation = sigmoid
-RMSE
+RMSE: 263.0283322224913
+소요 시간: 17.84301781654358
 
 
 Case3
 activation = relu
-RMES
-
+RMES: 153.59232454754982
+소요 시간: 18.357366800308228
 
 '''
 
