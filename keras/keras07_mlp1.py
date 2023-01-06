@@ -11,6 +11,7 @@ y = np.array([2, 4, 6, 8, 10, 12, 14, 16, 18, 20]) # output_dim = 1
 # Data.shape: (행: 데이터 개수, 열: 데이터 요소)
 print(x.shape) # (2, 10)
 print(y.shape) # (10, ) -> keras08 확인
+
 # Data.T 행렬 전환
 x = x.T
 print(x.shape) # (10, 2)
@@ -37,17 +38,15 @@ model.add(Dense(1))
 # output_dim = 1 (출력값 기준으로 열의 개수, Output Layer)
 
 
-# 3. Compile
+# 3. Compile and Train
 model.compile(loss='mae', optimizer='adam')
 model.fit(x, y, epochs=100, batch_size=1)
-# batch를 자르는 기준은 총 data 개수가 아니라, 행으로 표시된 데이터 개수를 기준으로 함
+# batch를 자르는 기준은 총 data 개수가 아니라, 1열에 포함된 scala 개수
 
 
 # 4. Evaluate and Predict
 loss = model.evaluate(x, y)
 # 문제: 훈련한 값(x, y)을 evaluate로 집어넣음
-# 1/1 [==============================] - 0s 90ms/step - loss: 0.1008
-# 평가도 훈련(model.fit)과 동일한 방식으로 수행
 print("loss: ", loss)
 # 해결: 훈련 데이터(Tranin Set)와 평가(Test Set) 데이터를 나누기
 

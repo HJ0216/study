@@ -20,6 +20,7 @@ x_train2 = x[:-3]
 x_test2 = x[-3:]
 print(x_train2, x_test2)
 
+
 # 2. Model Construction
 model = Sequential()
 model.add(Dense(10, input_dim=1))
@@ -31,7 +32,6 @@ model.add(Dense(30))
 model.add(Dense(10))
 model.add(Dense(5))
 model.add(Dense(1))
-# node shpae recommendation: 역 피라미드 or 다이아몬드
 
 
 # 3. Compile and train

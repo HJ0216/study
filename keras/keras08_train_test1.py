@@ -2,6 +2,7 @@ import numpy as np
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 
+
 # 1. Data
 x = np.array([1,2,3,4,5,6,7,8,9,10])
 y = np.array(range(10)) # [0,1,2,3,4,5,6,7,8,9]
@@ -25,7 +26,6 @@ model.add(Dense(30))
 model.add(Dense(10))
 model.add(Dense(5))
 model.add(Dense(1))
-# node shpae recommendation: 역 피라미드 or 다이아몬드
 
 
 # 3. Compile and train
