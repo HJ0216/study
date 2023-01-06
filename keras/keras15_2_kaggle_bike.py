@@ -1,7 +1,12 @@
 # kaggle.com/competitions/bike-sharing-demand
+# casual, registered, count 삭제
+# datetime -> idx 처리
+
 
 import numpy as np
 import pandas as pd
+import time
+
 
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
@@ -13,84 +18,85 @@ from sklearn.metrics import mean_squared_error, r2_score
 # 1. Data
 path = './_data/bike/'
 train_csv = pd.read_csv(path+'train.csv', index_col=0)
-# path + 'train.csv': ./_data/ddarung/train.csv
-# index_col을 입력하지 않을 경우 idx도 데이터로 인식하게 됨 (0번째 column은 data가 아닌 idx임을 안내)
-# print(train_csv) [1459 rows x 10 columns]
-# -> input_dim =10 -> count 제외 input_dim=9
-# print(train_csv.shape) (1459, 10)
-# index_col=0 미 입력시, train_csv = pd.read_csv(path + 'train.csv') print(train_csv) [1459 rows x 11 columns]
+print(train_csv) # [10886 rows x 11 columns]
 
 test_csv = pd.read_csv(path+'test.csv', index_col=0)
-submission = pd.read_csv(path+'submission.csv', index_col=0)
+submission = pd.read_csv(path+'sampleSubmission.csv', index_col=0)
 
-print(train_csv.columns) # sklearn.feature_names, column name
-
-print(train_csv.info())
-# null 값 제외 출력
-# Int64Index: 715 entries, 총 데이터 수
-# 결측치: 총 데이터 수 - Non-Null (수집못한 데이터)
-print(test_csv.info())
-print(train_csv.describe()) # sklearn.DESC
-
-# 결측치 처리 1. 주변 평균값 2. 0 대입 3. 근처값과 동일 4. 임의의 값 5. 결측 데이터 제거
-# 결측치 처리 - '결측 데이터 제거'
 print(train_csv.isnull().sum())
 # data_set의 결측치(Null) 값 총계 출력
 train_csv = train_csv.dropna()
 # pandas.dropna(): null 값을 포함한 데이터 행 삭제
-print(train_csv.isnull().sum())
-# pandas.isnull(): null 값 출력
-# pandas.isnull().sum(): null 값 총계 출력
-print(train_csv.shape) # (1328, 10)
+print(train_csv.shape) # (10886, 11)
 
-'''
-info -> null이 아닌 값(Non-Null) 출력
-isnull -> 결측치(Null) 값 총계 출력
-'''
+x = train_csv.drop(['casual', 'registered', 'count'], axis=1)
+# column 명이 casual, registered 'count'(axis=1)인 column 삭제
+# evaluate에 필요한 test_cvs와 동일한 형태를 
 
-x = train_csv.drop(['count'], axis=1) # column 명이 count(axis=1)인 column 삭제
 print(x)
-# [1459 rows x 9 columns] -> dropna로 인한 변경
+# [10886 rows x 8 columns] -> dropna로 인한 변경
 
 y = train_csv['count']
-print(y)
-print(y.shape)
+print(y) # Length: 10886
 
 
 x_train, x_test, y_train, y_test = train_test_split(
     x, y,
     shuffle=True,
     train_size=0.7,
-    random_state=1234
+    random_state=123
 )
 
-print(x_train.shape, x_test.shape) #(1021, 9) (438, 9)
-print(y_train.shape, y_test.shape) #
+print(x_train.shape, x_test.shape) # (7620, 8), (3266, 8)
+print(y_train.shape, y_test.shape) # (7620,), (3266,)
 
 
 # 2. model
 model = Sequential()
-model.add(Dense(32, input_dim=9)) # input_dim = 9
+model.add(Dense(32, input_dim=8, activation='relu'))
+model.add(Dense(32, activation='relu'))
 model.add(Dense(16))
 model.add(Dense(1)) # output_dim = 1
+# Activation default: linear
 
+# output_dim에서 activation을 'sigmoid'를 사용할 경우, return value가 0(predict값이 0.5미만일 경우) or 1(predict값이 0.5이상일 경우)로만 반환하게 됨
+# -> 이진 분류에서만 sigmoid를 마지막에 사용
+# Hidden Layer에서 sigmoid를 사용할 수 있으나, 값이 너무 한정적으로 변하기때문에 이진 분류를 제외한 곳에서 사용을 권장하지 않음
+# relu도 hidden layer에서만 사용 권장, output_dim에서 사용 시, 음수값이 왜곡될 가능성이 있음
+
+'''
+Case1
+activation = linear
+RMSE
+
+
+Case2
+activation = sigmoid
+RMSE
+
+
+Case3
+activation = relu
+RMES
+
+
+'''
 
 # 3. compile and train
-import time
 model.compile(loss='mse', optimizer='adam')
 # RMSE가 평가지표이므로 유사한 mse 사용
 start = time.time()
 model.fit(x_train, y_train, epochs=100, batch_size=32)
 end = time.time()
 
+
 # 4. evaluate and predict
 loss = model.evaluate(x_test, y_test)
 print("Loss: ", loss)
 
 y_predict = model.predict(x_test)
-# test는 y값이 없으므로 train 파일 사용
+# test는 y값이 없으므로 train file의 x_test로 splited된 파일 사용
 print(y_predict)
-# 결측치의 문제로 loss = non
 
 from sklearn.metrics import mean_squared_error, r2_score
 def RMSE (y_test, y_predict):
@@ -102,19 +108,18 @@ print("RMSE: ", rmse)
 print("소요 시간: ", end - start)
 
 '''
-(tf27) cpu 소요 시간:  59.87569808959961
-(tf274gpu) gpu 소요 시간:  179.78400087356567
+(tf27) cpu 소요 시간:  18.1283917427063
+(tf274gpu) gpu 소요 시간:  77.01734590530396
 '''
 
 # for submission
 y_submit = model.predict(test_csv)
 print(y_submit)
-print(y_submit.shape) # (715, 1)
+print(y_submit.shape) # (6493, 1)
 
 print(submission)
 submission['count'] = y_submit
-print(submission)
 # pandas(submission['count'])에 numpy(y_submit)를 직접 대입시키면 numpy가 pandas가 됨
+print(submission)
 
-submission.to_csv(path+'submission_01050251.csv')
-
+submission.to_csv(path+'sampleSubmission_1.csv')
