@@ -40,6 +40,7 @@ model = Sequential()
 model.add(Dense(64, input_dim=8, activation='linear'))
 model.add(Dense(64, activation='sigmoid'))
 model.add(Dense(32, activation='relu'))
+model.add(Dense(32, activation='relu'))
 model.add(Dense(1))
 
 '''
@@ -66,7 +67,7 @@ RMES: 153.59232454754982
 # 3. compile and train
 model.compile(loss='mse', optimizer='adam')
 # RMSE가 평가지표이므로 유사한 mse 사용
-model.fit(x_train, y_train, epochs=100, batch_size=16, validation_split=0.25)
+model.fit(x_train, y_train, epochs=500, batch_size=16, validation_split=0.25)
 
 
 # 4. evaluate and predict
@@ -96,5 +97,8 @@ submission.to_csv(path+'sampleSubmission_2.csv')
 '''
 Updated Result
 RMSE:  152.88134659403144
+
+Updated Result2
+RMSE:  149.99826531602525
 
 '''
