@@ -48,7 +48,6 @@ print(hist.history['loss'])
 print(hist.history['val_loss'])
 
 
-# (epochs, loss)의 산점도 및 그래프를 작성할 수 있음
 import matplotlib.pyplot as plt
 
 plt.figure(figsize=(9, 6)) 

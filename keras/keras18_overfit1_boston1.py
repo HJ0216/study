@@ -42,9 +42,6 @@ hist = model.fit(x_train, y_train,
           batch_size=16,
           validation_split=0.2,
           verbose=1)
-# 함수 수행 시 발생하는 상세한 정보들을 표준 출력으로 자세히 내보낼 것인가를 나타냄
-# 0: 미출력, 1(Default): 자세히, 2: 함축적 정보 출력 3. 2보다 더 함축적 정보 출력
-# fit 수행 시, 수행 과정을 어떤식으로 보여주는가에 따라 소요시간이 변화함
 
 
 # 4. evaluate and predict
@@ -58,14 +55,15 @@ print(hist.history)
 # {'loss': [25004.84765625, 1219.100830078125, 160.86378479003906, 82.83763122558594, 73.0763931274414, 71.3211669921875, 71.86249542236328, 70.77513885498047, 68.52639770507812, 68.08159637451172],
 # 'val_loss': [2787.144775390625, 272.2074279785156, 78.57952880859375, 58.332862854003906, 55.535221099853516, 54.82481002807617, 54.39116668701172, 56.427764892578125, 59.47801971435547, 55.58904266357422]}
 
-print(hist.history['loss']) # hist의 history 중 loss값만 반환
-print(hist.history['val_loss']) # hist의 history 중 loss값만 반환
+print(hist.history['loss']) # key -> value 반환
+print(hist.history['val_loss'])
 
 
 # (epochs, loss)의 산점도 및 그래프를 작성할 수 있음
 import matplotlib.pyplot as plt
 
-# plt.scatter(x, hist.history) # 산점도(x 생략 불가)
+# plt.scatter(x, hist.history)
+# 산점도: keras18_overfit1_boston2_scatter.py 참조
 plt.figure(figsize=(9, 6)) # 그래프 사이즈 설정: figsize=(가로 inch, 세로 inch) 
 plt.plot(hist.history['loss'], c='red', marker='.', label='loss') # x 추론 가능 시, x 생략 가능
 plt.plot(hist.history['val_loss'], c='blue', marker='.', label='val_loss')
