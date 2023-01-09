@@ -14,7 +14,6 @@ evaluate: x_test, y_test
 '''
 
 
-
 import numpy as np
 
 from tensorflow.keras.models import Sequential
@@ -26,8 +25,8 @@ from sklearn.model_selection import train_test_split
 
 # 1. Data
 dataset = load_boston()
-x = dataset.data # home
-y = dataset.target # home_price
+x = dataset.data # for training
+y = dataset.target # for predict
 
 x_train, x_test, y_train, y_test = train_test_split(
     x, y,

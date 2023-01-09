@@ -1,11 +1,11 @@
 import time
 
 from sklearn.datasets import load_boston
+from sklearn.model_selection import train_test_split
 
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 
-from sklearn.model_selection import train_test_split
 
 # 1. Data
 datasets = load_boston()
@@ -50,21 +50,21 @@ print("소요 시간: ", end-start)
 '''
 Result
 
-verboss = 0
+verbose = 0
 진행과정 나오지 않음
 소요 시간:  11.600938081741333
 
-verboss = 1
+verbose = 1
 Epoch 50/50
 323/323 [==============================] - 0s 762us/step - loss: 45.8877 - val_loss: 38.3869
 소요 시간:  12.756858348846436
 
-verboss = 2
+verbose = 2
 Epoch 50/50
 323/323 - 0s - loss: 43.5736 - val_loss: 33.5931 - 214ms/epoch - 664us/step
 소요 시간:  11.219664096832275
 
-vervoss = 3 이상
+verbose = 3 이상
 Epoch 50/50
 소요 시간:  11.527057409286499
 

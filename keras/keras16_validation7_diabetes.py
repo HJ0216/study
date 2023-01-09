@@ -45,8 +45,6 @@ y_predict = model.predict(x_test)
 
 def RMSE (y_test, y_predict):
     return np.sqrt(mean_squared_error(y_test, y_predict))
-# def 함수_이름(para1, para2):
-    # return np.sqrt(mse)
 print("RMSE: ", RMSE(y_test, y_predict))
 
 r2 = r2_score(y_test, y_predict)

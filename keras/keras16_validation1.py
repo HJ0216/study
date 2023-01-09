@@ -4,6 +4,7 @@ from tensorflow.keras.layers import Dense
 
 
 # 1. Data
+# data 분리 1: direct
 # For train
 x_train = np.array(range(1, 11)) # 1,2,3,4,5,6,7,8,9,10
 y_train = np.array(range(1, 11))

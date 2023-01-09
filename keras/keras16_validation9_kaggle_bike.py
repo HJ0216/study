@@ -71,10 +71,7 @@ model.fit(x_train, y_train, epochs=500, batch_size=16, validation_split=0.25)
 
 # 4. evaluate and predict
 loss = model.evaluate(x_test, y_test)
-# train data 중 test set를 evaluate -> loss 판단
-
 y_predict = model.predict(x_test)
-# train data 중 test set를 predict -> y_predict
 
 
 def RMSE (y_test, y_predict):
@@ -83,10 +80,12 @@ def RMSE (y_test, y_predict):
 rmse = RMSE(y_test, y_predict)
 print("RMSE: ", rmse)
 
+r2 = r2_score(y_test, y_predict)
+print("R2: ", r2)
+
 
 # for submission
 y_submit = model.predict(test_csv)
-# test data를 predict -> y_submit
 submission['count'] = y_submit
 
 submission.to_csv(path+'sampleSubmission_2.csv')

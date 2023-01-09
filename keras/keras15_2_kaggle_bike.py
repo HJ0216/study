@@ -66,7 +66,7 @@ model.add(Dense(1, activation='sigmoid')) # output_dim = 1
 
 # SIGMOID
 # output_dim activation='sigmoid': return value 0~1
-# -> 이진 분류(binary classification)에서만 sigmoid를 마지막에 사용하므롯 0 or 1 반환
+# 이진 분류(binary classification): 0(0.5 미만) or 1(0.5 이상) 반환하기 위해 모든 값이 0~1로 나와야하므로 이 때 sigmoid 사용
 # Hidden Layer에서 sigmoid를 사용할 수 있으나, 값이 너무 한정적으로 변하기때문에 이진 분류를 제외한 곳에서 사용을 권장하지 않음
 
 # RELU

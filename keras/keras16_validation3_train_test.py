@@ -1,5 +1,7 @@
 import numpy as np
+
 from sklearn.model_selection import train_test_split
+
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 
@@ -9,6 +11,7 @@ x = np.array(range(1, 17))
 y = np.array(range(1, 17))
 
 
+# data 분리 3: train_test_split
 x_train, x_test_tmp, y_train, y_test_tmp = train_test_split(
     x, y,
     shuffle=False,
@@ -29,40 +32,6 @@ print(x_test)
 print(y_test)
 print(x_val)
 print(y_val)
-
-'''
-x_train = x[:10]
-y_train = y[:10]
-x_test = x[10:13]
-y_test = y[10:13]
-x_validation = x[13:]
-y_validation = y[13:]
-# slicing [초과:이하]
-
-print(x_train)
-print(y_train)
-print(x_test)
-print(y_test)
-print(x_validation)
-print(y_validation)
-
-'''
-
-
-'''
-# For train
-x_train = np.array(range(1, 11)) # 1,2,3,4,5,6,7,8,9,10
-y_train = np.array(range(1, 11))
-
-# For evaluate
-x_test = np.array([11,12,13])
-y_test = np.array([11,12,13])
-
-# For validatoin
-x_validation = np.array([14,15,16])
-y_validation = np.array([14,15,16])
-
-# '''
 
 
 # 2. Model
