@@ -32,14 +32,27 @@ model.add(Dense(1))
 
 # 3. Compile and train
 model.compile(loss='mse', optimizer='adam')
+
+
+from tensorflow.keras.callbacks import EarlyStopping # 대문자: Class, 소문자: method, variable
+# import 후 미사용 시, 옅은 색깔로 표시됨
+earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=5, restore_best_weights=True, verbose=1)
+# mode: accuracy-max, loss-min, max인지 min인지 모를 때, auto 사용
+# patience=5: 갱신이 되지 않더라도 5번 참음
+# verbose를 통해 earlyStopping 과정 볼 수 있음: Restoring model weights from the end of the best epoch: 25.
+
 hist = model.fit(x_train, y_train,
-          epochs=50,
+          epochs=300,
           batch_size=16,
           validation_split=0.2,
-          verbose=1)
-# 함수 수행 시 발생하는 상세한 정보들을 표준 출력으로 자세히 내보낼 것인가를 나타냄
-# 0: 미출력, 1(Default): 자세히, 2: 함축적 정보 출력 3. 2보다 더 함축적 정보 출력
-# fit 수행 시, 수행 과정을 어떤식으로 보여주는가에 따라 소요시간이 변화함
+          callbacks=[earlyStopping],
+          # 정지된 지점-5: min(val_loss)
+          # 문제: 5번 인내 후, 최소가 아닌 val_loss 지점에서의 weight가 아닌 끊긴 지점에서의 weight가 반환
+          # 해결: restore_best_weights="True"를 통해 최적의 weight 지점을 반환
+          # restore_best_weights="False" Defualt
+          # 최적의 weight로 predict 수행(false일 경우, epoch가 마무리된 weight를 기준으로 predict 수행)
+          verbose=1
+          )
 
 
 # 4. evaluate and predict
@@ -57,21 +70,17 @@ print(hist.history['loss']) # hist의 history 중 loss값만 반환
 print(hist.history['val_loss']) # hist의 history 중 loss값만 반환
 
 
-# (epochs, loss)의 산점도 및 그래프를 작성할 수 있음
 import matplotlib.pyplot as plt
 
-# plt.scatter(x, hist.history) # 산점도(x 생략 불가)
-plt.figure(figsize=(9, 6)) # 그래프 사이즈 설정: figsize=(가로 inch, 세로 inch) 
-plt.plot(hist.history['loss'], c='red', marker='.', label='loss') # x 추론 가능 시, x 생략 가능
+plt.figure(figsize=(9, 6))
+plt.plot(hist.history['loss'], c='red', marker='.', label='loss')
 plt.plot(hist.history['val_loss'], c='blue', marker='.', label='val_loss')
-# c: color, marker: graph 형태, label: graph name
 
-plt.title('boston loss') # graph name
-plt.xlabel('epochs') # x축 이름
-plt.ylabel('loss') # x축 이름
-plt.grid() # 격자 표시
-plt.legend(loc='upper right') # 선 이름(label) 표시, location 미 지정 시 그래프와 안 겹치게 생성
-# supported values are 'best', 'upper right', 'upper left', 'lower left', 'lower right', 'right', 'center left', 'center right', 'lower center', 'upper center', 'center'
+plt.title('Boston loss')
+plt.xlabel('epochs')
+plt.ylabel('loss')
+plt.grid()
+plt.legend(loc='upper right')
 plt.show()
 
 
@@ -82,6 +91,5 @@ Result
 plt.show()
 -> plt을 통해 overfit 문제가 발생하는 지점을 찾을 수 있음
 -> overfit 지점 이후: 최소 loss의 지점 = 최적 weight의 지점
--> 해당 지점을 찾
 
 '''
