@@ -66,7 +66,6 @@ RMES: 153.59232454754982
 
 # 3. compile and train
 model.compile(loss='mse', optimizer='adam')
-# RMSE가 평가지표이므로 유사한 mse 사용
 model.fit(x_train, y_train, epochs=500, batch_size=16, validation_split=0.25)
 
 

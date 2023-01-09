@@ -60,13 +60,18 @@ print(y_train.shape, y_test.shape) # (7620,), (3266,)
 model = Sequential()
 model.add(Dense(32, input_dim=8, activation='linear'))
 model.add(Dense(32, activation='sigmoid'))
-model.add(Dense(16, activation='relu'))
-model.add(Dense(1)) # output_dim = 1
+model.add(Dense(16, activation='sigmoid'))
+model.add(Dense(1, activation='sigmoid')) # output_dim = 1
 # Activation default: linear
+
+# SIGMOID
 # output_dim activation='sigmoid': return value 0~1
-# -> 이진 분류에서만 sigmoid를 마지막에 사용
+# -> 이진 분류(binary classification)에서만 sigmoid를 마지막에 사용하므롯 0 or 1 반환
 # Hidden Layer에서 sigmoid를 사용할 수 있으나, 값이 너무 한정적으로 변하기때문에 이진 분류를 제외한 곳에서 사용을 권장하지 않음
-# relu도 hidden layer에서만 사용 권장, output_dim에서 사용 시, 음수값이 왜곡될 가능성이 있음
+
+# RELU
+# relu도 hidden layer에서만 사용 권장 -> output_dim에서 사용 시, 음수값이 왜곡될 가능성이 있음
+
 
 
 '''

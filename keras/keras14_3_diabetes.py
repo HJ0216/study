@@ -21,7 +21,7 @@ from sklearn.metrics import mean_squared_error, r2_score
 # 1. Data
 datasets = load_diabetes()
 x = datasets.data
-# y = datasets.target
+y = datasets.target
 
 print(x)
 print(y)
