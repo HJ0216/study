@@ -63,7 +63,7 @@ model.add(Dense(32, activation='sigmoid'))
 model.add(Dense(16, activation='relu'))
 model.add(Dense(1)) # output_dim = 1
 # Activation default: linear
-# output_dim에서 activation을 'sigmoid'를 사용할 경우, return value가 0(predict값이 0.5미만일 경우) or 1(predict값이 0.5이상일 경우)로만 반환하게 됨
+# output_dim activation='sigmoid': return value 0~1
 # -> 이진 분류에서만 sigmoid를 마지막에 사용
 # Hidden Layer에서 sigmoid를 사용할 수 있으나, 값이 너무 한정적으로 변하기때문에 이진 분류를 제외한 곳에서 사용을 권장하지 않음
 # relu도 hidden layer에서만 사용 권장, output_dim에서 사용 시, 음수값이 왜곡될 가능성이 있음
@@ -92,7 +92,6 @@ RMES: 153.59232454754982
 
 # 3. compile and train
 model.compile(loss='mse', optimizer='adam')
-# RMSE가 평가지표이므로 유사한 mse 사용
 start = time.time()
 model.fit(x_train, y_train, epochs=10, batch_size=32)
 end = time.time()
