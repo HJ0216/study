@@ -94,7 +94,7 @@ RMES: 153.59232454754982
 model.compile(loss='mse', optimizer='adam')
 # RMSE가 평가지표이므로 유사한 mse 사용
 start = time.time()
-model.fit(x_train, y_train, epochs=100, batch_size=32)
+model.fit(x_train, y_train, epochs=10, batch_size=32)
 end = time.time()
 
 
