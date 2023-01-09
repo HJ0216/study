@@ -87,6 +87,9 @@ plt.show()
 
 '''
 Result
+Restoring model weights from the end of the best epoch: 14.
+loss 69.12869262695312
+
 
 plt.show()
 -> plt을 통해 overfit 문제가 발생하는 지점을 찾을 수 있음

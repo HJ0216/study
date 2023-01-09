@@ -70,6 +70,7 @@ plt.show()
 
 '''
 Result
-
+Restoring model weights from the end of the best epoch: 45.
+loss 3139.306396484375
 
 '''

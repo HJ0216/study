@@ -31,7 +31,7 @@ model.add(Dense(1))
 
 # 3. Compile and train
 model.compile(loss='mse', optimizer='adam')
-earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=5, restore_best_weights=True, verbose=1)
+earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=10, restore_best_weights=True, verbose=1)
 hist = model.fit(x_train, y_train,
           epochs=300,
           batch_size=16,
@@ -65,7 +65,7 @@ plt.show()
 
 '''
 Result
-plt.show()
-
+Restoring model weights from the end of the best epoch: 7.
+loss 0.8286768794059753
 
 '''

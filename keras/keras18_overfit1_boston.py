@@ -5,7 +5,6 @@ from sklearn.datasets import load_boston
 from sklearn.model_selection import train_test_split
 
 
-
 # 1. Data
 datasets = load_boston()
 x = datasets.data
@@ -23,8 +22,8 @@ x_train, x_test, y_train, y_test = train_test_split(
 
 # 2. Model Construction
 model = Sequential()
-# model.add(Dense(5, input_dim=13)) # (vector, scalar) input_dim 사용 가능
-model.add(Dense(64, input_shape=(13,))) # 다차원의 경우 input_shape 사용
+# model.add(Dense(5, input_dim=13))
+model.add(Dense(64, input_shape=(13,)))
 model.add(Dense(64))
 model.add(Dense(32))
 model.add(Dense(1))
@@ -33,7 +32,7 @@ model.add(Dense(1))
 # 3. Compile and train
 model.compile(loss='mse', optimizer='adam')
 hist = model.fit(x_train, y_train,
-          epochs=50,
+          epochs=500,
           batch_size=16,
           validation_split=0.2,
           verbose=1)
@@ -78,10 +77,10 @@ plt.show()
 
 '''
 Result
+loss 26.94292640686035
 
 plt.show()
--> plt을 통해 overfit 문제가 발생하는 지점을 찾을 수 있음
--> overfit 지점 이후: 최소 loss의 지점 = 최적 weight의 지점
--> 해당 지점을 찾
+문제: min(loss)가 아닌 훈련값(Overfit)이 존재 
+해결: Overfit이 발생하는 부분에서 훈련을 중지
 
 '''

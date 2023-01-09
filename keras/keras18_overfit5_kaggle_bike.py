@@ -78,6 +78,6 @@ plt.show()
 
 '''
 Result
-
+loss 24765.1171875
 
 '''
