@@ -4,6 +4,12 @@ from tensorflow.keras.layers import Dense
 from sklearn.datasets import load_boston
 from sklearn.model_selection import train_test_split
 
+# matplotlib 한글 설정
+from matplotlib import font_manager, rc
+font_path = "C:\Windows\Fonts\malgun.ttf"
+font = font_manager.FontProperties(fname=font_path).get_name()
+rc('font', family=font)
+
 
 # 1. Data
 datasets = load_boston()
@@ -65,7 +71,7 @@ plt.plot(hist.history['loss'], c='red', marker='.', label='loss') # x 추론 가
 plt.plot(hist.history['val_loss'], c='blue', marker='.', label='val_loss')
 # c: color, marker: graph 형태, label: graph name
 
-plt.title('boston loss') # graph name
+plt.title('보스턴 로스') # graph name
 plt.xlabel('epochs') # x축 이름
 plt.ylabel('loss') # x축 이름
 plt.grid() # 격자 표시
