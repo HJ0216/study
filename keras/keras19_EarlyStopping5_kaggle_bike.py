@@ -18,7 +18,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, r2_score
 
 
-
 # 1. Data
 path = './_data/bike/'
 train_csv = pd.read_csv(path+'train.csv', index_col=0)
@@ -68,7 +67,6 @@ rmse = RMSE(y_test, y_predict)
 print("RMSE: ", rmse)
 
 
-# (epochs, loss)의 산점도 및 그래프를 작성할 수 있음
 import matplotlib.pyplot as plt
 
 plt.figure(figsize=(9, 6)) 

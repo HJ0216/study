@@ -8,7 +8,7 @@ from tensorflow.keras.callbacks import EarlyStopping
 
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, r2_score
-
+# import 후 미사용 시, 옅은 색깔로 표시됨
 
 
 # 1. Data
@@ -78,7 +78,6 @@ print(hist)
 print(hist.history)
 
 
-# (epochs, loss)의 산점도 및 그래프를 작성할 수 있음
 import matplotlib.pyplot as plt
 
 plt.figure(figsize=(9, 6)) 

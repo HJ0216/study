@@ -1,9 +1,9 @@
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
+from tensorflow.keras.callbacks import EarlyStopping # 대문자: Class, 소문자: method, variable
 
 from sklearn.datasets import load_boston
 from sklearn.model_selection import train_test_split
-
 
 
 # 1. Data
@@ -23,8 +23,10 @@ x_train, x_test, y_train, y_test = train_test_split(
 
 # 2. Model Construction
 model = Sequential()
-# model.add(Dense(5, input_dim=13)) # (vector, scalar) input_dim 사용 가능
-model.add(Dense(64, input_shape=(13,))) # 다차원의 경우 input_shape 사용
+# model.add(Dense(5, input_dim=13))
+# input_dim=scalar: (vector, scalar) 형태에서만 사용 가능
+model.add(Dense(64, input_shape=(13,)))
+# (vector, scalar) 이상 input_shape 사용
 model.add(Dense(64))
 model.add(Dense(32))
 model.add(Dense(1))
@@ -33,9 +35,6 @@ model.add(Dense(1))
 # 3. Compile and train
 model.compile(loss='mse', optimizer='adam')
 
-
-from tensorflow.keras.callbacks import EarlyStopping # 대문자: Class, 소문자: method, variable
-# import 후 미사용 시, 옅은 색깔로 표시됨
 earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=5, restore_best_weights=True, verbose=1)
 # mode: accuracy-max, loss-min, max인지 min인지 모를 때, auto 사용
 # patience=5: 갱신이 되지 않더라도 5번 참음
@@ -58,18 +57,20 @@ hist = model.fit(x_train, y_train,
 # 4. evaluate and predict
 loss = model.evaluate(x_test, y_test)
 print("loss", loss)
-
 print(hist) # <keras.callbacks.History object at 0x0000016CC0BBC4F0>
 print(hist.history)
-# fit의 history는 loss 결과값을 dictionary(key-value(list)) 형태로 반환
+# hist.history
+# model.compile(loss='mse', optimizer='adam') 기준으로 결과값 반환
+# loss 결과값을 dictionary(key-value(list)) 형태로 반환
 # key: 'loss', 'val_loss' / value = list[] 형태의 epochs의 loss, val_loss 값들의 집합
 # {'loss': [25004.84765625, 1219.100830078125, 160.86378479003906, 82.83763122558594, 73.0763931274414, 71.3211669921875, 71.86249542236328, 70.77513885498047, 68.52639770507812, 68.08159637451172],
 # 'val_loss': [2787.144775390625, 272.2074279785156, 78.57952880859375, 58.332862854003906, 55.535221099853516, 54.82481002807617, 54.39116668701172, 56.427764892578125, 59.47801971435547, 55.58904266357422]}
 
-print(hist.history['loss']) # hist의 history 중 loss값만 반환
-print(hist.history['val_loss']) # hist의 history 중 loss값만 반환
+print(hist.history['loss']) # dictionary type에서 key 값 입력 시, value 반환
+print(hist.history['val_loss'])
 
 
+# (epochs, loss)의 산점도 및 그래프를 작성할 수 있음
 import matplotlib.pyplot as plt
 
 plt.figure(figsize=(9, 6))

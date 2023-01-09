@@ -2,10 +2,8 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 from tensorflow.keras.callbacks import EarlyStopping
 
-
 from sklearn.datasets import load_diabetes
 from sklearn.model_selection import train_test_split
-
 
 
 # 1. Data
@@ -52,7 +50,6 @@ print(hist.history['loss'])
 print(hist.history['val_loss'])
 
 
-# (epochs, loss)의 산점도 및 그래프를 작성할 수 있음
 import matplotlib.pyplot as plt
 
 plt.figure(figsize=(9, 6)) 

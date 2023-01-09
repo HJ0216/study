@@ -1,3 +1,5 @@
+import numpy as np
+
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 
@@ -36,9 +38,14 @@ hist = model.fit(x_train, y_train,
           validation_split=0.2,
           verbose=1)
 
+
 # 4. evaluate and predict
 loss = model.evaluate(x_test, y_test)
 print("loss", loss)
 
 import matplotlib.pyplot as plt
-# plt.scatter(, hist.history['loss']) # 산점도(x 생략 불가)
+x_len = np.arange(len(hist.history['loss']))
+plt.scatter(x_len, hist.history['loss'])
+# len(hist.history['loss']): fit(x_train)의 loss의 개수 = epochs
+# 산점도(x 생략 불가)
+plt.show() # 작성한 plt show
