@@ -28,8 +28,8 @@ from sklearn.metrics import mean_squared_error, r2_score
 
 # 1. Data
 dataset = load_boston()
-x = dataset.data
-y = dataset.target
+x = dataset.data # dataset.data Numpy 배열로 이루어진 Sample data로 학습해야 할 feed용 데이터
+y = dataset.target # dataset.targer Numpy 배열로 이루어진 Label data로 예측해야 할 데이터
 
 '''
 print(x.shape) # (506, 13)
