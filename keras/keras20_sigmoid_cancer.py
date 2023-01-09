@@ -6,6 +6,7 @@ from sklearn.model_selection import train_test_split
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 
+
 # 1. Data
 datasets = load_breast_cancer()
 # print(datasets)
@@ -14,9 +15,9 @@ datasets = load_breast_cancer()
 
 # data: x, target: y(0 or 1)
 x = datasets['data'] # for training
-# x=datasets.data
+# x = datasets.data
 y = datasets['target'] # for predict
-# x=datasets.target
+# y = datasets.target
 print(x.shape, y.shape) # (569, 30) (569,)
 
 x_train, x_test, y_train, y_test = train_test_split(
@@ -77,7 +78,6 @@ acc = accuracy_score(y_test, pred_class)
 print("accuarcy_score: ", acc) # accuracy(x_test, pred_class)
 
 print(hist.history)
-
 
 
 '''
