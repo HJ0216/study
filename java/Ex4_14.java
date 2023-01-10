@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 public class Ex4_14 {
     public static void main(String[] args){
         // 1~100 사이의 임의의 값을 얻어서 answer에 저장
