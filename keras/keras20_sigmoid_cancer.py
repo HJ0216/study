@@ -67,9 +67,7 @@ y_predict = model.predict(x_test) # y_test와 비교
 # 실수와 정수 Type Unmatching Error (ValueError: Classification metrics can't handle a mix of binary and continuous targets)
 
 # Solve: ValueError(Classification metrics can't handle a mix of binary and continuous targets)
-preds_1d = y_predict.flatten()
-# numpy.ndarray.flatten : 1차원 배열 복사본을 반환
-pred_class = np.where(preds_1d >= 0.5, 1, 0) # 0.5 이상=1, 0.5 미만=0
+pred_class = np.where(y_predict >= 0.5, 1, 0) # 0.5 이상=1, 0.5 미만=0
 # 조건에 따라 x or y에서 선택한 요소를 반환
 
 
