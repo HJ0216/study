@@ -73,7 +73,11 @@ pred_class = np.where(y_predict >= 0.5, 1, 0) # 0.5 이상=1, 0.5 미만=0
 
 from sklearn.metrics import r2_score, accuracy_score
 acc = accuracy_score(y_test, pred_class)
-print("accuarcy_score: ", acc) # accuracy(x_test, pred_class)
+print("accuarcy_score: ", acc)
+# accuracy(x_test, pred_class)
+# y_predict = model.predict(x_test)
+# parameter가 다르므로 accuracy도 차이
+
 
 print(hist.history)
 
