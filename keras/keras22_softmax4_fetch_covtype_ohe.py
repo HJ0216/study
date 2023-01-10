@@ -17,7 +17,7 @@ x = datasets.data
 y = datasets['target']
 print(x.shape, y.shape) # (581012, 54) (581012,)
 print(np.unique(y, return_counts=True))
-print(datasets.get_data_home())
+
 '''
 (array([1, 2, 3, 4, 5, 6, 7]),
 array([211840, 283301,  35754,   2747,   9493,  17367,  20510],
@@ -49,28 +49,30 @@ onehot_encoder=OneHotEncoder(sparse=False)
 # Encode categorical features as a one-hot numeric array.
 # sparse : bool, default=True
 # Will return sparse matrix if set True else will return an array.
-print("Long time ago..: ", y)
+print("Original y ", y)
 # y = datasets['target']
 # [5 5 2 ... 3 3 3]
-print(y.shape) # (581012,)
-reshaped=y.reshape(len(y), 1) # (581012, 1)
+# print(y.shape) (581012,)
+reshaped=y.reshape(len(y), 1) # (581012, 1): vector에 담아줌
 # len(y): 581012 = data의 개수 -> reshaped.shape (581012, 1)
-print("Before y: ", y)
-# before y:  [5 5 2 ... 3 3 3] - vector에 담음
+print("Before onehot_encoder y: ", y)
+# before y:  [5 5 2 ... 3 3 3]
 y=onehot_encoder.fit_transform(reshaped)
-print("After y: ", y)
 
 '''
-After y:
+print("After onehot_encoder y: ", y)
+After onehot_encoder y:
 [[0. 0. 0. ... 1. 0. 0.]
  [0. 0. 0. ... 1. 0. 0.]
  [0. 0. 1. ... 0. 0. 0.]
  [0. 0. 1. ... 0. 0. 0.]
  [0. 0. 1. ... 0. 0. 0.]]
+-> onehot type(class -> column으로 변환하여 값을 도출)
 
 '''
+
 print(y.shape) #(581012, 7)
-# transformed array.shape (n_samples, n_features_new)
+# transformed array.shape (n_samples, n_features_new=encoding에 따라 class-> col)
 
 
 x_train, x_test, y_train, y_test = train_test_split(
@@ -99,7 +101,7 @@ model.compile(loss='categorical_crossentropy',
 
 earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=20, restore_best_weights=True, verbose=1)
 
-model.fit(x_train, y_train, epochs=2, batch_size=128,
+model.fit(x_train, y_train, epochs=100, batch_size=128,
           validation_split=0.2,
           verbose=1)
 
@@ -109,3 +111,18 @@ loss, accuracy = model.evaluate(x_test, y_test)
 print("loss: ", loss)
 print("accuracy: ", accuracy)
 
+y_predict = model.predict(x_test)
+y_predict = np.argmax(y_predict, axis=1)
+y_test = np.argmax(y_test, axis=1)
+
+acc = accuracy_score(y_test, y_predict)
+print("accuracy_score: ", acc)
+
+
+'''
+Result
+
+loss:  0.596627414226532
+accuracy:  0.7471494078636169
+accuracy_score:  0.7471493851277505
+'''
