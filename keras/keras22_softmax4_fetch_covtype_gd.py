@@ -85,6 +85,12 @@ y_test = np.argmax(y_test, axis=1)
 acc = accuracy_score(y_test, y_predict)
 print("accuracy_score: ", acc)
 
+'''
+Error
+ValueError: Shape of passed values is (116203, 1), indices imply (116203, 7)
+추가하고자 하는 값은 116203개의 값을 7개의 열에 추가해주려고 하는데, 정작 입력한 값은 116203개의 값을 1개의 열 값
+'''
+
 
 '''
 Result
