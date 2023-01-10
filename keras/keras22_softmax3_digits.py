@@ -68,15 +68,8 @@ acc = accuracy_score(y_test, y_predict)
 print("accuracy_score: ", acc)
 
 
-
-'''
 import matplotlib.pyplot as plt
 
 plt.gray()
-plt.matshow(datasets.images[1000])
+plt.matshow(datasets.images[64])
 plt.show()
-
-'''
-
-
-

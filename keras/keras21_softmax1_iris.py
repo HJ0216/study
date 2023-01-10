@@ -78,7 +78,7 @@ model.add(Dense(3,activation='softmax')) # 훈련 순서: output_dim -> activati
 # 다중분류: output_dim = 3(class), activatoin = 'softmax', loss = 'categorical_crossentropy'
 # y_col: 1, y_class(종류): 3
 # class의 number: 0, 1, 2 -> 동등한 대상임에도 불구하고 value의 차이가 발생
-# One_Hot encoding: 
+# One_Hot encoding 실행: 10진 정수 형식을 특수한 2진 binary 형식으로 변환
 
 
 # 3. Compile and train

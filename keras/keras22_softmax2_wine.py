@@ -4,6 +4,7 @@ import pandas as pd
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 from tensorflow.keras.utils import to_categorical
+from tensorflow.keras.callbacks import EarlyStopping
 
 
 from sklearn.datasets import load_wine
@@ -52,6 +53,8 @@ model.compile(loss='categorical_crossentropy',
               optimizer='adam',
               metrics=['accuracy']
               )
+
+earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=5, restore_best_weights=True, verbose=1)
 
 model.fit(x_train, y_train, epochs=500, batch_size=8,
           validation_split=0.2,
