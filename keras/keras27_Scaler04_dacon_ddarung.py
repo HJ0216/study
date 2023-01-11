@@ -33,8 +33,18 @@ x_train, x_test, y_train, y_test = train_test_split(
 scaler = MinMaxScaler()
 scaler.fit(x_train)
 x_train = scaler.transform(x_train)
-x_test = scaler.transform(x_test) # test는 train의 fit 활용
+x_test = scaler.transform(x_test) # train_csv의 test는 train의 fit 활용
 test_csv = scaler.transform(test_csv)
+# train data를 표준화하여 training & validation 진행
+# 훈련을 표준화하여 진행했으므로 submit용 data도 표준화 후 예측 진행
+'''
+original_x: 100, scaling_x: 1 original_y: 500
+훈련을 scaling_x -> original_y로 했으면
+예측도 scaling_x -> original_y로 진행
+
+'''
+
+ 
 
 
 # 2. Model Construction
@@ -73,6 +83,10 @@ print("R2: ", r2)
 
 # for submission
 y_submit = model.predict(test_csv)
+# training한 데이터는 scaling된 x, scaling된 x가 가르키는 y 값
+# (문제) submit을 위해 predict할 data는 x가 scaling이 되지 않으면 훈련의 효과가 나타나지 않아 예측이 잘 이뤄지지 않을 수 있음
+# (해결) test_csv = scaler.transform(test_csv): test할 x 값도 scaling
+
 
 submission['count'] = y_submit
 submission.to_csv(path+'submission_0111.csv')
