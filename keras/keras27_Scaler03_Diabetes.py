@@ -1,3 +1,5 @@
+import numpy as np
+
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 from tensorflow.keras.callbacks import EarlyStopping
@@ -62,5 +64,9 @@ print("R2: ", r2)
 Result
 Restoring model weights from the end of the best epoch: 45.
 loss 3139.306396484375
+
+Updated Result using MinMaxScaler
+RMSE:  58.15208371512175
+R2:  0.37283925642017157
 
 '''
