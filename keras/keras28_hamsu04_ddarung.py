@@ -1,36 +1,44 @@
 import numpy as np
+import pandas as pd
 
 from tensorflow.keras.models import Sequential, Model
 from tensorflow.keras.layers import Dense, Input
 from tensorflow.keras.callbacks import EarlyStopping
 
-from sklearn.datasets import fetch_california_housing
+
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 
 
 # 1. Data
-datasets = fetch_california_housing()
-x = datasets.data
-y = datasets.target
+path = './_data/ddarung/'
+train_csv = pd.read_csv(path+'train.csv', index_col=0)
+test_csv = pd.read_csv(path+'test.csv', index_col=0)
+submission = pd.read_csv(path+'submission.csv', index_col=0)
+train_csv = train_csv.dropna()
+
+x = train_csv.drop(['count'], axis=1)
+y = train_csv['count']
 
 
 x_train, x_test, y_train, y_test = train_test_split(
     x, y,
-    test_size=0.2,
-    shuffle= True,
-    random_state = 333
+    shuffle=True,
+    train_size=0.7,
+    random_state=111
 )
 
 # scaler = StandardScaler()
 scaler = MinMaxScaler()
 scaler.fit(x_train)
 x_train = scaler.transform(x_train)
-x_test = scaler.fit_transform(x_test)
+x_test = scaler.transform(x_test) # test는 train의 fit 활용
+test_csv = scaler.transform(test_csv)
 
 
 # 2. Model Construction
-input1 = Input(shape=(8,))
+input1 = Input(shape=(9,))
 dense1 = Dense(64, activation='relu')(input1)
 dense2 = Dense(64, activation='sigmoid')(dense1)
 dense3 = Dense(32, activation='relu')(dense2)
@@ -40,10 +48,10 @@ model = Model(inputs=input1, outputs=output1)
 
 # 3. Compile and train
 model.compile(loss='mse', optimizer='adam', metrics=['mae'])
-earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=10, restore_best_weights=True, verbose=1)
+earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=20, restore_best_weights=True, verbose=1)
 hist = model.fit(x_train, y_train,
-          epochs=300,
-          batch_size=16,
+          epochs=500,
+          batch_size=8,
           validation_split=0.2,
           callbacks=[earlyStopping],
           verbose=1)
@@ -52,28 +60,39 @@ hist = model.fit(x_train, y_train,
 # 4. evaluate and predict
 loss = model.evaluate(x_test, y_test)
 y_predict = model.predict(x_test)
+print("loss", loss)
 
-from sklearn.metrics import mean_squared_error, r2_score
+
 def RMSE (y_test, y_predict):
     return np.sqrt(mean_squared_error(y_test, y_predict))
-print("RMSE: ", RMSE(y_test, y_predict))
+rmse = RMSE(y_test, y_predict)
+print("RMSE: ", rmse)
 
 r2 = r2_score(y_test, y_predict)
 print("R2: ", r2)
 
 
+# for submission
+y_submit = model.predict(test_csv)
+
+submission['count'] = y_submit
+submission.to_csv(path+'submission_0111.csv')
+
+
 
 '''
 Result
-Restoring model weights from the end of the best epoch: 7.
-loss 0.8286768794059753
+loss 3360.444580078125
+RMSE:  57.96934266653727
 
 Updated Result using MinMaxScaler
-RMSE:  0.7463498785444389
-R2:  0.5627911964358545
+loss 2880.295166015625
+RMSE:  54.01102397913288
+R2:  0.6049261814023652
 
 Updated Result using Model, Input
-RMSE:  0.7244659086127198
-R2:  0.5880543962729712
+loss [2068.5126953125, 33.87137222290039]
+RMSE:  45.48090354567061
+R2:  0.7198622758753592
 
 '''

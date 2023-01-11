@@ -80,8 +80,6 @@ Non-trainable params: 0
 '''
 
 
-
-
 # 3. compile and train
 model.compile(loss='mse', optimizer='adam', metrics=['mae'])
 earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=10, restore_best_weights=True, verbose=1)
@@ -91,6 +89,7 @@ hist = model.fit(x_train, y_train,
           validation_split=0.2,
           callbacks=[earlyStopping],
           verbose=1)
+
 
 # 4. evaluate and predict
 loss = model.evaluate(x_test, y_test)
