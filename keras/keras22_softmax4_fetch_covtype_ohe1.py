@@ -77,22 +77,19 @@ print(y)
 (1, 4) 1.0 -> 4번째가 1
 (2, 1) 1.0 -> 1번째가 1
 ...
-onehot encoder 형태의 scipy type
-
-print(y.shape) (581012, 7)
 print(type(y)) <clss 'scipy.sparse._csr.csr_matrix'>
+onehot encoder 형태의 scipy type
 
 (*암기) TypeError: use X.toarray() to convert to a dense numpy array.
 y = y.toarray()
 print(type(y)) <class 'numpy'>
-numpy의 one-hot encoder type으로 변환
+numpy array의 one-hot encoder type으로 변환
 [[0. 0. 0. ... 1. 0. 0.]
  [0. 0. 0. ... 1. 0. 0.]
  [0. 0. 1. ... 0. 0. 0.]
  [0. 0. 1. ... 0. 0. 0.]
  [0. 0. 1. ... 0. 0. 0.]]
 -> onehot type(class -> column으로 변환하여 값을 도출)
-
 
 '''
 

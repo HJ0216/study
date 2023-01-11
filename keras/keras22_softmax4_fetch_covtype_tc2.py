@@ -14,6 +14,7 @@ from sklearn.metrics import accuracy_score
 datasets = fetch_covtype()
 x = datasets.data
 y = datasets['target'] - 1
+# Raw data는 건드리지 않기
 
 print(x.shape, y.shape) # (581012, 54) (581012,)
 print(np.unique(y, return_counts=True))

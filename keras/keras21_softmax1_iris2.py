@@ -139,8 +139,12 @@ y_predict = np.argmax(y_predict, axis=1)
 # arg 중 가장 큰 확률을 뽑아 위치값을 반환(0, 1, 2...)
 print(y_predict)
 
-# y_test = np.argmax(y_test, axis=1) -> onehot encoding 안할 때, 사용X
+y_test = np.argmax(y_test, axis=1)
+# onehot encoding type이 아니라면 argmax 사용이 의미 없음
 # (numpy.AxisError: axis 1 is out of bounds for array of dimension 1)
+
+
+
 # y_test.shape: [1. 0. 0.] -> 가장 큰 값을찾아 위치를 반환
 # -> y_predict와 y_test의 자료 형태를 맞추고 accuracy 비교
 print(y_test)
