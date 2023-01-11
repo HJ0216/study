@@ -42,8 +42,12 @@ x_train, x_test, y_train, y_test = train_test_split(
 # scaler = StandardScaler()
 scaler = MinMaxScaler()
 scaler.fit(x_train)
+# x_train을 기준으로 scaling -> scaler에 훈련된 가중치 저장
 x_train = scaler.transform(x_train)
-x_test = scaler.fit_transform(x_test)
+# 가중치가 저장된 scaler로 x_train data를 transform 후 x_train에 저장
+x_test = scaler.transform(x_test)
+# train data의 가중치가 저장된 scaler를 transform
+# train data 외 fit X
 
 
 # 2. Model
