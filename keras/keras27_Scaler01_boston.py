@@ -18,9 +18,12 @@ import numpy as np
 
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
+from tensorflow.keras.callbacks import EarlyStopping
+
 
 from sklearn.datasets import load_boston
 from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import MinMaxScaler, StandardScaler
 
 
 # 1. Data
@@ -30,8 +33,17 @@ y = dataset.target # for predict
 
 x_train, x_test, y_train, y_test = train_test_split(
     x, y,
-    train_size=0.7
+    train_size=0.7,
+    random_state=123
 )
+# stratify: y 타입이 분류에서만 사용
+
+
+# scaler = StandardScaler()
+scaler = MinMaxScaler()
+scaler.fit(x_train)
+x_train = scaler.transform(x_train)
+x_test = scaler.fit_transform(x_test)
 
 
 # 2. Model
@@ -42,9 +54,14 @@ model.add(Dense(1))
 
 
 # 3. compile and train
-model.compile(loss='mse', optimizer = 'adam', metrics=['mae'])
-model.fit(x_train, y_train, epochs=500, batch_size=4, validation_split=0.25)
-
+model.compile(loss='mse', optimizer='adam', metrics=['mae'])
+earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=10, restore_best_weights=True, verbose=1)
+hist = model.fit(x_train, y_train,
+          epochs=300,
+          batch_size=16,
+          validation_split=0.2,
+          callbacks=[earlyStopping],
+          verbose=1)
 
 # 4. evaluate and predict
 loss = model.evaluate(x_test, y_test)
@@ -68,5 +85,17 @@ R2:  0.7499457664401593
 Updated Result
 RMSE:  3.758338531055167
 R2:  0.8443360976276741
+
+Updated Result2 with MinMax scalering
+RMSE:  5.711671989312524
+R2:  0.596387886457775
+
+Updated Result2 with Standard scaler
+RMSE:  4.60305594170595
+R2:  0.7378618798976347
+
+Upadated Result2 with MinMax Scaler
+RMSE:  4.737990416535103
+R2:  0.7222679303359896
 
 '''
