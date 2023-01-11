@@ -10,6 +10,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from sklearn.preprocessing import OneHotEncoder
 
+
 # 1. Data
 datasets = fetch_covtype()
 x = datasets.data
@@ -28,29 +29,20 @@ print(datasets.feature_names) # pandas.columns, column name
 
 
 
-'''
-Result
-y=to_categorical(y)
-print(y.shape) # (581012, 8)
-
-to_catergorical: class가 0부터 시작하지 않을 때, 앞에 0을 추가 -> 추가된 0만큼의 자원의 낭비가 발생
-to_categorical: (0,1,2,3,4,5,6,7)
-y: (1,2,3,4,5,6,7)
-
-
-y = pd.get_dummies(y)
-'''
-
-
-
-ohe = OneHotEncoder()
-y = ohe.fit(y)
 y = y.reshape(581012, 1) # matrix화
 
-from sklearn.preprocessing import OneHotEncoder
 ohe = OneHotEncoder()
-y = ohe.fit_transform(y) # transform - one hot encoder 형태
+ohe.fit(y)
+y = ohe.transform(y)
 y = y.toarray()
+
+
+'''
+ohe = OneHotEncoder()
+y = ohe.fit_transform(y)
+y = y.toarray()
+'''
+
 
 
 x_train, x_test, y_train, y_test = train_test_split(

@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
@@ -7,17 +8,14 @@ from tensorflow.keras.utils import to_categorical
 
 from sklearn.model_selection import train_test_split
 from sklearn.datasets import load_iris
-# iris 꽃잎, 꽃받침의 길이 넓이 등을 통해 어떤 꽃인지 맞추는 data
 from sklearn.preprocessing import OneHotEncoder
+from sklearn.metrics import accuracy_score
 
 
 # 1. Data
 datasets = load_iris()
-print(datasets.DESCR) # pandas.describe / cvs_type.info
-# attribute = column, feature, 열, 특성
-# x_column(input_dim=4): sepal (length, width), petal (length, width) (cm)
-# output_dim=1(3 class(종류): Iris-Setosa, Iris-Versicolour, Iris-Virginica)
-print(datasets.feature_names) # pandas.columns, column name
+print(datasets.DESCR)
+print(datasets.feature_names)
 
 x = datasets.data
 y = datasets['target']
@@ -27,26 +25,6 @@ print(x) # shape(150, 4)
 print(y) # shape(150,), [0, 1, 2]
 '''
 
-'''
-# sklearn: one_hot encoding
-onehot_encoder=OneHotEncoder(sparse=False)
-reshaped=y.reshape(len(y), 1)
-onehot=onehot_encoder.fit_transform(reshaped)
-print(onehot)
-[[1. 0. 0.]...[0. 0. 1.]]
-print(onehot.shape) (150, 3)
-
-# keras: to_categorical
-to_cat=to_categorical(y)
-print(to_cat)
-[[1. 0. 0.]...[0. 0. 1.]]
-print(to_cat.shape) (150, 3)
-
-# pandas: get_dummies
-print(pd.get_dummies(y))
-[150 rows x 3 columns]
-
-'''
 
 
 '''
@@ -57,6 +35,7 @@ print(y.shape)
 '''
 
 
+
 x_train, x_test, y_train, y_test = train_test_split(
     x,y,
     shuffle=True, # Non-shuffle: y_train, y_test 자료의 치우침이 발생
@@ -65,21 +44,15 @@ x_train, x_test, y_train, y_test = train_test_split(
     stratify=y # 원본 자료 내 비율 유지 - 분류형 데이터에서만 사용 가능
 )
 
-'''
-print("y_train: ", y_train)
-print("y_test: ", y_test)
-'''
-
 
 # 2. Model Construction
 model = Sequential()
-model.add(Dense(64, activation='relu', input_shape=(4, ))) # input_dim = 4
+model.add(Dense(64, activation='relu', input_shape=(4, )))
 model.add(Dense(64, activation='sigmoid'))
 model.add(Dense(32,activation='relu'))
 model.add(Dense(16,activation='linear'))
 model.add(Dense(3,activation='softmax')) # 훈련 순서: output_dim -> activation
-# y_col: 1, y_class(종류): 3
-# one-hot encoding을 해주진 않았지만 node 대신 class 값을 입력해도 Error가 발생하지 않게 자동 형변환 됨
+# one-hot encoding을 해주진 않았지만 y_col(1) 대신 y_class(3) 값을 입력해도 Error가 발생하지 않게 자동 형변환 됨
 # 자동 형변환 이후 activation = softmax로 다중분류 처리
 
 
@@ -101,6 +74,14 @@ loss, accuracy = model.evaluate(x_test, y_test)
 print("loss: ", loss)
 print("accuracy: ", accuracy)
 
+print("without onehotencoder: y_test: ", y_test) # raw data로 [0, 1]을 
+y_predict = model.predict(x_test)
+# y_predict: y_test 값을 확률로 반환(class 확률 합=1)
+y_predict = np.argmax(y_predict, axis=1)
+# arg 중 가장 큰 확률을 뽑아 위치값을 반환(0, 1, 2...)
+
+# y_test = np.argmax(y_test, axis=1) # -> onehot encoding 안할 때, 사용X
+# (numpy.AxisError: axis 1 is out of bounds for array of dimension 1)
 
 '''
 Result
@@ -113,7 +94,6 @@ print(y_predict)
 print("==========================")
 
 accuracy:  1.0
-
 y_test
 [[1. 0. 0.]
  [0. 0. 1.]
@@ -132,24 +112,6 @@ y_test
  
 '''
 
-
-# model.evaluate는 직접 0, 1 판단
-
-from sklearn.metrics import accuracy_score
-import numpy as np
-
-y_predict = model.predict(x_test)
-# y_predict: y_test 값을 확률로 반환(class 확률 합=1)
-y_predict = np.argmax(y_predict, axis=1)
-# arg 중 가장 큰 확률을 뽑아 위치값을 반환(0, 1, 2...)
-print(y_predict)
-
-# y_test = np.argmax(y_test, axis=1) # -> onehot encoding 안할 때, 사용X
-# (numpy.AxisError: axis 1 is out of bounds for array of dimension 1)
-# y_test.shape: [1. 0. 0.] -> 가장 큰 값을찾아 위치를 반환
-# -> y_predict와 y_test의 자료 형태를 맞추고 accuracy 비교
-print(y_test)
-
 acc = accuracy_score(y_test, y_predict)
 print(acc)
 
@@ -163,10 +125,6 @@ y_predict: 실수 타입
 (타입 불일치 오류) ValueError: Classification metrics can't handle a mix of multilabel-indicator and continuous-multioutput targets
 
 (해결) y_predict = np.argmax(y_predict, axis=1)
-argmax를 사용해서 arg 중 가장 큰 값을 뽑아 위치값을 반환
-(타입 불일치 오류) ValueError: Classification metrics can't handle a mix of multilabel-indicator and continuous-multioutput targets
-
-(해결) y_test = np.argmax(y_test, axis=1)
 argmax를 사용해서 arg 중 가장 큰 값을 뽑아 위치값을 반환
 
 (최종 결과)
