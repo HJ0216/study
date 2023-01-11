@@ -48,6 +48,12 @@ x_train = scaler.transform(x_train)
 x_test = scaler.transform(x_test)
 # train data의 가중치가 저장된 scaler를 transform
 # train data 외 fit X
+'''
+scaler = MinMaxScaler()
+x_train = scaler.fit_transform(x_train)
+x_test = scaler.transform(x_test)
+
+'''
 
 
 # 2. Model
