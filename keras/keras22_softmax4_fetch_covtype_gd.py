@@ -18,12 +18,18 @@ y = datasets['target']
 print(x.shape, y.shape) # (581012, 54) (581012,)
 print(np.unique(y, return_counts=True)) # (array([1, 2, 3, 4, 5, 6, 7]), array([211840, 283301,  35754,   2747,   9493,  17367,  20510])
 
+
+
 y = pd.get_dummies(y)
-print(y)
+print(type(y)) # pandas
+# y = y.values # pandas -> numpy
+y = y.to_numpy() # pandas -> numpy
+print(type(y)) # numpy
 
 '''
 Result
 
+부분 출력: print(y[:10])
 print(y)
         1  2  3  4  5  6  7
 0       0  0  0  0  1  0  0
@@ -42,6 +48,10 @@ print(y)
 print(y.shape)
 (581012, 7)
 
+print(type(y)) 
+<class 'pandas.core.frame.DataFrame'>
+
+get_dummies: idx 및 head 출력
 '''
 
 x_train, x_test, y_train, y_test = train_test_split(
@@ -91,6 +101,18 @@ print("accuracy_score: ", acc)
 Error
 ValueError: Shape of passed values is (116203, 1), indices imply (116203, 7)
 추가하고자 하는 값은 116203개의 값을 7개의 열에 추가해주려고 하는데, 정작 입력한 값은 116203개의 값을 1개의 열 값
+
+잘못 인식된 이유: get dummies를 통해서 numpy-> pandas
+train_test_split을 통과해도 pandas
+
+y_predict: numpy
+y_test: pandas
+-> np method에 pandas 바로 입력하면 해당 error 발생
+해결: numpy로 바꿔주기(idx와 header가 빠진 pandas의 numpy화)
+
+y = y.values # pandas -> numpy
+y = y.to_numpy() # pandas -> numpy
+
 '''
 
 

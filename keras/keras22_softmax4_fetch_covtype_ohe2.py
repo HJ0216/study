@@ -43,35 +43,14 @@ y = pd.get_dummies(y)
 
 
 
-onehot_encoder=OneHotEncoder(sparse=False)
-# return one-hot numeric an array
-# Encode categorical features as a one-hot numeric array.
-# sparse : bool, default=True
-# Will return sparse matrix if set True else will return an array.
-print("Original y ", y)
-# y = datasets['target']
-# [5 5 2 ... 3 3 3]
-# print(y.shape) (581012,)
-reshaped=y.reshape(len(y), 1) # (581012, 1): vector에 담아줌
-# len(y): 581012 = data의 개수 -> reshaped.shape (581012, 1)
-print("Before onehot_encoder y: ", y)
-# before y:  [5 5 2 ... 3 3 3]
-y=onehot_encoder.fit_transform(reshaped)
+ohe = OneHotEncoder()
+y = ohe.fit(y)
+y = y.reshape(581012, 1) # matrix화
 
-'''
-print("After onehot_encoder y: ", y)
-After onehot_encoder y:
-[[0. 0. 0. ... 1. 0. 0.]
- [0. 0. 0. ... 1. 0. 0.]
- [0. 0. 1. ... 0. 0. 0.]
- [0. 0. 1. ... 0. 0. 0.]
- [0. 0. 1. ... 0. 0. 0.]]
--> onehot type(class -> column으로 변환하여 값을 도출)
-
-'''
-
-print(y.shape) #(581012, 7)
-# transformed array.shape (n_samples, n_features_new=encoding에 따라 class-> col)
+from sklearn.preprocessing import OneHotEncoder
+ohe = OneHotEncoder()
+y = ohe.fit_transform(y) # transform - one hot encoder 형태
+y = y.toarray()
 
 
 x_train, x_test, y_train, y_test = train_test_split(
