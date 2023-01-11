@@ -3,7 +3,6 @@ import pandas as pd
 
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
-from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.callbacks import EarlyStopping
 
 from sklearn.datasets import fetch_covtype
