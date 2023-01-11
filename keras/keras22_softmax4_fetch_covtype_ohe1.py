@@ -16,29 +16,13 @@ x = datasets.data
 y = datasets['target']
 print(x.shape, y.shape) # (581012, 54) (581012,)
 print(np.unique(y, return_counts=True))
-
 '''
 (array([1, 2, 3, 4, 5, 6, 7]),
 array([211840, 283301,  35754,   2747,   9493,  17367,  20510],
 dtype=int64))
 
-print(datasets.DESCR) # pandas.describe / cvs_type.info
-print(datasets.feature_names) # pandas.columns, column name
-'''
-
-
-
-'''
-Result
-y=to_categorical(y)
-print(y.shape) # (581012, 8)
-
-to_catergorical: class가 0부터 시작하지 않을 때, 앞에 0을 추가 -> 추가된 0만큼의 자원의 낭비가 발생
-to_categorical: (0,1,2,3,4,5,6,7)
-y: (1,2,3,4,5,6,7)
-
-
-y = pd.get_dummies(y)
+print(datasets.DESCR) # numpy.DESCR = pandas.describe / cvs_type.info
+print(datasets.feature_names) # numpy.feature_names = pandas.columns, column name
 '''
 
 
@@ -91,11 +75,11 @@ numpy array의 one-hot encoder type으로 변환
  [0. 0. 1. ... 0. 0. 0.]]
 -> onehot type(class -> column으로 변환하여 값을 도출)
 
+print(y.shape) #(581012, 7)
+transformed array.shape (n_samples, n_features_new=encoding에 따라 class-> col: one-hot encoder 형태이므로)
+
 '''
 
-
-print(y.shape) #(581012, 7)
-# transformed array.shape (n_samples, n_features_new=encoding에 따라 class-> col)
 
 
 x_train, x_test, y_train, y_test = train_test_split(
@@ -148,4 +132,5 @@ Result
 loss:  0.596627414226532
 accuracy:  0.7471494078636169
 accuracy_score:  0.7471493851277505
+
 '''

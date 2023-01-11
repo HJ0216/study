@@ -18,55 +18,22 @@ print(y)
 
 print(x.shape, y.shape) # (581012, 54) (581012,)
 print(np.unique(y, return_counts=True))
+'''
+np.unique()
+print(np.unique(y[:,0], return_counts=True)) # : 모든 행, 0번째 열
+# (array([0.], dtype=float32), array([581012], dtype=int64))
+print(np.unique(y[:,1], return_counts=True)) # : 모든 행, 1번째 열
+# (array([0., 1.], dtype=float32), array([369172, 211840], dtype=int64))
+
+'''
+
+
 
 y=to_categorical(y)
 '''
 print(y.shape) (581012, 8) -> class 맨 앞의 0 col 생성
 print(type(y)) # 타입 확인 <class 'numpy.ndarray'>
 
-'''
-print(np.unique(y[:,0], return_counts=True)) # : 모든 행, 0번째 열
-# (array([0.], dtype=float32), array([581012], dtype=int64))
-print(np.unique(y[:,1], return_counts=True)) # : 모든 행, 0번째 열
-# (array([0., 1.], dtype=float32), array([369172, 211840], dtype=int64))
-# 0만 있는 0번째 열을 삭제
-
-y = np.delete(y, 0, axis=1)
-'''
-np.delete(data, 행, 열)
-열 -> 축(axis)이 지정되지 않으면 1차원으로 변환된(flatten) array에서 지정한 인덱스 값 제거
-np.delete(a, 1, axis=1)과 같이 축을 지정: 축을 따라 지정한 인덱스의 서브어레이를 제거한 어레이를 반환합니다.
-
-Example
-[[ 0  1  2  3]
- [ 4  5  6  7]
- [ 8  9 10 11]]
- 
- print(np.delete(a, 5))
-[ 0  1  2  3  4  6  7  8  9 10 11]
-
-print(np.delete(a, 1, axis=1))
-[[ 0  2  3]
- [ 4  6  7]
- [ 8 10 11]]
-
-'''
-
-'''
-print(y.shape) # (581012, 7)
-
-print(y)
-[[0. 0. 0. ... 1. 0. 0.]
- [0. 0. 0. ... 1. 0. 0.]
- [0. 1. 0. ... 0. 0. 0.]
- ...
- [0. 0. 1. ... 0. 0. 0.]
- [0. 0. 1. ... 0. 0. 0.]
- [0. 0. 1. ... 0. 0. 0.]]
- 
-'''
-
-'''
 Problem
 to_catergorical: class가 0부터 시작하지 않을 때, 앞에 0을 추가 -> 추가된 0만큼의 자원의 낭비가 발생
 to_categorical(y): (0,1,2,3,4,5,6,7)
@@ -78,6 +45,21 @@ np.delete(array, idx, axis)
 numpy 배열의 첫번째 열을 삭제
 
 '''
+
+
+
+y = np.delete(y, 0, axis=1)
+'''
+np.delete(data, 행, 열)
+열 -> 축(axis)이 지정되지 않으면 1차원으로 변환된(flatten) array에서 지정한 인덱스 값 제거
+np.delete(a, 1, axis=1)과 같이 축을 지정: 축을 따라 지정한 인덱스의 서브어레이를 제거한 어레이를 반환
+
+np.delete 참조: 
+keras22_softmax4_fetch_covtype_tc_delete.py
+
+'''
+
+
 
 x_train, x_test, y_train, y_test = train_test_split(
     x,y,

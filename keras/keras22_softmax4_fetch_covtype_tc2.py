@@ -21,18 +21,6 @@ print(np.unique(y, return_counts=True))
 
 y=to_categorical(y)
 print(y.shape) # (581012, 7)
-'''
-Result
-
-(array([0, 1, 2, 3, 4, 5, 6]),
-array([211840, 283301,  35754,   2747,   9493,  17367,  20510])
-
-to_catergorical: class가 0부터 시작하지 않을 때, 앞에 0을 추가 -> 추가된 0만큼의 자원의 낭비가 발생
-to_categorical: (0,1,2,3,4,5,6,7)
-y: (1,2,3,4,5,6,7)
-
-y = pd.get_dummies(y)
-'''
 
 x_train, x_test, y_train, y_test = train_test_split(
     x,y,
