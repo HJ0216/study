@@ -72,7 +72,7 @@ Updated Result using MinMaxScaler
 RMSE:  0.7463498785444389
 R2:  0.5627911964358545
 
-Updated Result using Model, Input
+Updated result using Function
 RMSE:  0.7244659086127198
 R2:  0.5880543962729712
 

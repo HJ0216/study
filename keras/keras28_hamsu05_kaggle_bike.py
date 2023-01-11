@@ -10,8 +10,8 @@ datetime -> idx 처리
 import numpy as np
 import pandas as pd
 
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense
+from tensorflow.keras.models import Sequential, Model
+from tensorflow.keras.layers import Dense, Input
 from tensorflow.keras.callbacks import EarlyStopping
 
 from sklearn.model_selection import train_test_split
@@ -41,22 +41,24 @@ scaler = MinMaxScaler()
 scaler.fit(x_train)
 x_train = scaler.transform(x_train)
 x_test = scaler.fit_transform(x_test)
+test_csv = scaler.transform(test_csv)
 
 
 # 2. model
-model = Sequential()
-model.add(Dense(64, input_dim=8, activation='linear'))
-model.add(Dense(64, activation='relu'))
-model.add(Dense(32, activation='relu'))
-model.add(Dense(32, activation='relu'))
-model.add(Dense(1))
+input1 = Input(shape=(8,))
+dense1 = Dense(64, activation='relu')(input1)
+dense2 = Dense(64, activation='sigmoid')(dense1)
+dense3 = Dense(32, activation='relu')(dense2)
+dense4 = Dense(32, activation='relu')(dense3)
+output1 = Dense(1, activation='linear')(dense4)
+model = Model(inputs=input1, outputs=output1)
 
 
 # 3. compile and train
 model.compile(loss='mse', optimizer='adam', metrics=['mae'])
-earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=10, restore_best_weights=True, verbose=1)
+earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=20, restore_best_weights=True, verbose=1)
 hist = model.fit(x_train, y_train,
-          epochs=300,
+          epochs=1000,
           batch_size=16,
           validation_split=0.2,
           callbacks=[earlyStopping],
@@ -95,5 +97,10 @@ Updated Result using MinMaxScaler
 loss 22635.67578125
 RMSE:  150.45157752219103
 R2:  0.30323941332889803
+
+Updated result using Function
+loss [22192.77734375, 110.43568420410156]
+RMSE:  148.9724144281168
+R2:  0.3168724544012469
 
 '''

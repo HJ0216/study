@@ -102,7 +102,7 @@ Upadated Result2 with MinMax Scaler
 RMSE:  4.737990416535103
 R2:  0.7222679303359896
 
-Upadated Result2 with Model, Input
+Updated result using Function
 RMSE:  4.219549853943171
 R2:  0.779722611266558
 
