@@ -56,7 +56,7 @@ model = Model(inputs=input1, outputs=output1)
 
 # 3. compile and train
 model.compile(loss='mse', optimizer='adam', metrics=['mae'])
-earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=20, restore_best_weights=True, verbose=1)
+earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=50, restore_best_weights=True, verbose=1)
 hist = model.fit(x_train, y_train,
           epochs=1000,
           batch_size=16,
@@ -82,7 +82,7 @@ print("R2: ", r2)
 # for submission
 y_submit = model.predict(test_csv)
 submission['count'] = y_submit
-submission.to_csv(path+'sampleSubmission_0111.csv')
+submission.to_csv(path+'sampleSubmission_0112.csv')
 
 
 
@@ -99,8 +99,8 @@ RMSE:  150.45157752219103
 R2:  0.30323941332889803
 
 Updated result using Function
-loss [22192.77734375, 110.43568420410156]
-RMSE:  148.9724144281168
-R2:  0.3168724544012469
+loss [21499.1015625, 106.30323791503906]
+RMSE:  146.62569397638993
+R2:  0.33822516890740884
 
 '''
