@@ -61,11 +61,12 @@ model.compile(loss='mse', optimizer='adam', metrics=['mae'])
 earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=20, restore_best_weights=True, verbose=1)
 
 modelCheckPoint = ModelCheckpoint(monitor='val_loss', mode='auto', verbose=1,
-                                   save_best_only=True,
-                                   filepath=path+'MCP/keras30_ModelCheckPoint1.hdf5') # MCP/ = MCP파일 하단
-# 가중치 및 모델 저장 확장자: h5, hdf5
+                                   save_best_only=True, # best만 save
+                                   filepath=path+'MCP/keras30_ModelCheckPoint1.hdf5') # MCP/ = MCP 폴더 하단
+# 가중치 및 모델 저장 확장자: h5
+# 가중치 저장 확장자: hdf5
 
-hist = model.fit(x_train, y_train,
+model.fit(x_train, y_train,
           epochs=1000,
           batch_size=32,
           validation_split=0.2,
@@ -86,12 +87,15 @@ Epoch 81/1000
 1/9 [==>...........................] - ETA: 0s - loss: 6.8561 - mae: 1.6694
 Restoring model weights from the end of the best epoch: 61.
 
+EarlyStopping: 최적의 weight가 갱신이 안되면 훈련을 끊어주는 역할
+ModelCheckPoint: 최적의 weight가 갱신될 때마다 저장해주는 역할
+
 MCP 저장
 RMSE:  4.393303432855621
 R2:  0.7612078343831213
+-> 확인하는 파일: keras30_ModelCheckPoint2_load_model.py
 
-EarlyStopping: 최적의 weight가 갱신이 안되면 훈련을 끊어주는 역할
-ModelCheckPoint: 최적의 weight가 갱신될 때마다 저장해주는 역할
+
 
 '''
 
@@ -112,24 +116,12 @@ print("R2: ", r2)
 
 '''
 Result
-RMSE:  3.9774667461538487
-R2:  0.7499457664401593
-
-Updated Result
 RMSE:  3.758338531055167
 R2:  0.8443360976276741
 
-Updated Result2 with MinMax scalering
-RMSE:  5.711671989312524
-R2:  0.596387886457775
-
-Updated Result2 with Standard scaler
+Updated Result with Standard scaler
 RMSE:  4.60305594170595
 R2:  0.7378618798976347
-
-Upadated Result2 with MinMax Scaler
-RMSE:  4.737990416535103
-R2:  0.7222679303359896
 
 Updated result using Function
 RMSE:  3.430171642478747

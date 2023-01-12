@@ -60,12 +60,32 @@ model.summary()
 model.compile(loss='mse', optimizer='adam', metrics=['mae'])
 
 earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=20,
-                              restore_best_weights=False, # False: 최적의 weight + patience의 weight
+                              restore_best_weights=False, # False: 최적의 weight + patience
                               verbose=1)
+
+import datetime # datetime: data type
+date = datetime.datetime.now() # 컴퓨터 시간으로 출력
+print(date) # 2023-01-12 14:58:36.143741
+print(type(date)) # <class 'datetime.datetime'>
+# 파일명에 넣으려면 string type이여야하므로 형변환 필요
+date = date.strftime("%m%d_%H%M")
+# date에서 strftime type으로 추출해서 date에 담기
+print(date) #0112_1502
+print(type(date)) # <class 'str'>
+
+
+filepath = './_save/MCP/'
+filename = '{epoch:04d}-{val_loss:.4f}.hdf5'
+# {epoch: 04d}: 정수 4자리(0100), {val_loss:.4f}: 실수 소수 4자리()
+# -, .hdf5: String,
+# {epoch: 04d}: epoch 값을 끌어와서 정수 4자리 출력
+# ModelCheckPoint에서 변수 epoch와 변수 val_loss의 값을 참조(출력 X)
+
 
 modelCheckPoint = ModelCheckpoint(monitor='val_loss', mode='auto', verbose=1,
                                    save_best_only=True,
-                                   filepath=path+'MCP/keras30_ModelCheckPoint3.hdf5') # MCP/ = MCP 폴더 하단
+                                   filepath=filepath + 'k30_' + date + '_' + filename) # MCP/ = MCP폴더 하단
+                                   # 최적의 weight만 저장되는것이 아닌 기록이 갱신된 weight 모두 저장
 
 model.fit(x_train, y_train,
           epochs=1000,
@@ -74,11 +94,10 @@ model.fit(x_train, y_train,
           callbacks=[earlyStopping, modelCheckPoint], # list = [2개 이상]
           verbose=1)
 
-model.save(path+'keras30_ModelCheckPoint3_save_model.h5') # 가중치, 모델 세이브
+model.save(path+'keras30_ModelCheckPoint3_save_model.h5') # 가중치 및 모델 세이브
 
 
 # 4. evaluate and predict
-print('========================= 1. 기본 출력 =========================')
 loss = model.evaluate(x_test, y_test)
 
 y_predict = model.predict(x_test)
@@ -88,28 +107,6 @@ r2 = r2_score(y_test, y_predict)
 print("R2: ", r2)
 
 
-
-print('========================= 2. load_model(EarlyStopping) 출력 =========================')
-model2 = load_model(path+'keras30_ModelCheckPoint3_save_model.h5')
-loss = model2.evaluate(x_test, y_test)
-
-y_predict = model2.predict(x_test)
-print("Loss: ", loss)
-
-r2 = r2_score(y_test, y_predict)
-print("R2: ", r2)
-
-
-
-print('========================= 3. ModelCheckPoint 출력 =========================')
-model3 = load_model(path+'MCP/keras30_ModelCheckPoint3.hdf5')
-loss = model3.evaluate(x_test, y_test)
-
-y_predict = model3.predict(x_test)
-print("Loss: ", loss)
-
-r2 = r2_score(y_test, y_predict)
-print("R2: ", r2)
 
 '''
 EarlyStopping: restore_best_weights=True: Break 지점이 아닌 최적의 weight에서 저장
@@ -122,31 +119,13 @@ train data에서 최적의 weigth가 발생하고 patience만큼 지난 자리�
 
 val_loss: validation data <- break 잡는 기준
 loss: train data
-r2 score: test data
--> 평가지표와 결과값 지표가 data가 다름
-
+r2 score: test data <- break 잡는 기준과 확인해 볼 data가 다름
 '''
 
 
 
 '''
-Result
-RMSE:  3.9774667461538487
-R2:  0.7499457664401593
-
-Updated Result
-RMSE:  3.758338531055167
-R2:  0.8443360976276741
-
-Updated Result2 with MinMax scalering
-RMSE:  5.711671989312524
-R2:  0.596387886457775
-
-Updated Result2 with Standard scaler
-RMSE:  4.60305594170595
-R2:  0.7378618798976347
-
-Upadated Result2 with MinMax Scaler
+Upadated Result with MinMax Scaler
 RMSE:  4.737990416535103
 R2:  0.7222679303359896
 
