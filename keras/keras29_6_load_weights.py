@@ -58,7 +58,7 @@ output1 = Dense(1, activation='linear')(dense4)
 model = Model(inputs=input1, outputs=output1)
 model.summary()
 
-# model.save_weights(path+'keras29_5_save_weights1.h5')
+# model.save_weights(path +'keras29_5_save_weights1.h5')
 # model.load_weights(path + 'keras29_5_save_weights1.h5')
 # Model이 저장 안되고, 가중치만 저장이 됨 -> 사용 시, 모델 필요
 # weight를 가져왔으므로 fit 필요 X

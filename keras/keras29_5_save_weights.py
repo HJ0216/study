@@ -58,7 +58,7 @@ output1 = Dense(1, activation='linear')(dense4)
 model = Model(inputs=input1, outputs=output1)
 model.summary()
 
-model.save_weights(path+'keras29_5_save_weights1.h5')
+model.save_weights(path +'keras29_5_save_weights1.h5')
 
 
 # 3. compile and train
