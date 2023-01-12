@@ -110,12 +110,17 @@ model.fit(x_train, y_train,
           callbacks=[earlyStopping, modelCheckPoint],
           verbose=1)
 
+model.save(path+'keras31_dropout01_save_model.h5') # 가중치 및 모델 세이브
+
 
 # 4. evaluate and predict
 loss = model.evaluate(x_test, y_test)
-
 y_predict = model.predict(x_test)
-print("Loss: ", loss)
+
+from sklearn.metrics import mean_squared_error, r2_score
+def RMSE (y_test, y_predict):
+    return np.sqrt(mean_squared_error(y_test, y_predict))
+print("RMSE: ", RMSE(y_test, y_predict))
 
 r2 = r2_score(y_test, y_predict)
 print("R2: ", r2)
@@ -130,5 +135,9 @@ R2:  0.7222679303359896
 Updated result using Function
 RMSE:  3.430171642478747
 R2:  0.8544308389149119
+
+Updated result using Dropout
+RMSE:  4.195241728686868
+R2:  0.7822532637113194
 
 '''
