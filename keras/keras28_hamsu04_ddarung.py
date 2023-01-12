@@ -76,7 +76,7 @@ print("R2: ", r2)
 y_submit = model.predict(test_csv)
 
 submission['count'] = y_submit
-submission.to_csv(path+'submission_0111.csv')
+submission.to_csv(path+'submission_0112.csv')
 
 
 
@@ -91,8 +91,8 @@ RMSE:  54.01102397913288
 R2:  0.6049261814023652
 
 Updated result using Function
-loss [2068.5126953125, 33.87137222290039]
-RMSE:  45.48090354567061
-R2:  0.7198622758753592
+loss [2031.6160888671875, 34.216949462890625]
+RMSE:  45.07345481571253
+R2:  0.7248591194498237
 
 '''

@@ -16,7 +16,7 @@ evaluate: x_test, y_test
 
 import numpy as np
 
-from tensorflow.keras.models import Sequential, Model
+from tensorflow.keras.models import Sequential, Model, load_model
 from tensorflow.keras.layers import Dense, Input
 from tensorflow.keras.callbacks import EarlyStopping
 
@@ -47,34 +47,21 @@ x_test = scaler.transform(x_test)
 
 
 # 2. Model(Function)
-input1 = Input(shape=(13,))
-dense1 = Dense(64, activation='relu')(input1)
-dense2 = Dense(64, activation='sigmoid')(dense1)
-dense3 = Dense(32, activation='relu')(dense2)
-dense4 = Dense(32, activation='linear')(dense3)
-output1 = Dense(1, activation='linear')(dense4)
-model = Model(inputs=input1, outputs=output1)
-model.summary()
-
 path = './_save/'
 # ./ 현재폴더(현재 VS code 경로: study) -> _save/ _save 폴더
 # path = '../_save/' # ../ 이전폴더 -> _save/ _save 폴더
 # path = 'c:/study/_save/' # 경로: 대소문자 구분 X
 
-model.save(path+'keras29_1_save_model.h5')
+# model.save(path+'keras29_1_save_model.h5')
+
+model = load_model(path + 'keras29_3_save_model.h5')
+# keras29_3_save_model.py와 동일한 가중치
+# RMSE:  3.745943953275478
+# R2:  0.8263958011288042
 
 
-
-'''
 # 3. compile and train
-model.compile(loss='mse', optimizer='adam', metrics=['mae'])
-earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=20, restore_best_weights=True, verbose=1)
-hist = model.fit(x_train, y_train,
-          epochs=500,
-          batch_size=16,
-          validation_split=0.2,
-          callbacks=[earlyStopping],
-          verbose=1)
+
 
 
 # 4. evaluate and predict
@@ -88,7 +75,7 @@ print("RMSE: ", RMSE(y_test, y_predict))
 
 r2 = r2_score(y_test, y_predict)
 print("R2: ", r2)
-'''
+
 
 
 

@@ -57,15 +57,8 @@ model = Model(inputs=input1, outputs=output1)
 model.summary()
 
 path = './_save/'
-# ./ 현재폴더(현재 VS code 경로: study) -> _save/ _save 폴더
-# path = '../_save/' # ../ 이전폴더 -> _save/ _save 폴더
-# path = 'c:/study/_save/' # 경로: 대소문자 구분 X
-
-model.save(path+'keras29_1_save_model.h5')
 
 
-
-'''
 # 3. compile and train
 model.compile(loss='mse', optimizer='adam', metrics=['mae'])
 earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=20, restore_best_weights=True, verbose=1)
@@ -75,6 +68,11 @@ hist = model.fit(x_train, y_train,
           validation_split=0.2,
           callbacks=[earlyStopping],
           verbose=1)
+
+model.save(path+'keras29_3_save_model.h5')
+# 훈련 후 model save
+# RMSE:  3.745943953275478
+# R2:  0.8263958011288042
 
 
 # 4. evaluate and predict
@@ -88,7 +86,7 @@ print("RMSE: ", RMSE(y_test, y_predict))
 
 r2 = r2_score(y_test, y_predict)
 print("R2: ", r2)
-'''
+
 
 
 
