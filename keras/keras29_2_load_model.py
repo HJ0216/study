@@ -16,7 +16,7 @@ evaluate: x_test, y_test
 
 import numpy as np
 
-from tensorflow.keras.models import Sequential, Model
+from tensorflow.keras.models import Sequential, Model, load_model
 from tensorflow.keras.layers import Dense, Input
 from tensorflow.keras.callbacks import EarlyStopping
 
@@ -47,13 +47,13 @@ x_test = scaler.transform(x_test)
 
 
 # 2. Model(Function)
-input1 = Input(shape=(13,))
-dense1 = Dense(64, activation='relu')(input1)
-dense2 = Dense(64, activation='sigmoid')(dense1)
-dense3 = Dense(32, activation='relu')(dense2)
-dense4 = Dense(32, activation='linear')(dense3)
-output1 = Dense(1, activation='linear')(dense4)
-model = Model(inputs=input1, outputs=output1)
+path = './_save/' # . 현재 /<-폴더
+# path = '../_save/' # ..이전
+# path = 'c:/study/_save/' # 경로 대소문자 구분 X
+#model.save(path+'keras29_1_save_model.h5')
+
+model = load_model(path+'keras29_1_save_model.h5')
+model.summary()
 
 
 # 3. compile and train
@@ -78,6 +78,7 @@ print("RMSE: ", RMSE(y_test, y_predict))
 
 r2 = r2_score(y_test, y_predict)
 print("R2: ", r2)
+
 
 
 

@@ -40,9 +40,9 @@ model = Model(inputs=input1, outputs=output1)
 
 # 3. Compile and train
 model.compile(loss='mse', optimizer='adam', metrics=['mae'])
-earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=10, restore_best_weights=True, verbose=1)
+earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=20, restore_best_weights=True, verbose=1)
 hist = model.fit(x_train, y_train,
-          epochs=300,
+          epochs=500,
           batch_size=16,
           validation_split=0.2,
           callbacks=[earlyStopping],
@@ -73,7 +73,7 @@ RMSE:  0.7463498785444389
 R2:  0.5627911964358545
 
 Updated result using Function
-RMSE:  0.7244659086127198
-R2:  0.5880543962729712
+RMSE:  0.5200042568091325
+R2:  0.787764629913331
 
 '''

@@ -54,8 +54,18 @@ dense3 = Dense(32, activation='relu')(dense2)
 dense4 = Dense(32, activation='linear')(dense3)
 output1 = Dense(1, activation='linear')(dense4)
 model = Model(inputs=input1, outputs=output1)
+model.summary()
+
+path = './_save/' # . 현재 /<-폴더
+# path = '../_save/' # ..이전
+# path = 'c:/study/_save/' # 경로 대소문자 구분 X
+
+model.save(path+'keras29_1_save_model.h5')
 
 
+
+
+'''
 # 3. compile and train
 model.compile(loss='mse', optimizer='adam', metrics=['mae'])
 earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=20, restore_best_weights=True, verbose=1)
@@ -78,6 +88,7 @@ print("RMSE: ", RMSE(y_test, y_predict))
 
 r2 = r2_score(y_test, y_predict)
 print("R2: ", r2)
+'''
 
 
 

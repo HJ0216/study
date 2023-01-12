@@ -33,12 +33,8 @@ x_train, x_test, y_train, y_test = train_test_split(
 
 # scaler = StandardScaler()
 scaler = MinMaxScaler()
-<<<<<<< HEAD
-x_train = scaler.fit_transform(x_train)
-=======
 scaler.fit(x_train)
 x_train = scaler.transform(x_train)
->>>>>>> 631cb8295c9d763bf692ab70cc12e4162c05a96b
 x_test = scaler.transform(x_test)
 
 
@@ -57,9 +53,9 @@ model.compile(loss='categorical_crossentropy',
               metrics=['accuracy']
               )
 
-earlyStopping = EarlyStopping(monitor='accuracy', mode='auto', patience=5, restore_best_weights=True, verbose=1)
+earlyStopping = EarlyStopping(monitor='accuracy', mode='auto', patience=50, restore_best_weights=True, verbose=1)
 
-model.fit(x_train, y_train, epochs=300, batch_size=16,
+model.fit(x_train, y_train, epochs=1000, batch_size=16,
           validation_split=0.2,
           callbacks=[earlyStopping],
           verbose=1)
@@ -84,7 +80,7 @@ print("predict_acc: ", acc)
 
 '''
 Result using MinMaxScaler
-loss:  0.4977390170097351
+loss:  0.32223355770111084
 test_accuracy:  0.9333333373069763
 predict_acc:  0.9333333333333333
 
