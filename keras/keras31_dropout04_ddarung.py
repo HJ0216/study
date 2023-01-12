@@ -12,7 +12,8 @@ from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 
 
-path = './_save/'
+path2 = './_save/'
+# path 경로가 중첩되므로 name 정정
 filepath = './_save/MCP/'
 filename = '{epoch:04d}-{val_loss:.4f}.hdf5'
 
@@ -74,7 +75,7 @@ model.fit(x_train, y_train,
           callbacks=[earlyStopping, modelCheckPoint],
           verbose=1)
 
-model.save(path+'keras31_dropout04_save_model.h5') # 가중치 및 모델 세이브
+model.save(path2+'keras31_dropout04_save_model.h5') # 가중치 및 모델 세이브
 
 
 # 4. evaluate and predict
