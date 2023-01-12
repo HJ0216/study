@@ -18,7 +18,7 @@ import numpy as np
 
 from tensorflow.keras.models import Sequential, Model
 from tensorflow.keras.layers import Dense, Input
-from tensorflow.keras.callbacks import EarlyStopping
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 
 from sklearn.datasets import load_boston
 from sklearn.model_selection import train_test_split
@@ -60,12 +60,40 @@ model.compile(loss='mse', optimizer='adam', metrics=['mae'])
 
 earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=20, restore_best_weights=True, verbose=1)
 
+modelCheckPoint = ModelCheckpoint(monitor='val_loss', mode='auto', verbose=1,
+                                   save_best_only=True,
+                                   filepath=path+'MCP/keras30_ModelCheckPoint1.hdf5') # MCP/ = MCP파일 하단
+# 가중치 및 모델 저장 확장자: h5, hdf5
+
 hist = model.fit(x_train, y_train,
-          epochs=500,
-          batch_size=16,
+          epochs=1000,
+          batch_size=32,
           validation_split=0.2,
-          callbacks=[earlyStopping],
+          callbacks=[earlyStopping, modelCheckPoint], # list = [2개 이상]
           verbose=1)
+
+'''
+epochs=1000
+Epoch 00001: val_loss improved from inf to 522.52173, saving model to ./_save/MCP\keras30_ModelCheckPoint1.hdf5
+-> 처음 훈련은 최상의 결과값이므로 저장
+Epoch 00002: val_loss improved from 522.52173 to 444.32184, saving model to ./_save/MCP\keras30_ModelCheckPoint1.hdf5
+-> 2번째 훈련 개선 -> 덮어쓰기
+-> 반복
+Epoch 00041: val_loss did not improve from 9.04129
+-> 개선되지 않을 경우 저장 X
+-> 개선되지 않은 결과가 20번 반복될 경우, EarlyStopping = 가장 성능이 좋은 ModelCheckPoint 지점
+Epoch 81/1000
+1/9 [==>...........................] - ETA: 0s - loss: 6.8561 - mae: 1.6694
+Restoring model weights from the end of the best epoch: 61.
+
+MCP 저장
+RMSE:  4.393303432855621
+R2:  0.7612078343831213
+
+EarlyStopping: 최적의 weight가 갱신이 안되면 훈련을 끊어주는 역할
+ModelCheckPoint: 최적의 weight가 갱신될 때마다 저장해주는 역할
+
+'''
 
 
 # 4. evaluate and predict
