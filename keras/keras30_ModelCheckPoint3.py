@@ -59,7 +59,9 @@ model.summary()
 # 3. compile and train
 model.compile(loss='mse', optimizer='adam', metrics=['mae'])
 
-earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=20, restore_best_weights=True, verbose=1)
+earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=20,
+                              restore_best_weights=False,
+                              verbose=1)
 
 modelCheckPoint = ModelCheckpoint(monitor='val_loss', mode='auto', verbose=1,
                                    save_best_only=True,
@@ -87,7 +89,7 @@ print("R2: ", r2)
 
 
 
-print('========================= 2. load_model 출력 =========================')
+print('========================= 2. load_model(EarlyStopping) 출력 =========================')
 model2 = load_model(path+'keras30_ModelCheckPoint3_save_model.h5')
 loss = model2.evaluate(x_test, y_test)
 
@@ -108,6 +110,19 @@ print("Loss: ", loss)
 
 r2 = r2_score(y_test, y_predict)
 print("R2: ", r2)
+
+'''
+EarlyStopping: restore_best_weights=True: Break 지점이 아닌 최적의 weight에서 저장
+EarlyStopping: restore_best_weights=False(Default) -> patience만큼 더 가서 weight 저장
+-> 일반적으로는 최적 weight보다 안좋은 값이 저장되지만 예외가 발생할 수 있음
+
+train data에서 최적의 weight가 발생한 지점이 test data에서 최적의 weight가 발생한 지점이 아닐 수 있음
+train data에서 최적의 weigth가 발생하고 patience만큼 지난 자리의 값의 weight를 저장(restore_best_weights=False)할 때,
+그 지점에서 test data를 돌렸을 때, 오히려 weight가 좋을 수 있음(data set이 다르므로)
+
+'''
+
+
 
 '''
 Result
