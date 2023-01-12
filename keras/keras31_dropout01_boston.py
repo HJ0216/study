@@ -73,7 +73,7 @@ model = Model(inputs=input1, outputs=output1)
 model.summary()
 '''
 summray
-node를 random하게 추출하여 훈련을 수행
+node를 random하게 추출하여 훈련을 수행 -> 과적합 문제 해결
 summary는 dropout된 node를 나누지 않음
 predict 시에는 dropout 사용 X
 

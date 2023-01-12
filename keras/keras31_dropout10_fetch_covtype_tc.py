@@ -69,7 +69,7 @@ modelCheckPoint = ModelCheckpoint(monitor='val_loss', mode='auto', verbose=1,
                                    save_best_only=True,
                                    filepath=filepath + 'k31_10_tc_' + date + '_' + filename)
 
-model.fit(x_train, y_train, epochs=100, batch_size=128,
+model.fit(x_train, y_train, epochs=300, batch_size=64,
           validation_split=0.2,
           callbacks=[earlyStopping, modelCheckPoint],
           verbose=1)
@@ -102,6 +102,8 @@ accuracy:  0.8892885446548462
 accuracy_score:  0.8892885725841846
 
 Result using Dropout
-
+loss:  0.42928606271743774
+accuracy:  0.8176897168159485
+accuracy_score:  0.817689732623082
 
 '''
