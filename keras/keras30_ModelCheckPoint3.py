@@ -101,7 +101,7 @@ print("R2: ", r2)
 
 
 
-print('========================= 3. ModelCheckPoint 출력 =========================')
+print('========================= 3. load_model(ModelCheckPoint) 출력 =========================')
 model3 = load_model(path+'MCP/keras30_ModelCheckPoint3.hdf5')
 loss = model3.evaluate(x_test, y_test)
 

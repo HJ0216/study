@@ -1,14 +1,20 @@
 import numpy as np
 import pandas as pd
-from sklearn.preprocessing import MinMaxScaler
+import datetime
 
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense
-from tensorflow.keras.callbacks import EarlyStopping
+from tensorflow.keras.layers import Dense, Dropout
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 
 from sklearn.datasets import fetch_covtype
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
+from sklearn.preprocessing import MinMaxScaler
+
+
+path = './_save/'
+filepath = './_save/MCP/'
+filename = '{epoch:04d}-{val_loss:.4f}.hdf5'
 
 
 # 1. Data
@@ -37,8 +43,11 @@ x_test = scaler.transform(x_test)
 # 2. Model Construction
 model = Sequential()
 model.add(Dense(64, activation='relu', input_shape=(54, )))
+model.add(Dropout(0.3))
 model.add(Dense(64, activation='sigmoid'))
+model.add(Dropout(0.3))
 model.add(Dense(32,activation='relu'))
+model.add(Dropout(0.2))
 model.add(Dense(16,activation='linear'))
 model.add(Dense(7,activation='softmax'))
 
@@ -51,10 +60,19 @@ model.compile(loss='categorical_crossentropy',
 
 earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=20, restore_best_weights=True, verbose=1)
 
-model.fit(x_train, y_train, epochs=100, batch_size=128,
+date = datetime.datetime.now()
+date = date.strftime("%m%d_%H%M")
+
+modelCheckPoint = ModelCheckpoint(monitor='val_loss', mode='auto', verbose=1,
+                                   save_best_only=True,
+                                   filepath=filepath + 'k31_10_gd_' + date + '_' + filename)
+
+model.fit(x_train, y_train, epochs=300, batch_size=128,
           validation_split=0.2,
-          callbacks=[earlyStopping],
+          callbacks=[earlyStopping, modelCheckPoint],
           verbose=1)
+
+model.save(path+'keras31_dropout10_gd_save_model.h5') # 가중치 및 모델 세이브
 
 
 # 4. evaluate and predict
@@ -81,5 +99,10 @@ Result using MinMaxScaler
 loss:  0.2859199047088623
 accuracy:  0.8842456936836243
 accuracy_score:  0.8842456735196166
+
+Result using Dropout
+loss:  0.433635950088501
+accuracy:  0.8202369809150696
+accuracy_score:  0.8202369990447751
 
 '''
