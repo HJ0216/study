@@ -26,7 +26,7 @@ x_train, x_test, y_train, y_test = train_test_split(
 scaler = MinMaxScaler()
 scaler.fit(x_train)
 x_train = scaler.transform(x_train)
-x_test = scaler.fit_transform(x_test)
+x_test = scaler.transform(x_test)
 
 
 # 2. Model Construction
@@ -68,7 +68,7 @@ Restoring model weights from the end of the best epoch: 7.
 loss 0.8286768794059753
 
 Updated Result using MinMaxScaler
-RMSE:  0.7463498785444389
-R2:  0.5627911964358545
+RMSE:  0.7262463681006281
+R2:  0.586027099412155
 
 '''

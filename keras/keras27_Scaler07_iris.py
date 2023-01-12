@@ -7,7 +7,7 @@ from tensorflow.keras.callbacks import EarlyStopping
 
 from sklearn.model_selection import train_test_split
 from sklearn.datasets import load_iris
-from sklearn.preprocessing import MinMaxScaler, StandardScaler, OneHotEncoder
+from sklearn.preprocessing import MinMaxScaler, StandardScaler
 
 
 # 1. Data
@@ -33,9 +33,8 @@ x_train, x_test, y_train, y_test = train_test_split(
 
 # scaler = StandardScaler()
 scaler = MinMaxScaler()
-scaler.fit(x_train)
-x_train = scaler.transform(x_train)
-x_test = scaler.fit_transform(x_test)
+x_train = scaler.fit_transform(x_train)
+x_test = scaler.transform(x_test)
 
 
 # 2. Model Construction
@@ -80,8 +79,8 @@ print("predict_acc: ", acc)
 
 '''
 Result using MinMaxScaler
-loss:  0.48310545086860657
-test_accuracy:  0.8666666746139526
-predict_acc:  0.8666666666666667
+loss:  0.4977390170097351
+test_accuracy:  0.9333333373069763
+predict_acc:  0.9333333333333333
 
 '''

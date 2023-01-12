@@ -28,13 +28,17 @@ print(datasets.feature_names) # pandas.columns, column name
 '''
 
 
-
 y = y.reshape(581012, 1) # matrix화
 
 ohe = OneHotEncoder()
 ohe.fit(y)
 y = ohe.transform(y)
 y = y.toarray()
+'''
+if not use to array
+TypeError: A sparse matrix was passed, but dense data is required.
+Use X.toarray() to convert to a dense numpy array.
+'''
 
 
 '''
@@ -73,6 +77,7 @@ earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=20, resto
 
 model.fit(x_train, y_train, epochs=100, batch_size=128,
           validation_split=0.2,
+          callbacks = [earlyStopping],
           verbose=1)
 
 
@@ -91,8 +96,13 @@ print("accuracy_score: ", acc)
 
 '''
 Result
-
 loss:  0.596627414226532
 accuracy:  0.7471494078636169
 accuracy_score:  0.7471493851277505
+
+
+Updated Result
+loss:  0.5452187657356262
+accuracy:  0.7694551944732666
+accuracy_score:  0.769455177577171
 '''

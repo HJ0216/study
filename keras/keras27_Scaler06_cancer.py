@@ -27,7 +27,7 @@ x_train, x_test, y_train, y_test = train_test_split(
 scaler = MinMaxScaler()
 scaler.fit(x_train)
 x_train = scaler.transform(x_train)
-x_test = scaler.fit_transform(x_test)
+x_test = scaler.transform(x_test)
 
 
 # 2. Model Construction
@@ -43,10 +43,10 @@ model.add(Dense(1, activation='sigmoid'))
 # 3. Compile and train
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
-earlyStopping = EarlyStopping(monitor='accuracy', mode='auto', patience=5, restore_best_weights=True, verbose=1)
+earlyStopping = EarlyStopping(monitor='accuracy', mode='auto', patience=20, restore_best_weights=True, verbose=1)
 
 hist = model.fit(x_train, y_train,
-          epochs=100, batch_size=16,
+          epochs=500, batch_size=8,
           validation_split=0.2,
           callbacks=[earlyStopping],
           verbose=1)
@@ -86,8 +86,8 @@ accuracy와 accuarcy_score가 차이나는 이유: y_predict.flatten()로 값 �
 
 
 Updated result using MinMaxScaler
-loss:  0.4332122802734375
-accuracy:  0.8070175647735596
-accuarcy_score:  0.8070175438596491
+loss:  0.16533207893371582
+accuracy:  0.9649122953414917
+accuarcy_score:  0.9649122807017544
 
 '''

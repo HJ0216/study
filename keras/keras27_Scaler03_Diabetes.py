@@ -24,7 +24,7 @@ x_train, x_test, y_train, y_test = train_test_split(
 scaler = MinMaxScaler()
 scaler.fit(x_train)
 x_train = scaler.transform(x_train)
-x_test = scaler.fit_transform(x_test)
+x_test = scaler.transform(x_test)
 
 
 # 2. Model Construction
@@ -32,15 +32,16 @@ model = Sequential()
 model.add(Dense(64, input_shape=(10,)))
 model.add(Dense(64))
 model.add(Dense(32))
+model.add(Dense(16))
 model.add(Dense(1))
 
 
 # 3. Compile and train
 model.compile(loss='mse', optimizer='adam', metrics=['mae'])
-earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=5, restore_best_weights=True, verbose=1)
+earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=50, restore_best_weights=True, verbose=1)
 hist = model.fit(x_train, y_train,
-          epochs=300,
-          batch_size=16,
+          epochs=500,
+          batch_size=4,
           validation_split=0.2,
           callbacks=[earlyStopping],
           verbose=1)
@@ -66,7 +67,7 @@ Restoring model weights from the end of the best epoch: 45.
 loss 3139.306396484375
 
 Updated Result using MinMaxScaler
-RMSE:  58.15208371512175
-R2:  0.37283925642017157
+RMSE:  54.96143921029424
+R2:  0.4397724044834669
 
 '''

@@ -40,7 +40,7 @@ x_train, x_test, y_train, y_test = train_test_split(
 scaler = MinMaxScaler()
 scaler.fit(x_train)
 x_train = scaler.transform(x_train)
-x_test = scaler.fit_transform(x_test)
+x_test = scaler.transform(x_test)
 
 
 # 2. model
@@ -54,7 +54,7 @@ model.add(Dense(1))
 
 # 3. compile and train
 model.compile(loss='mse', optimizer='adam', metrics=['mae'])
-earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=10, restore_best_weights=True, verbose=1)
+earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=20, restore_best_weights=True, verbose=1)
 hist = model.fit(x_train, y_train,
           epochs=300,
           batch_size=16,
@@ -92,8 +92,8 @@ Updated Result2
 RMSE:  149.99826531602525
 
 Updated Result using MinMaxScaler
-loss 22635.67578125
-RMSE:  150.45157752219103
-R2:  0.30323941332889803
+loss [22103.845703125, 107.3910140991211]
+RMSE:  148.67362394616345
+R2:  0.3196099721897673
 
 '''
