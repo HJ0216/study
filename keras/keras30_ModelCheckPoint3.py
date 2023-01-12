@@ -16,14 +16,14 @@ evaluate: x_test, y_test
 
 import numpy as np
 
-from tensorflow.keras.models import Sequential, Model
+from tensorflow.keras.models import Sequential, Model, load_model
 from tensorflow.keras.layers import Dense, Input
-from tensorflow.keras.callbacks import EarlyStopping
-
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 
 from sklearn.datasets import load_boston
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
+from sklearn.metrics import mean_squared_error, r2_score
 
 path = './_save/'
 
@@ -37,12 +37,9 @@ x_train, x_test, y_train, y_test = train_test_split(
     x, y,
     train_size=0.7,
     random_state=123
-    # stratify = y : y 타입이 분류에서만 사용
 )
 
-
 scaler = StandardScaler()
-# scaler = MinMaxScaler()
 scaler.fit(x_train)
 x_train = scaler.transform(x_train)
 x_test = scaler.transform(x_test)
@@ -58,38 +55,59 @@ output1 = Dense(1, activation='linear')(dense4)
 model = Model(inputs=input1, outputs=output1)
 model.summary()
 
-model.save_weights(path +'keras29_5_save_weights1.h5')
-# 훈련이 되지 않은 가중치가 저장되므로 사용 의미 X
-
 
 # 3. compile and train
 model.compile(loss='mse', optimizer='adam', metrics=['mae'])
+
 earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=20, restore_best_weights=True, verbose=1)
-hist = model.fit(x_train, y_train,
-          epochs=500,
-          batch_size=16,
+
+modelCheckPoint = ModelCheckpoint(monitor='val_loss', mode='auto', verbose=1,
+                                   save_best_only=True,
+                                   filepath=path+'MCP/keras30_ModelCheckPoint3.hdf5') # MCP/ MCP파일 하단
+
+model.fit(x_train, y_train,
+          epochs=1000,
+          batch_size=32,
           validation_split=0.2,
-          callbacks=[earlyStopping],
+          callbacks=[earlyStopping, modelCheckPoint], # list = [2개 이상]
           verbose=1)
 
-model.save_weights(path+'keras29_5_save_weights2.h5')
-# 훈련이 된 가중치가 저장되므로 사용
+model.save(path+'keras30_ModelCheckPoint3_save_model.h5') # 가중치, 모델 세이브
 
 
 # 4. evaluate and predict
+print('========================= 1. 기본 출력 =========================')
 loss = model.evaluate(x_test, y_test)
-y_predict = model.predict(x_test)
 
-from sklearn.metrics import mean_squared_error, r2_score
-def RMSE (y_test, y_predict):
-    return np.sqrt(mean_squared_error(y_test, y_predict))
-print("RMSE: ", RMSE(y_test, y_predict))
+y_predict = model.predict(x_test)
+print("Loss: ", loss)
 
 r2 = r2_score(y_test, y_predict)
 print("R2: ", r2)
 
 
 
+print('========================= 2. load_model 출력 =========================')
+model2 = load_model(path+'keras30_ModelCheckPoint3_save_model.h5')
+loss = model2.evaluate(x_test, y_test)
+
+y_predict = model2.predict(x_test)
+print("Loss: ", loss)
+
+r2 = r2_score(y_test, y_predict)
+print("R2: ", r2)
+
+
+
+print('========================= 3. ModelCheckPoint 출력 =========================')
+model3 = load_model(path+'MCP/keras30_ModelCheckPoint3.hdf5')
+loss = model3.evaluate(x_test, y_test)
+
+y_predict = model3.predict(x_test)
+print("Loss: ", loss)
+
+r2 = r2_score(y_test, y_predict)
+print("R2: ", r2)
 
 '''
 Result
