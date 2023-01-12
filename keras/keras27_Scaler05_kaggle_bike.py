@@ -41,7 +41,11 @@ scaler = MinMaxScaler()
 scaler.fit(x_train)
 x_train = scaler.transform(x_train)
 x_test = scaler.transform(x_test)
+<<<<<<< HEAD
 
+=======
+test_cvs = scaler.transform(test_cvs)
+>>>>>>> 631cb8295c9d763bf692ab70cc12e4162c05a96b
 
 # 2. model
 model = Sequential()

@@ -33,7 +33,12 @@ x_train, x_test, y_train, y_test = train_test_split(
 
 # scaler = StandardScaler()
 scaler = MinMaxScaler()
+<<<<<<< HEAD
 x_train = scaler.fit_transform(x_train)
+=======
+scaler.fit(x_train)
+x_train = scaler.transform(x_train)
+>>>>>>> 631cb8295c9d763bf692ab70cc12e4162c05a96b
 x_test = scaler.transform(x_test)
 
 
