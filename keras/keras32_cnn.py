@@ -4,7 +4,7 @@ from tensorflow.keras.layers import Dense, Conv2D, Flatten
 
 model = Sequential()
 # 입력: 데이터개수(무시), 가로(5), 세로(5), 색깔(1 or 3)
-# 데이터의 개수는 중요하지 않으므로 (N, 5, 5, 1)
+# 데이터의 개수는 중요하지 않으므로 (NaN, 5, 5, 1)
 model.add(Conv2D(filters=10, kernel_size=(2,2),
                  input_shape=(5,5,1)))
 # 이미지 픽셀 수(5*5) 1개(흑백) 3개(컬러RPG)
@@ -24,26 +24,31 @@ model.add(Flatten()) # (3*3*5) -> (45, ) (Nan, 45)
 model.add(Dense(units=10))
 # (임의) hidden 10 layer 처리
 model.add(Dense(1)) # 이미지의 최종 수치화, (Nan, 1)
+# Nan = 고정적으로 제공되는 Data의 양
+# model.add(tf.keras.layers.Dense(32))
+# model.output_shape (None, 32) -> None = data의 개수
 
 model.summary()
 
 
 
 '''
-cnn 연산 검색
-'''
-
-'''
-Input shape
+Conv2D Input shape
+(None, 4, 4, 10)
 Conv2D(batch_size, rows, columns, channels(colors, filters))
--> batch_size: 훈련의 단위(10개의 데이터+2batch_size: 2개씩 5번)
+1. batch_size=None(데이터의 개수) -> 고정되어있으므로 입력 시 생략(or NaN, None)
+2. rows: 행
+3. columns: 열
+4. channnels: color(흑백-1, 컬러-3)
 
-Dense(units)
-Input shape
+Dense Input shape
+(None, 10)
 Dense(batch_size, input_dim)
-input_dim=col 개수
-Dense(4, activation='relu')
+1. batch_size=None(데이터의 개수) -> 고정되어있으므로 입력 시 생략(or NaN, None)
+2. input_dim=col 개수
+
 '''
+
 
 
 '''
@@ -52,12 +57,13 @@ _________________________________________________________________
  Layer (type)                Output Shape              Param #
 =================================================================
  conv2d (Conv2D)             (None, 4, 4, 10)          50 
-                            연산에 따라 사이즈가 줄어감
+                             연산에 따라 사이즈가 줄어감
  conv2d_1 (Conv2D)           (None, 3, 3, 5)           205
-                            5 = filter 수
- flatten (Flatten)           (None, 45)                0 (flatten은 펴주는 것이므로 연산량 X) -------------------DNN---------------------
+                              5 = filter 수
+-------------------------------DNN---------------------------------
+ flatten (Flatten)           (None, 45)                0 (flatten은 펴주는 것이므로 연산량 X) 
 
- dense (Dense)               (None, 10)                460(bias +1)
+ dense (Dense)               (None, 10)                460 (bias +1)
 
  dense_1 (Dense)             (None, 1)                 11
  =================================================================

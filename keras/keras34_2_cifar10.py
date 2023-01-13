@@ -3,7 +3,7 @@ import numpy as np
 
 from tensorflow.keras.datasets import mnist, cifar10, cifar100
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Conv2D, Flatten, Dense, Dropout
+from tensorflow.keras.layers import Conv2D, Flatten, Dense, Dropout, MaxPooling2D
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 
 
@@ -16,6 +16,10 @@ filename = '{epoch:04d}-{val_loss:.4f}.hdf5'
 (x_train, y_train), (x_test, y_test) = cifar10.load_data()
 print(x_train.shape, y_train.shape) # (50000, 32, 32, 3) (50000, 1)
 print(x_test.shape, y_test.shape) # (10000, 32, 32, 3) (10000, 1)
+
+# pixel값의 최대 수치인 255로 직접 나눠주어 정규화 scaling
+x_train = x_train/255
+x_test = x_test/255
 
 print(np.unique(y_train, return_counts=True))
 '''
@@ -31,10 +35,12 @@ model.add(Conv2D(filters=128,
                  padding='same',
                  input_shape=(32, 32, 3),
                  activation='relu'))
+model.add(MaxPooling2D((2, 2)))
 model.add(Conv2D(filters=64,
                  kernel_size=(2, 2),
                  padding='same',
                  activation='relu'))
+model.add(MaxPooling2D((2, 2)))
 model.add(Conv2D(filters=64,
                  kernel_size=(2, 2),
                  padding='same',
@@ -79,5 +85,9 @@ print("acc: ", result[1])
 Result
 loss:  2.3027520179748535
 acc:  0.10000000149011612
+
+Result with train and test data scaling
+loss:  0.9031396508216858
+acc:  0.6916000247001648
 
 '''
