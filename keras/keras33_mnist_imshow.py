@@ -1,4 +1,5 @@
 from tensorflow.keras.datasets import mnist
+# mnist: 고등학생과 미국 인구조사국 직원들이 손으로 쓴 70,000개의 작은 숫자 이미지들의 집합
 
 
 (x_train, y_train), (x_test, y_test) = mnist.load_data()
