@@ -12,7 +12,7 @@ from sklearn.metrics import accuracy_score
 
 
 # 1. Data
-datasets = load_digits()
+datasets = load_digits() # <class 'sklearn.utils._bunch.Bunch'>
 x = datasets.data
 y = datasets['target']
 print(x.shape, y.shape) # (1797, 64) (1797,)
@@ -66,10 +66,11 @@ y_test = np.argmax(y_test, axis=1)
 
 acc = accuracy_score(y_test, y_predict)
 print("accuracy_score: ", acc)
-
+print(type(acc)) # <class 'numpy.float64'>
 
 import matplotlib.pyplot as plt
 
 plt.gray()
-plt.matshow(datasets.images[64])
+plt.matshow(datasets.images[64]) # <class 'numpy.ndarray'>
+# plt.matshow(2D array or list)
 plt.show()
