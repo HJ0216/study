@@ -3,11 +3,13 @@ from tensorflow.keras.datasets import mnist
 
 (x_train, y_train), (x_test, y_test) = mnist.load_data()
 
-print(x_train.shape, y_train.shape)
+print(x_train.shape)
 # (60000, 28, 28) -> 1이 생략된 흑백 데이터(60000, 28, 28, 1)
+print(y_train.shape)
 # (60000,)
 
-print(x_test.shape, y_test.shape) # (10000, 28, 28) (10000,)
+print(x_test.shape) # (10000, 28, 28)
+print(y_test.shape) # (10000,)
 
 print(x_train[0])
 print(y_train[0])
@@ -44,8 +46,10 @@ x_train[0]
 
 y_train[0]
 5
+
+x_train[0] = y_train[0]으로 훈련
 '''
 
 import matplotlib.pyplot as plt
-plt.imshow(x_train[1000], 'gray')
-plt.show()
+plt.imshow(x_train[0], 'gray')
+plt.show() # print(x_train[0])

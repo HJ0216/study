@@ -1,12 +1,25 @@
 import numpy as np
-from tensorflow.keras.datasets import mnist
+import datetime
 
+from tensorflow.keras.datasets import mnist
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Conv2D, Flatten, Dense, Dropout
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
+
+
+path = './_save/'
+filepath = './_save/MCP/'
+filename = '{epoch:04d}-{val_loss:.4f}.hdf5'
+
+# 1. data
 (x_train, y_train), (x_test, y_test) = mnist.load_data()
 print(x_train.shape, y_train.shape) # (60000, 28, 28) (60000,)
 print(x_test.shape, y_test.shape) # (10000, 28, 28) (10000,)
 
 x_train = x_train.reshape(60000, 28, 28, 1)
 x_test = x_test.reshape(10000, 28, 28, 1)
+# train, test 분리되어있으므로 split 필요 X
+
 
 print(x_train.shape, y_train.shape) # (60000, 28, 28, 1) (60000,)
 print(x_test.shape, y_test.shape) # (10000, 28, 28) (10000,)
@@ -24,9 +37,21 @@ print(np.unique(y_train, return_counts=True))
 array([5923, 6742, 5958, 6131, 5842, 5421, 5918, 6265, 5851, 5949], dtype=int64))
 '''
 
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Conv2D, Flatten, Dense
 
+'''
+scaler = StandardScaler()
+scaler.fit(x_train)
+x_train = scaler.transform(x_train)
+x_test = scaler.transform(x_test)
+
+ValueError: Found array with dim 4.
+StandardScaler expected <= 2.
+
+StandardScaler, MinMaxScaler는 dim=2인 경우에 가능
+'''
+
+
+# 2. Model
 model = Sequential()
 model.add(Conv2D(filters=128,
                  kernel_size=(2, 2),
@@ -36,8 +61,45 @@ model.add(Conv2D(filters=64,
                  kernel_size=(2, 2))) # 26, 26, 64
 model.add(Conv2D(filters=64,
                  kernel_size=(2, 2))) # 25, 25, 64
-model.add(Flatten())
-model.add(Dense(32, activation='relu'))  # 32- 임의
-model.add(10, activation='softmax') # 10=y_class
+model.add(Flatten()) # input_dim=25*25*64=40000
+model.add(Dense(32, activation='relu'))  # 32- 임의, input shape (60000, 40000) -> (40000, )
+# 60000=batch_size(총 훈련 필요 대상), 40000=input_dim
+model.add(Dropout(0.3))
+model.add(Dense(10, activation='softmax')) # 10=y_class
 
-model.summary()
+# model.summary()
+
+
+# 3. Compile and train
+model.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=['acc'])
+# one-hot encoding 안했으므로, sparse
+# one-hot encoding 후 (60000, 10)
+
+
+earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=20, restore_best_weights=True, verbose=1)
+
+date = datetime.datetime.now()
+date = date.strftime("%m%d_%H%M")
+
+modelCheckPoint = ModelCheckpoint(monitor='val_loss', mode='auto', verbose=1,
+                                   save_best_only=True,
+                                   filepath=filepath + 'k34_1_' + date + '_' + filename)
+
+
+model.fit(x_train, y_train, epochs=100, batch_size=32,
+                    validation_split=0.2,
+                    callbacks=[earlyStopping, modelCheckPoint],
+                    verbose=1)
+
+model.save(path+'keras34_1_mnist_save_model.h5') # 가중치 및 모델 세이브
+
+
+# 4. evaluate and predict
+result = model.evaluate(x_test, y_test)
+print("loss: ", result[0])
+print("acc: ", result[1])
+
+
+
+
+# early stopping, modelcheck point, val_
