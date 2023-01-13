@@ -20,7 +20,7 @@ print(x_test.shape, y_test.shape) # (10000, 32, 32, 3) (10000, 1)
 print(np.unique(y_train, return_counts=True))
 '''
 (array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], dtype=uint8),
-array([5000, 5000, 5000, 5000, 5000, 5000, 5000, 5000, 5000, 5000], dtype=int64))
+ array([5000, 5000, 5000, 5000, 5000, 5000, 5000, 5000, 5000, 5000], dtype=int64))
 '''
 
 
@@ -28,15 +28,22 @@ array([5000, 5000, 5000, 5000, 5000, 5000, 5000, 5000, 5000, 5000], dtype=int64)
 model = Sequential()
 model.add(Conv2D(filters=128,
                  kernel_size=(2, 2),
-                 input_shape=(28, 28, 1),
+                 padding='same',
+                 input_shape=(32, 32, 3),
                  activation='relu'))
 model.add(Conv2D(filters=64,
-                 kernel_size=(2, 2)))
+                 kernel_size=(2, 2),
+                 padding='same',
+                 activation='relu'))
 model.add(Conv2D(filters=64,
-                 kernel_size=(2, 2)))
+                 kernel_size=(2, 2),
+                 padding='same',
+                 activation='relu'))
 model.add(Flatten())
 model.add(Dense(32, activation='relu'))
-model.add(Dropout(0.3))
+model.add(Dropout(0.5))
+# dropout = rate: Float between 0 and 1. Fraction of the input units to drop.
+# 사용하지 않을 node의 비율
 model.add(Dense(10, activation='softmax'))
 
 
@@ -53,7 +60,7 @@ modelCheckPoint = ModelCheckpoint(monitor='val_loss', mode='auto', verbose=1,
                                    filepath=filepath + 'k34_2_' + date + '_' + filename)
 
 
-model.fit(x_train, y_train, epochs=100, batch_size=32,
+model.fit(x_train, y_train, epochs=300, batch_size=1024,
                     validation_split=0.2,
                     callbacks=[earlyStopping, modelCheckPoint],
                     verbose=1)
@@ -66,3 +73,11 @@ result = model.evaluate(x_test, y_test)
 print("loss: ", result[0])
 print("acc: ", result[1])
 
+
+
+'''
+Result
+loss:  2.3027520179748535
+acc:  0.10000000149011612
+
+'''
