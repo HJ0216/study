@@ -41,11 +41,7 @@ scaler = MinMaxScaler()
 scaler.fit(x_train)
 x_train = scaler.transform(x_train)
 x_test = scaler.transform(x_test)
-<<<<<<< HEAD
 
-=======
-test_cvs = scaler.transform(test_cvs)
->>>>>>> 631cb8295c9d763bf692ab70cc12e4162c05a96b
 
 # 2. model
 model = Sequential()
@@ -60,8 +56,8 @@ model.add(Dense(1))
 model.compile(loss='mse', optimizer='adam', metrics=['mae'])
 earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=20, restore_best_weights=True, verbose=1)
 hist = model.fit(x_train, y_train,
-          epochs=300,
-          batch_size=16,
+          epochs=512,
+          batch_size=8,
           validation_split=0.2,
           callbacks=[earlyStopping],
           verbose=1)
