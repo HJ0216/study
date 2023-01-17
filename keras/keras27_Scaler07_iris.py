@@ -40,10 +40,10 @@ x_test = scaler.transform(x_test)
 
 # 2. Model Construction
 model = Sequential()
-model.add(Dense(64, activation='relu', input_shape=(4, )))
-model.add(Dense(64, activation='sigmoid'))
-model.add(Dense(32,activation='relu'))
-model.add(Dense(16,activation='linear'))
+model.add(Dense(32, activation='relu', input_shape=(4, )))
+model.add(Dense(32, activation='sigmoid'))
+model.add(Dense(16,activation='relu'))
+model.add(Dense(8,activation='linear'))
 model.add(Dense(3,activation='softmax'))
 
 
@@ -55,7 +55,7 @@ model.compile(loss='categorical_crossentropy',
 
 earlyStopping = EarlyStopping(monitor='accuracy', mode='auto', patience=50, restore_best_weights=True, verbose=1)
 
-model.fit(x_train, y_train, epochs=1000, batch_size=16,
+model.fit(x_train, y_train, epochs=512, batch_size=16,
           validation_split=0.2,
           callbacks=[earlyStopping],
           verbose=1)
