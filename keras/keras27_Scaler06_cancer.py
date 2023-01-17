@@ -32,11 +32,11 @@ x_test = scaler.transform(x_test)
 
 # 2. Model Construction
 model = Sequential()
-model.add(Dense(50, activation='linear', input_shape=(30,)))
-model.add(Dense(40, activation='relu'))
-model.add(Dense(30, activation='relu'))
-model.add(Dense(20, activation='relu'))
-model.add(Dense(10, activation='relu'))
+model.add(Dense(32, activation='linear', input_shape=(30,)))
+model.add(Dense(32, activation='relu'))
+model.add(Dense(16, activation='relu'))
+model.add(Dense(16, activation='relu'))
+model.add(Dense(8, activation='relu'))
 model.add(Dense(1, activation='sigmoid'))
 
 
@@ -46,7 +46,7 @@ model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy']
 earlyStopping = EarlyStopping(monitor='accuracy', mode='auto', patience=20, restore_best_weights=True, verbose=1)
 
 hist = model.fit(x_train, y_train,
-          epochs=500, batch_size=8,
+          epochs=350, batch_size=4,
           validation_split=0.2,
           callbacks=[earlyStopping],
           verbose=1)
