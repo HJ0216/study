@@ -49,8 +49,8 @@ model.add(Dense(1))
 model.compile(loss='mse', optimizer='adam')
 earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=5, restore_best_weights=True, verbose=1)
 hist = model.fit(x_train, y_train,
-          epochs=300,
-          batch_size=16,
+          epochs=500,
+          batch_size=8,
           validation_split=0.2,
           callbacks=[earlyStopping],
           verbose=1)
@@ -72,7 +72,7 @@ print("RMSE: ", rmse)
 y_submit = model.predict(test_csv)
 
 submission['count'] = y_submit
-submission.to_csv(path+'submission_0109.csv')
+submission.to_csv(path+'submission_0117.csv')
 
 print(hist)
 print(hist.history)
