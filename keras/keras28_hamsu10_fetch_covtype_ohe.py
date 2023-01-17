@@ -57,7 +57,7 @@ model.compile(loss='categorical_crossentropy',
 
 earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=20, restore_best_weights=True, verbose=1)
 
-model.fit(x_train, y_train, epochs=500, batch_size=256,
+model.fit(x_train, y_train, epochs=128, batch_size=256,
           validation_split=0.2,
           callbacks = [earlyStopping],
           verbose=1)
