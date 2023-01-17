@@ -21,8 +21,8 @@ y_validation = np.array([14,15,16])
 # 2. Model
 model = Sequential()
 model.add(Dense(32, input_dim=1))
+model.add(Dense(32, activation='relu'))
 model.add(Dense(16, activation='relu'))
-model.add(Dense(8, activation='relu'))
 model.add(Dense(1))
 
 
