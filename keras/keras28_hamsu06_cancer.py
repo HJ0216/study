@@ -46,7 +46,7 @@ model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy']
 earlyStopping = EarlyStopping(monitor='accuracy', mode='auto', patience=20, restore_best_weights=True, verbose=1)
 
 hist = model.fit(x_train, y_train,
-          epochs=1000, batch_size=8,
+          epochs=512, batch_size=32,
           validation_split=0.2,
           callbacks=[earlyStopping],
           verbose=1)
