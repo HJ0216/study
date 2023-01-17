@@ -41,8 +41,8 @@ earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=5, restor
 # verbose를 통해 earlyStopping 과정 볼 수 있음: Restoring model weights from the end of the best epoch: 25.
 
 hist = model.fit(x_train, y_train,
-          epochs=300,
-          batch_size=16,
+          epochs=500,
+          batch_size=4,
           validation_split=0.2,
           callbacks=[earlyStopping],
           # 정지된 지점-5: min(val_loss)
