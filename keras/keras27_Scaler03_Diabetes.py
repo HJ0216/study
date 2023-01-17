@@ -40,8 +40,8 @@ model.add(Dense(1))
 model.compile(loss='mse', optimizer='adam', metrics=['mae'])
 earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=50, restore_best_weights=True, verbose=1)
 hist = model.fit(x_train, y_train,
-          epochs=500,
-          batch_size=4,
+          epochs=512,
+          batch_size=2,
           validation_split=0.2,
           callbacks=[earlyStopping],
           verbose=1)
