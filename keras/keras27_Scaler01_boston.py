@@ -52,14 +52,6 @@ x_train = scaler.transform(x_train)
 x_test = scaler.transform(x_test)
 # train data의 가중치가 저장된 scaler를 transform
 # train data 외 fit X
-<<<<<<< HEAD
-=======
-'''
-scaler = MinMaxScaler()
-x_train = scaler.fit_transform(x_train)
-x_test = scaler.transform(x_test)
->>>>>>> 631cb8295c9d763bf692ab70cc12e4162c05a96b
-
 '''
 
 
@@ -74,8 +66,8 @@ model.add(Dense(1))
 model.compile(loss='mse', optimizer='adam', metrics=['mae'])
 earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=10, restore_best_weights=True, verbose=1)
 hist = model.fit(x_train, y_train,
-          epochs=300,
-          batch_size=16,
+          epochs=500,
+          batch_size=8,
           validation_split=0.2,
           callbacks=[earlyStopping],
           verbose=1)
