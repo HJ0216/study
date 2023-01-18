@@ -47,9 +47,9 @@ test_csv = scaler.transform(test_csv)
 # 2. Model Construction
 input1 = Input(shape=(9,))
 dense1 = Dense(64, activation='relu')(input1)
-drop1 = Dropout(0.3)(dense1)
+drop1 = Dropout(0.2)(dense1)
 dense2 = Dense(64, activation='sigmoid')(drop1)
-drop2 = Dropout(0.3)(dense2)
+drop2 = Dropout(0.15)(dense2)
 dense3 = Dense(32, activation='relu')(drop2)
 drop3 = Dropout(0.2)(dense3)
 output1 = Dense(1, activation='linear')(drop3)
@@ -58,7 +58,7 @@ model = Model(inputs=input1, outputs=output1)
 
 # 3. Compile and train
 model.compile(loss='mse', optimizer='adam', metrics=['mae'])
-earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=20, restore_best_weights=True, verbose=1)
+earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=32, restore_best_weights=True, verbose=1)
 
 date = datetime.datetime.now()
 date = date.strftime("%m%d_%H%M")
@@ -69,8 +69,8 @@ modelCheckPoint = ModelCheckpoint(monitor='val_loss', mode='auto', verbose=1,
 
 
 model.fit(x_train, y_train,
-          epochs=500,
-          batch_size=8,
+          epochs=512,
+          batch_size=32,
           validation_split=0.2,
           callbacks=[earlyStopping, modelCheckPoint],
           verbose=1)
@@ -95,7 +95,7 @@ print("R2: ", r2)
 y_submit = model.predict(test_csv)
 
 submission['count'] = y_submit
-submission.to_csv(path+'submission_0112.csv')
+submission.to_csv(path+'submission_0118.csv')
 
 
 
