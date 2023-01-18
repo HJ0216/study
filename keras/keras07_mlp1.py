@@ -31,16 +31,16 @@ print(x.shape) # (10, 2)
 model = Sequential()
 model.add(Dense(10, input_dim=2))
 # input_dim = 2 (입력값 기준으로 열의 개수, Input Layer), output = 5(hidden layer로 임의값 설정 가능)
-model.add(Dense(20))
-model.add(Dense(30))
-model.add(Dense(20))
+model.add(Dense(32))
+model.add(Dense(32))
+model.add(Dense(16))
 model.add(Dense(1))
 # output_dim = 1 (출력값 기준으로 열의 개수, Output Layer)
 
 
 # 3. Compile and Train
 model.compile(loss='mae', optimizer='adam')
-model.fit(x, y, epochs=100, batch_size=1)
+model.fit(x, y, epochs=64, batch_size=1)
 # batch를 자르는 기준은 총 data 개수가 아니라, 1열에 포함된 scala 개수
 
 
