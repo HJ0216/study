@@ -47,7 +47,7 @@ model = Model(inputs=input1, outputs=output1)
 
 # 3. Compile and train
 model.compile(loss='mse', optimizer='adam', metrics=['mae'])
-earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=50, restore_best_weights=True, verbose=1)
+earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=32, restore_best_weights=True, verbose=1)
 
 date = datetime.datetime.now()
 date = date.strftime("%m%d_%H%M")
@@ -57,8 +57,8 @@ modelCheckPoint = ModelCheckpoint(monitor='val_loss', mode='auto', verbose=1,
                                    filepath=filepath + 'k31_03_' + date + '_' + filename)
 
 model.fit(x_train, y_train,
-          epochs=1000,
-          batch_size=8,
+          epochs=512,
+          batch_size=16,
           validation_split=0.2,
           callbacks=[earlyStopping, modelCheckPoint],
           verbose=1)
