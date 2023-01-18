@@ -49,7 +49,7 @@ x_test = scaler.transform(x_test)
 # 2. Model Construction
 input1 = Input(shape=(4,))
 dense1 = Dense(64, activation='relu')(input1)
-drop1 = Dropout(0.3)(dense1)
+drop1 = Dropout(0.15)(dense1)
 dense2 = Dense(64, activation='linear')(drop1)
 drop2 = Dropout(0.3)(dense2)
 dense3 = Dense(32, activation='relu')(drop2)
@@ -65,7 +65,7 @@ model.compile(loss='categorical_crossentropy',
               metrics=['accuracy']
               )
 
-earlyStopping = EarlyStopping(monitor='accuracy', mode='auto', patience=20, restore_best_weights=True, verbose=1)
+earlyStopping = EarlyStopping(monitor='accuracy', mode='auto', patience=32, restore_best_weights=True, verbose=1)
 
 date = datetime.datetime.now()
 date = date.strftime("%m%d_%H%M")
@@ -75,7 +75,7 @@ modelCheckPoint = ModelCheckpoint(monitor='val_loss', mode='auto', verbose=1,
                                    filepath=filepath + 'k31_07_' + date + '_' + filename)
 
 
-model.fit(x_train, y_train, epochs=500, batch_size=8,
+model.fit(x_train, y_train, epochs=256, batch_size=16,
           validation_split=0.2,
           callbacks=[earlyStopping, modelCheckPoint],
           verbose=1)
