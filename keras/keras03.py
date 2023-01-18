@@ -22,7 +22,7 @@ model.add(Dense(1, input_dim=1))
 
 # 3. Compile and training
 model.compile(loss='mae', optimizer='adam')
-model.fit(x, y, epochs=3000)
+model.fit(x, y, epochs=1024)
 
 
 # 4. Evaluation and Prediction
