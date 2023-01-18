@@ -24,15 +24,15 @@ Data를 Train set과 Test set으로 구분하는 이유
 
 # 2. Model Construction
 model = Sequential()
-model.add(Dense(10, input_dim=1))
-model.add(Dense(10))
-model.add(Dense(10))
+model.add(Dense(32, input_dim=1))
+model.add(Dense(32))
+model.add(Dense(16))
 model.add(Dense(1))
 
 
 # 3. compile and train
 model.compile(loss='mae', optimizer='adam')
-model.fit(x_train, y_train, epochs=200, batch_size=1)
+model.fit(x_train, y_train, epochs=128, batch_size=1)
 
 
 # 4. Evalueate and Predict
