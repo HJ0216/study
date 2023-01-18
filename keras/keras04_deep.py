@@ -10,21 +10,21 @@ y = np.array([1,2,3,5,4])
 
 # 2. Model
 model = Sequential()
-model.add(Dense(30, input_dim=1)) # 이전 layer의 output이 다음 layer의 input이 되므로 생략 가능
-model.add(Dense(50)) # Layer 쌓기
-model.add(Dense(70))
-model.add(Dense(90))
-model.add(Dense(90))
-model.add(Dense(70))
-model.add(Dense(50))
-model.add(Dense(30))
-model.add(Dense(10))
+model.add(Dense(64, input_dim=1)) # 이전 layer의 output이 다음 layer의 input이 되므로 생략 가능
+model.add(Dense(64)) # Layer 쌓기
+model.add(Dense(32))
+model.add(Dense(32))
+model.add(Dense(16))
+model.add(Dense(16))
+model.add(Dense(8))
+model.add(Dense(8))
+model.add(Dense(4))
 model.add(Dense(1))
 
 
 # 3. Complile, training
 model.compile(loss='mae', optimizer='adam')
-model.fit(x, y, epochs=500)
+model.fit(x, y, epochs=256)
 
 
 # 4. Evaluation, Prediction
