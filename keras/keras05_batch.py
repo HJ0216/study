@@ -14,16 +14,16 @@ y = np.array([1,2,3,5,4,6])
 # 해결1 및 문제2: batch로 나누어 훈련을 시킬 경우, 시간이 오래 걸림
 #         해결2: 알맞은 batch size 찾기
 model = Sequential()
-model.add(Dense(30, input_dim=1))
-model.add(Dense(50))
-model.add(Dense(40))
-model.add(Dense(20))
+model.add(Dense(64, input_dim=1))
+model.add(Dense(64))
+model.add(Dense(32))
+model.add(Dense(16))
 model.add(Dense(1))
 
 
 # 3. Complile, training
 model.compile(loss='mae', optimizer='adam')
-model.fit(x, y, epochs=300, batch_size=2)
+model.fit(x, y, epochs=256, batch_size=2)
 # Batch_size Default: 32
 
 
