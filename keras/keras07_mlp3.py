@@ -15,19 +15,16 @@ y = y.T # (10, 2), output_dim = 2
 
 # 2. Model
 model = Sequential()
-model.add(Dense(10, input_dim=3))
-model.add(Dense(30))
-model.add(Dense(50))
-model.add(Dense(70))
-model.add(Dense(50))
-model.add(Dense(30))
-model.add(Dense(10))
+model.add(Dense(64, input_dim=3))
+model.add(Dense(64))
+model.add(Dense(32))
+model.add(Dense(16))
 model.add(Dense(2))
 
 
 # 3. Compile
 model.compile(loss='mae', optimizer='adam')
-model.fit(x, y, epochs=1000, batch_size=2)
+model.fit(x, y, epochs=128, batch_size=2)
 
 
 # 4. (Evaluate) and Predict
