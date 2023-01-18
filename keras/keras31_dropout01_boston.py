@@ -62,11 +62,11 @@ model.summary()
 # 2. Model(Function)
 input1 = Input(shape=(13,))
 dense1 = Dense(64, activation='relu')(input1)
-drop1 = Dropout(0.5)(dense1)
+drop1 = Dropout(0.3)(dense1)
 dense2 = Dense(64, activation='sigmoid')(drop1)
-drop2 = Dropout(0.3)(dense2)
+drop2 = Dropout(0.2)(dense2)
 dense3 = Dense(32, activation='relu')(drop2)
-drop3 = Dropout(0.2)(dense3)
+drop3 = Dropout(0.15)(dense3)
 dense4 = Dense(32, activation='linear')(drop3)
 output1 = Dense(1, activation='linear')(dense4)
 model = Model(inputs=input1, outputs=output1)
@@ -86,7 +86,7 @@ Non-trainable params: 0
 # 3. compile and train
 model.compile(loss='mse', optimizer='adam', metrics=['mae'])
 
-earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=20,
+earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=30,
                               restore_best_weights=False, # False: 최적의 weight + patience
                               verbose=1)
 
@@ -104,8 +104,8 @@ modelCheckPoint = ModelCheckpoint(monitor='val_loss', mode='auto', verbose=1,
                                    filepath=filepath + 'k31_01_' + date + '_' + filename)
 
 model.fit(x_train, y_train,
-          epochs=500,
-          batch_size=128,
+          epochs=256,
+          batch_size=64,
           validation_split=0.2,
           callbacks=[earlyStopping, modelCheckPoint],
           verbose=1)
