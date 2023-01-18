@@ -9,16 +9,16 @@ y = np.array([1,2,3,5,4,6])
 
 # 2. Model
 model = Sequential()
-model.add(Dense(30, input_dim=1))
-model.add(Dense(50))
-model.add(Dense(40))
-model.add(Dense(20))
+model.add(Dense(64, input_dim=1))
+model.add(Dense(64))
+model.add(Dense(32))
+model.add(Dense(16))
 model.add(Dense(1))
 
 
 # 3. Complile, training
 model.compile(loss='mae', optimizer='adam')
-model.fit(x, y, epochs=200, batch_size=3)
+model.fit(x, y, epochs=128, batch_size=3)
 
 
 # 4. Evaluation, Prediction
