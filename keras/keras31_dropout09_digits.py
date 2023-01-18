@@ -42,7 +42,7 @@ x_test = scaler.transform(x_test)
 # 2. Model Construction
 model = Sequential()
 model.add(Dense(64, activation='relu', input_shape=(64, )))
-model.add(Dropout(0.3)) # 50%를 dropout
+model.add(Dropout(0.5)) # 50%를 dropout
 model.add(Dense(64, activation='sigmoid'))
 model.add(Dropout(0.3))
 model.add(Dense(32,activation='relu'))
@@ -57,7 +57,7 @@ model.compile(loss='categorical_crossentropy',
               metrics=['accuracy']
               )
 
-earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=50, restore_best_weights=True, verbose=1)
+earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=32, restore_best_weights=True, verbose=1)
 
 date = datetime.datetime.now()
 date = date.strftime("%m%d_%H%M")
@@ -66,7 +66,7 @@ modelCheckPoint = ModelCheckpoint(monitor='val_loss', mode='auto', verbose=1,
                                    save_best_only=True,
                                    filepath=filepath + 'k31_09_' + date + '_' + filename)
 
-model.fit(x_train, y_train, epochs=1000, batch_size=8,
+model.fit(x_train, y_train, epochs=256, batch_size=64,
           validation_split=0.2,
           callbacks=[earlyStopping, modelCheckPoint],
           verbose=1)
