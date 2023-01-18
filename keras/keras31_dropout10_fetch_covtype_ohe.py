@@ -74,7 +74,7 @@ modelCheckPoint = ModelCheckpoint(monitor='val_loss', mode='auto', verbose=1,
                                    save_best_only=True,
                                    filepath=filepath + 'k31_10_ohe_' + date + '_' + filename)
 
-model.fit(x_train, y_train, epochs=500, batch_size=256,
+model.fit(x_train, y_train, epochs=256, batch_size=128,
           validation_split=0.2,
           callbacks = [earlyStopping, modelCheckPoint],
           verbose=1)
