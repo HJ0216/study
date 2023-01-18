@@ -38,11 +38,11 @@ x_test = scaler.transform(x_test)
 # 2. Model Construction
 input1 = Input(shape=(30,))
 dense1 = Dense(64, activation='relu')(input1)
-drop1 = Dropout(0.3)(dense1)
+drop1 = Dropout(0.2)(dense1)
 dense2 = Dense(64, activation='linear')(drop1)
-drop2 = Dropout(0.2)(dense2)
+drop2 = Dropout(0.15)(dense2)
 dense3 = Dense(32, activation='relu')(drop2)
-drop3 = Dropout(0.3)(dense3)
+drop3 = Dropout(0.15)(dense3)
 dense4 = Dense(32, activation='relu')(drop3)
 output1 = Dense(1, activation='sigmoid')(dense4)
 model = Model(inputs=input1, outputs=output1)
@@ -51,7 +51,7 @@ model = Model(inputs=input1, outputs=output1)
 # 3. Compile and train
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
-earlyStopping = EarlyStopping(monitor='accuracy', mode='auto', patience=20, restore_best_weights=True, verbose=1)
+earlyStopping = EarlyStopping(monitor='accuracy', mode='auto', patience=32, restore_best_weights=True, verbose=1)
 
 date = datetime.datetime.now()
 date = date.strftime("%m%d_%H%M")
@@ -61,7 +61,7 @@ modelCheckPoint = ModelCheckpoint(monitor='val_loss', mode='auto', verbose=1,
                                    filepath=filepath + 'k31_06_' + date + '_' + filename)
 
 model.fit(x_train, y_train,
-          epochs=1000, batch_size=16,
+          epochs=512, batch_size=32,
           validation_split=0.2,
           callbacks=[earlyStopping, modelCheckPoint],
           verbose=1)
