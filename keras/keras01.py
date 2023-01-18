@@ -23,7 +23,7 @@ model.add(Dense(1, input_dim=1))
 model.compile(loss='mae', optimizer='adam')
 # 'mae': min absolute error
 # 'adam': loss 최적화 = adam 사용
-model.fit(x, y, epochs=10)
+model.fit(x, y, epochs=256)
 # model.fit: training
 # epochs: training 횟수(과적합을 고려하여 횟수 조절)
 # 초기 랜덤값이 다르므로 실행 시 마다 loss가 달라짐
