@@ -22,7 +22,7 @@ model.add(Dense(1, input_dim=1))
 
 # 3. compile and training(best weight, minimum loss)
 model.compile(loss='mae', optimizer='adam')
-model.fit(x, y, epochs=2000)
+model.fit(x, y, epochs=512)
 
 
 # 4. Evaluation and Prediction
