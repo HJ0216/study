@@ -20,9 +20,9 @@ x_train, x_test, y_train, y_test = train_test_split(
 
 # 2. Model Construction
 model = Sequential()
-model.add(Dense(10, input_dim=1))
-model.add(Dense(10))
-model.add(Dense(10))
+model.add(Dense(64, input_dim=1))
+model.add(Dense(32))
+model.add(Dense(8))
 model.add(Dense(1))
 
 
@@ -30,7 +30,7 @@ model.add(Dense(1))
 model.compile(loss='mse', optimizer='adam',
               metrics=['mae', 'accuracy', 'acc']) # accuracy = acc
 # metrics: loss에 1개의 지표밖에 사용하지 못하므로 추가적으로 loss 타입을 사용하고 싶을 때 사용
-model.fit(x_train, y_train, epochs=200, batch_size=1)
+model.fit(x_train, y_train, epochs=128, batch_size=1)
 
 
 # 4. Evalueate and Predict
