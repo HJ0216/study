@@ -42,7 +42,7 @@ drop1 = Dropout(0.3)(dense1)
 dense2 = Dense(64, activation='sigmoid')(drop1)
 drop2 = Dropout(0.2)(dense2)
 dense3 = Dense(32, activation='relu')(drop2)
-drop3 = Dropout(0.2)(dense3)
+drop3 = Dropout(0.1)(dense3)
 output1 = Dense(1, activation='linear')(drop3)
 model = Model(inputs=input1, outputs=output1)
 
@@ -51,7 +51,7 @@ model = Model(inputs=input1, outputs=output1)
 # 3. Compile and train
 model.compile(loss='mse', optimizer='adam', metrics=['mae'])
 
-earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=20, restore_best_weights=True, verbose=1)
+earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=32, restore_best_weights=True, verbose=1)
 
 
 date = datetime.datetime.now()
@@ -63,8 +63,8 @@ modelCheckPoint = ModelCheckpoint(monitor='val_loss', mode='auto', verbose=1,
 
 
 model.fit(x_train, y_train,
-          epochs=500,
-          batch_size=16,
+          epochs=512,
+          batch_size=32,
           validation_split=0.2,
           callbacks=[earlyStopping, modelCheckPoint],
           verbose=1)
