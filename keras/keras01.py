@@ -36,12 +36,12 @@ print('Result1: ', result)
 
 
 # 5. ect
-model.fit(x, y, epochs=1000)
+model.fit(x, y, epochs=512)
 result = model.predict([4])
 # result 값이 덮어씌어짐
 print('Result2: ', result)
 
-model.fit(x, y, epochs=3000)
+model.fit(x, y, epochs=1024)
 result = model.predict([4])
 print('Result3: ', result)
 
