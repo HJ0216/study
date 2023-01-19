@@ -89,7 +89,7 @@ modelCheckPoint = ModelCheckpoint(monitor='val_loss', mode='auto', verbose=1,
                                    filepath=filepath + 'k34_1_' + date + '_' + filename)
 
 
-model.fit(x_train, y_train, epochs=100, batch_size=32,
+model.fit(x_train, y_train, epochs=64, batch_size=512,
                     validation_split=0.2,
                     callbacks=[earlyStopping, modelCheckPoint],
                     verbose=1)
@@ -108,5 +108,9 @@ print("acc: ", result[1])
 Result
 loss:  0.11852584034204483
 acc:  0.9685999751091003
+
+Updated Result
+loss:  0.13651755452156067
+acc:  0.975600004196167
 
 '''
