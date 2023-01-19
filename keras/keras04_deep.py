@@ -13,18 +13,14 @@ model = Sequential()
 model.add(Dense(64, input_dim=1)) # 이전 layer의 output이 다음 layer의 input이 되므로 생략 가능
 model.add(Dense(64)) # Layer 쌓기
 model.add(Dense(32))
-model.add(Dense(32))
-model.add(Dense(16))
 model.add(Dense(16))
 model.add(Dense(8))
-model.add(Dense(8))
-model.add(Dense(4))
 model.add(Dense(1))
 
 
 # 3. Complile, training
 model.compile(loss='mae', optimizer='adam')
-model.fit(x, y, epochs=256)
+model.fit(x, y, epochs=128)
 
 
 # 4. Evaluation, Prediction
