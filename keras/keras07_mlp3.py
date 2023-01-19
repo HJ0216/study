@@ -24,7 +24,7 @@ model.add(Dense(2))
 
 # 3. Compile
 model.compile(loss='mae', optimizer='adam')
-model.fit(x, y, epochs=128, batch_size=2)
+model.fit(x, y, epochs=256, batch_size=8)
 
 
 # 4. (Evaluate) and Predict
