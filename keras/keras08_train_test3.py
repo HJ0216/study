@@ -60,7 +60,7 @@ model.add(Dense(1))
 
 # 3. Compile and train
 model.compile(loss='mae', optimizer='adam')
-model.fit(x_train, y_train, epochs=256, batch_size=1)
+model.fit(x_train, y_train, epochs=256, batch_size=32)
 
 
 # 4. evaluate and predict
