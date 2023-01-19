@@ -12,13 +12,12 @@ model = Sequential()
 model.add(Dense(64, input_dim=1))
 model.add(Dense(64))
 model.add(Dense(32))
-model.add(Dense(16))
 model.add(Dense(1))
 
 
 # 3. Complile, training
 model.compile(loss='mae', optimizer='adam')
-model.fit(x, y, epochs=128, batch_size=3)
+model.fit(x, y, epochs=128, batch_size=4)
 
 
 # 4. Evaluation, Prediction
