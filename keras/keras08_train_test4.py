@@ -111,19 +111,16 @@ x_train = x_train.T 할 경우, 데이터의 특징인 열이 input_dim으로 �
 
 # 2. Model
 model = Sequential()
-model.add(Dense(10, input_dim=3))
-model.add(Dense(30))
-model.add(Dense(50))
-model.add(Dense(70))
-model.add(Dense(50))
-model.add(Dense(30))
-model.add(Dense(10))
+model.add(Dense(64, input_dim=3))
+model.add(Dense(32))
+model.add(Dense(32))
+model.add(Dense(8))
 model.add(Dense(2))
 
 
 # 3. Compile
 model.compile(loss='mae', optimizer='adam')
-model.fit(x, y, epochs=1000, batch_size=2)
+model.fit(x, y, epochs=512, batch_size=32)
 
 
 # 4. (Evaluate) and Predict
