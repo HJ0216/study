@@ -23,7 +23,7 @@ model.add(Dense(1))
 
 # 3. Complile, training
 model.compile(loss='mae', optimizer='adam')
-model.fit(x, y, epochs=256, batch_size=2)
+model.fit(x, y, epochs=256, batch_size=8)
 # Batch_size Default: 32
 
 
