@@ -66,7 +66,7 @@ model.add(Dense(100, activation='softmax'))
 # 3. Compile and train
 model.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=['acc'])
 
-earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=20, restore_best_weights=True, verbose=1)
+earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=32, restore_best_weights=True, verbose=1)
 
 date = datetime.datetime.now()
 date = date.strftime("%m%d_%H%M")
@@ -76,7 +76,7 @@ modelCheckPoint = ModelCheckpoint(monitor='val_loss', mode='auto', verbose=1,
                                    filepath=filepath + 'k34_3_' + date + '_' + filename)
 
 
-model.fit(x_train, y_train, epochs=300, batch_size=512,
+model.fit(x_train, y_train, epochs=256, batch_size=512,
                     validation_split=0.2,
                     callbacks=[earlyStopping, modelCheckPoint],
                     verbose=1)
