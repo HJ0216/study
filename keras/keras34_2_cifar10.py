@@ -66,7 +66,7 @@ modelCheckPoint = ModelCheckpoint(monitor='val_loss', mode='auto', verbose=1,
                                    filepath=filepath + 'k34_2_' + date + '_' + filename)
 
 
-model.fit(x_train, y_train, epochs=300, batch_size=1024,
+model.fit(x_train, y_train, epochs=128, batch_size=512,
                     validation_split=0.2,
                     callbacks=[earlyStopping, modelCheckPoint],
                     verbose=1)
@@ -89,5 +89,7 @@ acc:  0.10000000149011612
 Result with train and test data scaling
 loss:  0.9031396508216858
 acc:  0.6916000247001648
+
+
 
 '''
