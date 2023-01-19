@@ -18,7 +18,6 @@ y_test = np.array(range(7, 10)) # 7~9
 # 2. Model Construction
 model = Sequential()
 model.add(Dense(64, input_dim=1))
-model.add(Dense(64))
 model.add(Dense(32))
 model.add(Dense(16))
 model.add(Dense(8))
@@ -27,7 +26,7 @@ model.add(Dense(1))
 
 # 3. Compile and train
 model.compile(loss='mae', optimizer='adam')
-model.fit(x_train, y_train, epochs=256, batch_size=1)
+model.fit(x_train, y_train, epochs=256, batch_size=16)
 
 
 # 4. evaluate and predict
