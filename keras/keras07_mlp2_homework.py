@@ -31,8 +31,6 @@ print(x.shape)
 # 2. Model
 model = Sequential()
 model.add(Dense(64, input_dim=3))
-model.add(Dense(64))
-model.add(Dense(32))
 model.add(Dense(32))
 model.add(Dense(16))
 model.add(Dense(1))
@@ -40,7 +38,7 @@ model.add(Dense(1))
 
 # 3. Compile
 model.compile(loss='mae', optimizer='adam')
-model.fit(x, y, epochs=256, batch_size=2)
+model.fit(x, y, epochs=256, batch_size=32)
 # 2행씩 훈련 5번(5/5)
 
 
