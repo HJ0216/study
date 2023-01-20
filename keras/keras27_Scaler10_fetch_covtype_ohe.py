@@ -69,9 +69,9 @@ model.compile(loss='categorical_crossentropy',
               metrics=['accuracy']
               )
 
-earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=20, restore_best_weights=True, verbose=1)
+earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=16, restore_best_weights=True, verbose=1)
 
-model.fit(x_train, y_train, epochs=100, batch_size=128,
+model.fit(x_train, y_train, epochs=128, batch_size=64,
           validation_split=0.2,
           callbacks = [earlyStopping],
           verbose=1)
@@ -100,5 +100,10 @@ Result using MinMaxScaler
 loss:  0.2795166075229645
 accuracy:  0.8866552710533142
 accuracy_score:  0.8866552498644613
+
+Updated result
+loss:  0.23012806475162506
+accuracy:  0.90787672996521
+accuracy_score:  0.9078767329587016
 
 '''
