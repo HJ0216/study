@@ -39,8 +39,7 @@ input1 = Input(shape=(54,))
 dense1 = Dense(64, activation='relu')(input1)
 dense2 = Dense(64, activation='linear')(dense1)
 dense3 = Dense(32, activation='relu')(dense2)
-dense4 = Dense(16, activation='relu')(dense3)
-output1 = Dense(7, activation='softmax')(dense4)
+output1 = Dense(7, activation='softmax')(dense3)
 model = Model(inputs=input1, outputs=output1)
 
 
@@ -50,9 +49,9 @@ model.compile(loss='categorical_crossentropy',
               metrics=['accuracy']
               )
 
-earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=50, restore_best_weights=True, verbose=1)
+earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=32, restore_best_weights=True, verbose=1)
 
-model.fit(x_train, y_train, epochs=512, batch_size=1024,
+model.fit(x_train, y_train, epochs=128, batch_size=512,
           validation_split=0.2,
           callbacks=[earlyStopping],
           verbose=1)
