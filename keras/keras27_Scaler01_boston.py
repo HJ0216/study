@@ -64,10 +64,10 @@ model.add(Dense(1))
 
 # 3. compile and train
 model.compile(loss='mse', optimizer='adam', metrics=['mae'])
-earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=10, restore_best_weights=True, verbose=1)
+earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=32, restore_best_weights=True, verbose=1)
 hist = model.fit(x_train, y_train,
-          epochs=500,
-          batch_size=8,
+          epochs=512,
+          batch_size=32,
           validation_split=0.2,
           callbacks=[earlyStopping],
           verbose=1)
