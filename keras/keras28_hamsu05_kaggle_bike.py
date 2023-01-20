@@ -56,9 +56,9 @@ model = Model(inputs=input1, outputs=output1)
 
 # 3. compile and train
 model.compile(loss='mse', optimizer='adam', metrics=['mae'])
-earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=50, restore_best_weights=True, verbose=1)
+earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=32, restore_best_weights=True, verbose=1)
 hist = model.fit(x_train, y_train,
-          epochs=1000,
+          epochs=256,
           batch_size=16,
           validation_split=0.2,
           callbacks=[earlyStopping],
