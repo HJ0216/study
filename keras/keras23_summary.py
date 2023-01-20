@@ -10,10 +10,10 @@ y = np.array([1,2,3])
 
 # 2. Model Instruction
 model = Sequential()
-model.add(Dense(5, input_dim=1))
-model.add(Dense(4))
-model.add(Dense(3))
-model.add(Dense(2))
+model.add(Dense(64, input_dim=1))
+model.add(Dense(32))
+model.add(Dense(32))
+model.add(Dense(16))
 model.add(Dense(1))
 
 model.summary()
