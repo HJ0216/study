@@ -43,10 +43,10 @@ model.add(Dense(1, activation='sigmoid'))
 # 3. Compile and train
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
-earlyStopping = EarlyStopping(monitor='accuracy', mode='auto', patience=20, restore_best_weights=True, verbose=1)
+earlyStopping = EarlyStopping(monitor='accuracy', mode='auto', patience=32, restore_best_weights=True, verbose=1)
 
 hist = model.fit(x_train, y_train,
-          epochs=350, batch_size=4,
+          epochs=512, batch_size=16,
           validation_split=0.2,
           callbacks=[earlyStopping],
           verbose=1)
