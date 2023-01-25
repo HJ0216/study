@@ -61,6 +61,12 @@ print(y_train[0])
 x_train = x_train.reshape(60000, 28, 28, 1)
 x_test = x_test.reshape(10000, 28, 28, 1)
 
+'''
+print(np.unique(y_train, return_counts=True))
+(array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], dtype=uint8),
+array([6000, 6000, 6000, 6000, 6000, 6000, 6000, 6000, 6000, 6000], dtype=int64))
+'''
+
 
 # 2. Model
 model = Sequential()

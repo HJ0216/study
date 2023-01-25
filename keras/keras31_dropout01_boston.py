@@ -44,6 +44,10 @@ scaler.fit(x_train)
 x_train = scaler.transform(x_train)
 x_test = scaler.transform(x_test)
 
+print(x_train.shape)
+print(x_test.shape)
+
+
 '''
 # 2. Model(Sequential)
 model = Sequential()
