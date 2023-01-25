@@ -25,6 +25,8 @@ print(np.unique(y_train, return_counts=True))
 '''
 (array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], dtype=uint8),
  array([5000, 5000, 5000, 5000, 5000, 5000, 5000, 5000, 5000, 5000], dtype=int64))
+ 
+ 
 '''
 
 

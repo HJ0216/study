@@ -63,6 +63,7 @@ model.add(Conv2D(filters=128,
                  activation='relu')) # Conv2D 후, result (27, 27, 128)
 model.add(Conv2D(filters=64,
                  kernel_size=(2, 2))) # Conv2D 후, result (26, 26, 64)
+# Sequential Model output->input이므로 입력값 작성 생략
 model.add(Conv2D(filters=64,
                  kernel_size=(2, 2))) # Conv2D 후, result (25, 25, 64)
 model.add(Flatten()) # input_dim=25*25*64=40000 = column
