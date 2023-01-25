@@ -56,10 +56,11 @@ Non-trainable params: 0
 _________________________________________________________________
 
 
-input_shape(None, 28, 28)
--> (None, 28, 128) # output_layer (Conv2D filter)
--> (None, 28, 64)
+input_shape(None, 28, 28, 1) -> (None, 28, 128)
+# output_layer (Conv2D filter)
 
+??????????????????????????????????
+흑백 이미지로 반환해서 
 '''
 
 

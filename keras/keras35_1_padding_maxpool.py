@@ -64,19 +64,48 @@ model.add(MaxPooling2D())
 model.add(Conv2D(filters=32,
                  kernel_size=(3, 3),
                  padding='same'))
-model.add(Flatten()) # input_dim=25*25*64=40000 = column
+model.add(Flatten()) # input_dim=7*7*32 (column)
 model.add(Dense(32, activation='relu'))  # 32- 임의
 # 60000=batch_size(총 훈련 필요 대상), 40000=input_dim
 model.add(Dropout(0.3))
-model.add(Dense(10, activation='softmax')) # 10=y_class
+model.add(Dense(10, activation='softmax')) # y_class=10
 model.summary()
+'''
+Model: "sequential"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #
+=================================================================
+ conv2d (Conv2D)                 (None, 28, 28, 128)       1280
+
+ max_pooling2d (MaxPooling2D)    (None, 14, 14, 128)       0
+
+ conv2d_1 (Conv2D)               (None, 14, 14, 64)        73792
+
+ conv2d_2 (Conv2D)               (None, 14, 14, 64)        36928
+
+ max_pooling2d_1 (MaxPooling2D)  (None, 7, 7, 64)          0
+
+ conv2d_3 (Conv2D)               (None, 7, 7, 32)          18464
+
+ flatten (Flatten)               (None, 1568)              0
+
+ dense (Dense)                   (None, 32)                50208
+
+ dropout (Dropout)               (None, 32)                0
+
+ dense_1 (Dense)                 (None, 10)                330
+
+=================================================================
+Total params: 181,002
+Trainable params: 181,002
+Non-trainable params: 0
+_________________________________________________________________
+'''
 
 
 # 3. Compile and train
 model.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=['acc'])
-# one-hot encoding 안했으므로, sparse
-# one-hot encoding 후 (60000, 10=y_class)
-
+# one-hot encoding 안했으므로, sparse_categorical_crossentropy
 
 earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=32, restore_best_weights=True, verbose=1)
 
@@ -85,7 +114,7 @@ date = date.strftime("%m%d_%H%M")
 
 modelCheckPoint = ModelCheckpoint(monitor='val_loss', mode='auto', verbose=1,
                                    save_best_only=True,
-                                   filepath=filepath + 'k34_1_' + date + '_' + filename)
+                                   filepath=filepath + 'k35_1_' + date + '_' + filename)
 
 
 model.fit(x_train, y_train, epochs=64, batch_size=512,
@@ -93,7 +122,7 @@ model.fit(x_train, y_train, epochs=64, batch_size=512,
                     callbacks=[earlyStopping, modelCheckPoint],
                     verbose=1)
 
-model.save(path+'keras34_1_mnist_save_model.h5') # 가중치 및 모델 세이브
+model.save(path+'keras35_1_padding_maxpool_save_model.h5')
 
 
 # 4. evaluate and predict

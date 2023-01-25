@@ -27,7 +27,8 @@ x_test=x_test/255.
 
 # 2. Model
 model = Sequential()
-model.add(Flatten()) # input_dim=28*28*1=784 (column)
+model.add(Flatten()) # 모델 초반부에 Flatten을 통한 1차원 배열로 변환 input_dim=28*28*1=784 (column)
+# 차원: []의 개수
 model.add(Dense(128, activation='relu', input_shape=(784,)))
 model.add(Dropout(0.3))
 model.add(Dense(64, activation='relu'))

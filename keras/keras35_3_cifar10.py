@@ -3,8 +3,7 @@ import datetime
 
 from tensorflow.keras.datasets import cifar10
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Conv2D, Flatten, Dense, Dropout, MaxPooling2D # 2D: 이미지
-# Maxpooling: 연산이 아니기때문에 model pkg가 아닌 layers pkg에 삽입
+from tensorflow.keras.layers import Conv2D, Flatten, Dense, Dropout, MaxPooling2D
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 
 

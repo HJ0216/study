@@ -15,16 +15,10 @@ path = './_save/'
 x_train = x_train.reshape(60000, 28, 28, 1)
 x_test = x_test.reshape(10000, 28, 28, 1)
 
-'''
-print(np.unique(y_train, return_counts=True))
-y_train 데이터 특성 파악
-(array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], dtype=uint8), # y_calss
-array([5923, 6742, 5958, 6131, 5842, 5421, 5918, 6265, 5851, 5949], dtype=int64) y_class의 개수)
-'''
-
 
 # 2. Model
 input1 = Input(shape=(28,28,1))
+# Dense 대신 conv2D
 dense1 = Conv2D(filters=128,
                  kernel_size=(3, 3),
                  padding='same',
