@@ -8,6 +8,9 @@ print(gpus)
 # [PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')]
 # Nvidia GPU만 출력됨(intel 내장형 GPU 출력 X)
 
+print(type(gpus))
+print(len(gpus))
+
 
 if(gpus):
     print("GPU is running.")
