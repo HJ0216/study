@@ -36,9 +36,6 @@ model = Sequential()
 model.add(Conv2D(filters=128,
                  kernel_size=(3, 3),
                  padding='same',
-                 strides=1, # stride: kernel의 이동 보폭
-                 # maxpooling은 나머지는 짤려나가고, stride는 조각이 남아있음
-                 # conv2D: default=1, maxpooling: default=2
                  input_shape=(28, 28, 1),
                  activation='relu'))
 '''
@@ -63,10 +60,10 @@ model.add(Conv2D(filters=64,
 model.add(Conv2D(filters=64,
                  kernel_size=(3, 3),
                  padding='same'))
-model.add(MaxPooling2D()) # (7, 7, 64) Parameter=0
+model.add(MaxPooling2D())
 model.add(Conv2D(filters=32,
                  kernel_size=(3, 3),
-                 padding='same')) # Conv2D 후, result (25, 25, 64)
+                 padding='same'))
 model.add(Flatten()) # input_dim=25*25*64=40000 = column
 model.add(Dense(32, activation='relu'))  # 32- 임의
 # 60000=batch_size(총 훈련 필요 대상), 40000=input_dim

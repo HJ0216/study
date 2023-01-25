@@ -17,6 +17,7 @@ path = './_data/ddarung/'
 train_csv = pd.read_csv(path+'train.csv', index_col=0)
 test_csv = pd.read_csv(path+'test.csv', index_col=0)
 submission = pd.read_csv(path+'submission.csv', index_col=0)
+
 train_csv = train_csv.dropna()
 
 x = train_csv.drop(['count'], axis=1)
