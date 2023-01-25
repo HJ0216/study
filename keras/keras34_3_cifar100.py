@@ -42,23 +42,24 @@ print(np.unique(y_train, return_counts=True))
 
 # 2. Model
 model = Sequential()
-model.add(Conv2D(filters=128,
-                 kernel_size=(2, 2),
+model.add(Conv2D(filters=512,
+                 kernel_size=(5, 5),
                  padding='same',
                  input_shape=(32, 32, 3),
                  activation='relu'))
-model.add(MaxPooling2D((2, 2)))
-model.add(Conv2D(filters=64,
-                 kernel_size=(2, 2),
+model.add(MaxPooling2D((3, 3)))
+model.add(Conv2D(filters=256,
+                 kernel_size=(5, 5),
                  padding='same',
                  activation='relu'))
-model.add(MaxPooling2D((2, 2)))
-model.add(Conv2D(filters=64,
-                 kernel_size=(2, 2),
+model.add(MaxPooling2D((3, 3)))
+model.add(Conv2D(filters=128,
+                 kernel_size=(5, 5),
                  padding='same',
                  activation='relu'))
 model.add(Flatten())
-model.add(Dense(32, activation='relu'))
+model.add(Dense(128, activation='relu'))
+model.add(Dense(64, activation='relu'))
 model.add(Dense(100, activation='softmax'))
 # output = y_class num과 맞추기
 
@@ -66,7 +67,7 @@ model.add(Dense(100, activation='softmax'))
 # 3. Compile and train
 model.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=['acc'])
 
-earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=32, restore_best_weights=True, verbose=1)
+earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=128, restore_best_weights=True, verbose=1)
 
 date = datetime.datetime.now()
 date = date.strftime("%m%d_%H%M")
@@ -76,7 +77,7 @@ modelCheckPoint = ModelCheckpoint(monitor='val_loss', mode='auto', verbose=1,
                                    filepath=filepath + 'k34_3_' + date + '_' + filename)
 
 
-model.fit(x_train, y_train, epochs=256, batch_size=512,
+model.fit(x_train, y_train, epochs=512, batch_size=256,
                     validation_split=0.2,
                     callbacks=[earlyStopping, modelCheckPoint],
                     verbose=1)
@@ -97,7 +98,7 @@ loss:  4.605188369750977
 acc:  0.009999999776482582
 
 Result with train and test data scaling
-loss:  2.6668992042541504
-acc:  0.33899998664855957
+loss:  2.5369935035705566
+acc:  0.3677000105381012
 
 '''
