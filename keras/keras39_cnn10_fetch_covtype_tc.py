@@ -42,9 +42,9 @@ x_test = x_test.reshape(174304, 6, 3, 3)
 # 2. Model(Sequential)
 model = Sequential()
 model.add(Conv2D(128, (2,2), padding='same', activation='relu', input_shape=(6,3,3)))
-# model.add(MaxPooling2D())
+model.add(MaxPooling2D(pool_size=(2, 1)))
 model.add(Conv2D(64, (2,2), padding='same', activation='relu'))
-# model.add(MaxPooling2D())
+model.add(MaxPooling2D(pool_size=(2, 1)))
 model.add(Conv2D(32, (2,2), padding='same', activation='relu'))
 model.add(Flatten())
 model.add(Dense(32, activation='relu'))
@@ -92,8 +92,8 @@ modelCheckPoint = ModelCheckpoint(monitor='val_loss', mode='min', verbose=1,
                                    filepath='MCP/keras39_10_fetch_tc_MCP.hdf5')
 
 model.fit(x_train, y_train,
-          epochs=256,
-          batch_size=64,
+          epochs=128,
+          batch_size=256,
           validation_split=0.2,
           callbacks=[earlyStopping, modelCheckPoint],
           verbose=1)
@@ -119,5 +119,6 @@ accuracy_score:  0.8892885725841846
 
 * 이미지가 아닌 데이터는 CNN이 좋은가 DNN이 좋은가
 Result(CNN)
+accuarcy_score:  0.8945290985863779
 
 '''

@@ -34,7 +34,6 @@ model.add(Dense(10, activation='softmax'))
 model.summary()
 '''
 # Dense Model은 2차원 이상을 input으로 받는 것이 가능
-
 Model: "sequential"
 _________________________________________________________________
  Layer (type)                Output Shape              Param #
@@ -55,12 +54,9 @@ Trainable params: 23,018
 Non-trainable params: 0
 _________________________________________________________________
 
-
 input_shape(None, 28, 28, 1) -> (None, 28, 128)
 # output_layer (Conv2D filter)
 
-??????????????????????????????????
-흑백 이미지로 반환해서 
 '''
 
 

@@ -52,7 +52,7 @@ padding opt
 '''
 model.add(MaxPooling2D())
 # output_shape=(14, 14, 128)
-# Parameter=0 (연산 X)
+# Parameter=0 (연산 X) -> 속도가 빠름
 model.add(Conv2D(filters=64,
                  kernel_size=(3, 3),
                  padding='same'))

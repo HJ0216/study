@@ -41,16 +41,13 @@ print(x_train.shape, x_test.shape)
 model = Sequential()
 model.add(Conv2D(128, (2,1), padding='same', activation='relu', input_shape=(13,1,1)))
 # kernel_size: (1, 1) 의미 X, (2, 2) -> 이미지 사이즈 (13, 1) 컬러=흑백, 그러므로 (2,1) 사용
-# model.add(MaxPooling2D())
+model.add(MaxPooling2D(pool_size=(2, 1)))
 '''
-keras39_cnn01_boston.py
--> 맥스 풀링 기본 커널이 2*2???
-에러 발생??
-풀 사이즈 건드려보기
-
+맥스 풀링 default pool_size=(2,2)
+(13*1) -> pool_size 조절 = (2,1)
 '''
 model.add(Conv2D(64, (2,1), padding='same', activation='relu'))
-# model.add(MaxPooling2D())
+model.add(MaxPooling2D(pool_size=(2, 1)))
 model.add(Conv2D(32, (2,1), padding='same', activation='relu'))
 model.add(Flatten())
 model.add(Dense(32, activation='relu'))
