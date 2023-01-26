@@ -25,7 +25,7 @@ y_predict = np.array([50,60,70])
 
 # 2. Model Construction
 model = Sequential()
-# model.add(SimpleRNN(units=64, input_shape=(3,1))) # input_length=3, input_dim=1, input_dim 단위로 연산
+# model.add(SimpleRNN(units=64, input_shape=(3,1)))
 model.add(LSTM(units=64, input_shape=(3,1)))
 model.add(Dense(64, activation='relu'))
 model.add(Dropout(0.2))
@@ -45,7 +45,7 @@ model.fit(x, y, epochs=512, batch_size=1)
 loss = model.evaluate(x,y)
 print("Loss: ", loss)
 
-y_pred = np.array([50,60,70]).reshape(1,3,1)
+y_pred = np.array([50,60,70]).reshape(1,3)
 
 result = model.predict(y_pred)
 print("Predict[50,60,70]: ", result)

@@ -53,6 +53,11 @@ model.summary()
 
 # 3. Compile and Training
 model.compile(loss='mse', optimizer='adam')
+
+earlyStopping = EarlyStopping(monitor='loss', mode='min', patience=32,
+                              restore_best_weights=True,
+                              verbose=1)
+
 model.fit(x, y, epochs=512, callbacks=[earlyStopping], batch_size=1)
 
 

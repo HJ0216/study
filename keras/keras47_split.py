@@ -8,35 +8,19 @@ from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 # 1. data
 
 #a = np.array(range(1,6)) # 1~5
-a = np.array(range(1,11)) # 1~5
+a = np.array(range(1,11)) # 1~10
 # timesteps = 3
 timesteps = 5
 
 def split_x(dataset, timesteps):
     aaa = [] # 빈 list 생성
-    for i in range(len(dataset) - timesteps + 1): # for i in range(3->3), range(4->2), range(5->1) : 반환하는 리스트 개수
-        subset = dataset[i: (i+timesteps)] # dataset[0(이상):3(미만)] [1:4] [2:5]
+    for i in range(len(dataset) - timesteps + 1): # for i in range(3->range(3): 0, 1, 2), range(4->2), range(5->1) : 반환하는 리스트 개수
+        subset = dataset[i: (i+timesteps)] # dataset[0(이상):3(미만)] [1:4] [2:5]: dataset 위치에 있는 값 반환
         aaa.append(subset) # append: 추가
     return np.array(aaa)
 
 bbb = split_x(a, timesteps)
 print(bbb)
-'''
-[[ 1  2  3  4  5]
- [ 2  3  4  5  6]
- [ 3  4  5  6  7]
- [ 4  5  6  7  8]
- [ 5  6  7  8  9]
- [ 6  7  8  9 10]]
-'''
-print(bbb.shape) # (6, 5)
-
-
-x = bbb[:, :-1] # 모든 행, -1번째 열
-y = bbb[:, -1] # 모든 행, -1번째 열
-
-print(x.shape, y.shape) # (6, 4) (6,)
-
 '''
 timesteps = 5
 [[1 2 3 4 5]]
@@ -52,10 +36,40 @@ timesteps = 4
  
 '''
 
+'''
+[[ 1  2  3  4  5]
+ [ 2  3  4  5  6]
+ [ 3  4  5  6  7]
+ [ 4  5  6  7  8]
+ [ 5  6  7  8  9]
+ [ 6  7  8  9 10]]
+'''
+print(bbb.shape) # (6, 5)
+
+# make x, y data
+x = bbb[:, :-1] # 모든 행, 시작 ~ -1번째 열
+y = bbb[:, -1] # 모든 행, -1번째 열(시작: 0번째 열)
+
+print(x, y)
+'''
+x: 
+[[1 2 3 4]
+ [2 3 4 5]
+ [3 4 5 6]
+ [4 5 6 7]
+ [5 6 7 8]
+ [6 7 8 9]]
+ 
+ y:
+ [ 5  6  7  8  9 10]
+[5][6][7][8][9][10]
+
+'''
+
 
 # 2. Model Construction
 model = Sequential()
-# model.add(SimpleRNN(units=64, input_shape=(4,1))) # input_length=3, input_dim=1, input_dim 단위로 연산
+# model.add(SimpleRNN(units=64, input_shape=(4,1)))
 model.add(LSTM(units=256, input_shape=(4,1)))
 model.add(Dense(256, activation='relu'))
 model.add(Dropout(0.2))
