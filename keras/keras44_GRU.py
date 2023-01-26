@@ -1,7 +1,7 @@
 import numpy as np
 
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, SimpleRNN, LSTM, Dropout
+from tensorflow.keras.layers import Dense, SimpleRNN, LSTM, GRU, Dropout
 
 
 # 1. Data
@@ -25,13 +25,14 @@ x = x.reshape(7,3,1)
 
 # 2. Model Construction
 model = Sequential()
-model.add(SimpleRNN(units=64, input_shape=(3,1))) # input_length=3, input_dim=1, input_dim 단위로 연산
-# (N, 3, 1) = ([batch(데이터 개수), timesteps, feature]), feature 단위로 연산
-model.add(Dense(32, activation='relu'))
+# model.add(SimpleRNN(units=64, input_shape=(3,1))) # input_length=3, input_dim=1, input_dim 단위로 연산
+# model.add(LSTM(units=10, input_shape=(3,1)))
+model.add(GRU(units=10, input_shape=(3,1)))
+model.add(Dense(10, activation='relu'))
 model.add(Dropout(0.2))
-model.add(Dense(32, activation='relu'))
+model.add(Dense(10, activation='relu'))
 model.add(Dropout(0.2))
-model.add(Dense(16, activation='relu'))
+model.add(Dense(5, activation='relu'))
 model.add(Dense(1))
 model.summary()
 '''
@@ -39,27 +40,14 @@ Model: "sequential"
 _________________________________________________________________
  Layer (type)                Output Shape              Param #
 =================================================================
- simple_rnn (SimpleRNN)      (None, 64)                4224
-
- dense (Dense)               (None, 32)                2080
-
- dropout (Dropout)           (None, 32)                0
-
- dense_1 (Dense)             (None, 32)                1056
-
- dropout_1 (Dropout)         (None, 32)                0
-
- dense_2 (Dense)             (None, 16)                528
-
- dense_3 (Dense)             (None, 1)                 17
-
-=================================================================
-Total params: 7,905
-Trainable params: 7,905
-Non-trainable params: 0
+ simple_rnn (SimpleRNN)      (None, 10)                120
+-----------------------------------------------------------------
+ lstm (LSTM)                 (None, 10)                480
+-----------------------------------------------------------------
+ gru (GRU)                   (None, 10)                390
 _________________________________________________________________
 
-1번째 Param #
+SimpleRNN Param #
 Total params = recurrent_weights + input_weights + biases
 = (units*units)+(features*units) + (1*units)
 = (features + units)* units + units
@@ -67,7 +55,21 @@ Total params = recurrent_weights + input_weights + biases
 
 1. units*units = 나간만큼 다시 돌아와서 연산
 2. units*feature 실제 연산
+
+model.add(LSTM(units=10, input_shape=(3,1)))
+
+LSTM Param
+Params # = 4 * ((input_dim + 1) * output_dim + output_dim^2)
+4 * ((1+1) * 10 + 100)
+= SimpleRNN * 4
+
+GRU Param
+Params # = 3 * ((input_dim + 1) * output_dim + output_dim^2)
+
+GRU
+Params # = 3 * (input_dim + bias + reset_after bias + output_dim) * output_dim
+(reset_after=False: 3*(input_dim+bias+output*node) * (output node) )
+
 '''
 
-# timesteps만큼 짜르고, feature만큼 일을 시키는 과정
-# hyperParameter Tuning: timesteps, feature
+

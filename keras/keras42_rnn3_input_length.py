@@ -25,8 +25,10 @@ x = x.reshape(7,3,1)
 
 # 2. Model Construction
 model = Sequential()
-model.add(SimpleRNN(units=64, input_shape=(3,1))) # input_length=3, input_dim=1, input_dim 단위로 연산
+# model.add(SimpleRNN(units=64, input_shape=(3,1))) # input_length=3, input_dim=1, input_dim 단위로 연산
 # (N, 3, 1) = ([batch(데이터 개수), timesteps, feature]), feature 단위로 연산
+model.add(SimpleRNN(units=64, input_length=3, input_dim=1))
+
 model.add(Dense(32, activation='relu'))
 model.add(Dropout(0.2))
 model.add(Dense(32, activation='relu'))
@@ -69,5 +71,3 @@ Total params = recurrent_weights + input_weights + biases
 2. units*feature 실제 연산
 '''
 
-# timesteps만큼 짜르고, feature만큼 일을 시키는 과정
-# hyperParameter Tuning: timesteps, feature

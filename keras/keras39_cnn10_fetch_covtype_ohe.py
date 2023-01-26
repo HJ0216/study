@@ -122,6 +122,6 @@ accuracy_score:  0.8855881517688872
 
 * 이미지가 아닌 데이터는 CNN이 좋은가 DNN이 좋은가
 Result(CNN)
-
+accuarcy_score:  0.8940529190380025
 
 '''
