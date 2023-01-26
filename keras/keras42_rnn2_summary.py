@@ -18,15 +18,16 @@ x = np.array([[1,2,3],
               [7,8,9]]) # (7, 3)
 y = np.array([4,5,6,7,8,9,10]) # (7,)
 # y = np.array([[4],[5],[6],[7],[8],[9],[10]]) 과 동일
-
 x = x.reshape(7,3,1)
-
 
 
 # 2. Model Construction
 model = Sequential()
 model.add(SimpleRNN(units=64, input_shape=(3,1))) # input_length=3, input_dim=1, input_dim 단위로 연산
-# (N, 3, 1) = ([batch(데이터 개수), timesteps, feature]), feature 단위로 연산
+# (N, 3, 1) = ([batch(데이터 개수), timesteps, feature])
+# batch: train data 총 set 수
+# timesteps: 1set의 train data 수
+# feature: train data 개수를 한 번에 몇 개씩 계산
 model.add(Dense(32, activation='relu'))
 model.add(Dropout(0.2))
 model.add(Dense(32, activation='relu'))
@@ -62,12 +63,10 @@ _________________________________________________________________
 1번째 Param #
 Total params = recurrent_weights + input_weights + biases
 = (units*units)+(features*units) + (1*units)
-= (features + units)* units + units
 = units(units + feature + 1)
 
-1. units*units = 나간만큼 다시 돌아와서 연산
-2. units*feature 실제 연산
 '''
 
-# timesteps만큼 짜르고, feature만큼 일을 시키는 과정
+
+
 # hyperParameter Tuning: timesteps, feature

@@ -22,10 +22,9 @@ y = np.array([4,5,6,7,8,9,10]) # (7,)
 x = x.reshape(7,3,1)
 
 
-
 # 2. Model Construction
 model = Sequential()
-# model.add(SimpleRNN(units=64, input_shape=(3,1))) # input_length=3, input_dim=1, input_dim 단위로 연산
+# model.add(SimpleRNN(units=64, input_shape=(3,1)))
 # model.add(LSTM(units=10, input_shape=(3,1)))
 model.add(GRU(units=10, input_shape=(3,1)))
 model.add(Dense(10, activation='relu'))
@@ -50,25 +49,23 @@ _________________________________________________________________
 SimpleRNN Param #
 Total params = recurrent_weights + input_weights + biases
 = (units*units)+(features*units) + (1*units)
-= (features + units)* units + units
 = units(units + feature + 1)
 
 1. units*units = 나간만큼 다시 돌아와서 연산
 2. units*feature 실제 연산
 
-model.add(LSTM(units=10, input_shape=(3,1)))
+LSTM Param #
+Params # = 4 * (output_dim(output_dim + input_dim + 1))
+= 4 * SimpleRNN (gate가 4개라서 SimpleRNN의 4배)
 
-LSTM Param
-Params # = 4 * ((input_dim + 1) * output_dim + output_dim^2)
-4 * ((1+1) * 10 + 100)
-= SimpleRNN * 4
-
-GRU Param
+(Deprecated) GRU Param #
 Params # = 3 * ((input_dim + 1) * output_dim + output_dim^2)
 
-GRU
-Params # = 3 * (input_dim + bias + reset_after bias + output_dim) * output_dim
-(reset_after=False: 3*(input_dim+bias+output*node) * (output node) )
+(Renew) GRU Param #
+Params # = 3 * output_dim * (input_dim + bias + reset_after bias + output_dim)
+(reset_after=False: 3 * output_dim * (input_dim + bias + output_dim))
+-> 3 * 10 * (1 + 1 + 1 + 10)
+(Default: reset_after=True)
 
 '''
 

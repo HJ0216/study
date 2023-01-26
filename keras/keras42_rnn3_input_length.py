@@ -22,13 +22,10 @@ y = np.array([4,5,6,7,8,9,10]) # (7,)
 x = x.reshape(7,3,1)
 
 
-
 # 2. Model Construction
 model = Sequential()
-# model.add(SimpleRNN(units=64, input_shape=(3,1))) # input_length=3, input_dim=1, input_dim 단위로 연산
-# (N, 3, 1) = ([batch(데이터 개수), timesteps, feature]), feature 단위로 연산
 model.add(SimpleRNN(units=64, input_length=3, input_dim=1))
-
+# model.add(SimpleRNN(units=64, input_shape=(3,1)))
 model.add(Dense(32, activation='relu'))
 model.add(Dropout(0.2))
 model.add(Dense(32, activation='relu'))
@@ -64,10 +61,6 @@ _________________________________________________________________
 1번째 Param #
 Total params = recurrent_weights + input_weights + biases
 = (units*units)+(features*units) + (1*units)
-= (features + units)* units + units
 = units(units + feature + 1)
 
-1. units*units = 나간만큼 다시 돌아와서 연산
-2. units*feature 실제 연산
 '''
-

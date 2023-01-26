@@ -37,6 +37,8 @@ x_test = scaler.transform(x_test)
 test_csv = scaler.transform(test_csv)
 
 print(x_train.shape, x_test.shape)
+print(test_csv.shape) # (6493, 8)
+
 
 x_train = x_train.reshape(7620, 4, 2, 1)
 x_test = x_test.reshape(3266, 4, 2, 1)
@@ -116,9 +118,11 @@ r2 = r2_score(y_test, y_predict)
 print("R2: ", r2)
 
 # for submission
-# y_submit = model.predict(test_csv)
-# submission['count'] = y_submit
-# submission.to_csv(path+'sampleSubmission_0125.csv')
+test_csv = test_csv.reshape(6493, 4, 2, 1)
+
+y_submit = model.predict(test_csv)
+submission['count'] = y_submit
+submission.to_csv(path+'sampleSubmission_0126.csv')
 
 '''
 Result(DNN)
@@ -127,7 +131,7 @@ R2:  0.30323941332889803
 
 * 이미지가 아닌 데이터는 CNN이 좋은가 DNN이 좋은가
 Result(CNN)
-RMSE:  146.6071808746188
-R2:  0.33839227101648595
+RMSE:  151.84623477201092
+R2:  0.2902618673099654
 
 '''

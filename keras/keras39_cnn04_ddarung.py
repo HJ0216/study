@@ -38,9 +38,11 @@ x_test = scaler.transform(x_test) # test는 train의 fit 활용
 test_csv = scaler.transform(test_csv)
 
 print(x_train.shape, x_test.shape)
+print(test_csv.shape) # (715, 9)
 
 x_train = x_train.reshape(929, 3, 3, 1)
 x_test = x_test.reshape(399, 3, 3, 1)
+
 
 
 # 2. Model(Sequential)
@@ -117,9 +119,13 @@ r2 = r2_score(y_test, y_predict)
 print("R2: ", r2)
 
 # for submission
-# y_submit = model.predict(test_csv)
-# submission['count'] = y_submit
-# submission.to_csv(path+'submission_0125.csv')
+test_csv = test_csv.reshape(715, 3, 3, 1)
+# training이 진행된 모델이 conv2D로 시작되어 input_shape이 4차원으로 이뤄져야 함
+# predict에 대입될 데이터도 만들어놓은 모델을 이용하므로 4차원으로 reshape 해줘야 함
+
+y_submit = model.predict(test_csv)
+submission['count'] = y_submit
+submission.to_csv(path+'submission_0125.csv')
 
 '''
 Result(DNN)
