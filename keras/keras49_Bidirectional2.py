@@ -56,6 +56,7 @@ model = Sequential()
 model.add(Bidirectional(LSTM(units=16, return_sequences=True),
                         input_shape=(4,1)))
 model.add(GRU(4, activation='relu'))
+# return_sequences: output_dim을 input_dim과 동일하게 유지하는 parameter
 model.add(Dense(4, activation='relu'))
 model.add(Dense(1))
 model.summary()

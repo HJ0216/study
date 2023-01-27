@@ -8,7 +8,7 @@ from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 from sklearn.datasets import fetch_covtype
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
-from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.metrics import accuracy_score, mean_squared_error, r2_score
 
 
 # 1. Data
@@ -56,7 +56,13 @@ model.fit(x, y, epochs=2, callbacks=[earlyStopping], batch_size=1024)
 
 # 4. Evaluation and Prediction
 loss = model.evaluate(x_test,y_test)
-y_predict = model.predict(x_test)
+
+y_predict = model.predict(x_test) # 확률
+y_predict = np.argmax(y_predict, axis=1) # 가장 높은 값 -> 1
+y_test = np.argmax(y_test, axis=1)
+
+print(y_test)
+print(y_predict)
 
 def RMSE (y_test, y_predict):
     return np.sqrt(mean_squared_error(y_test, y_predict))
@@ -65,8 +71,14 @@ print("RMSE: ", RMSE(y_test, y_predict))
 r2 = r2_score(y_test, y_predict)
 print("R2: ", r2)
 
+acc = accuracy_score(y_test, y_predict)
+print("accuarcy_score: ", acc)
+
 
 '''
 Result(epoch 수정하기), (4,2) 안돌아가는 이유 찾기
+RMSE:  1.7558992728194476
+R2:  -0.5663698773666586
+accuarcy_score:  0.3641281898292638
 
 '''

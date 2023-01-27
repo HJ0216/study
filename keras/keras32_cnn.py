@@ -5,7 +5,7 @@ from tensorflow.keras.layers import Dense, Conv2D, Flatten
 model = Sequential()
 # 입력: 데이터개수(무시), 가로(5), 세로(5), 색깔(1 or 3)
 # 데이터의 개수는 중요하지 않으므로 (NaN, 5, 5, 1)
-model.add(Conv2D(filters=10, kernel_size=(2,2),
+model.add(Conv2D(filters=10, kernel_size=(2,2), # kernel_size=2 -> 자동으로 (2,2)로 인식
                  input_shape=(5,5,1)))
 # 이미지 픽셀 수(5*5) 1개(흑백) 3개(컬러RPG)
 # kernel_size = 합을 연산할 이미지 블럭의 사이즈(2*2)
