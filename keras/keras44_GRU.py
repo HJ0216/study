@@ -24,7 +24,7 @@ x = x.reshape(7,3,1)
 
 # 2. Model Construction
 model = Sequential()
-# model.add(SimpleRNN(units=64, input_shape=(3,1)))
+# model.add(SimpleRNN(units=10, input_shape=(3,1)))
 # model.add(LSTM(units=10, input_shape=(3,1)))
 model.add(GRU(units=10, input_shape=(3,1)))
 model.add(Dense(10, activation='relu'))
@@ -68,5 +68,3 @@ Params # = 3 * output_dim * (input_dim + bias + reset_after bias + output_dim)
 (Default: reset_after=True)
 
 '''
-
-
