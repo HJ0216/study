@@ -1,5 +1,6 @@
 import numpy as np
 
+from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.models import Sequential, Model, load_model
 from tensorflow.keras.layers import Dense, SimpleRNN, LSTM, Dropout, Conv2D, Flatten, MaxPooling2D
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
@@ -15,6 +16,8 @@ dataset = load_digits()
 
 x = dataset.data # for training
 y = dataset.target # for predict
+
+y=to_categorical(y)
 
 x_train, x_test, y_train, y_test = train_test_split(
     x, y,
@@ -41,15 +44,22 @@ model.add(Dense(32, activation='relu'))
 model.add(Dense(32, activation='relu'))
 model.add(Dense(16, activation='relu'))
 model.add(Dense(8, activation='relu'))
-model.add(Dense(1))
+model.add(Dense(10, activation='softmax'))
 
 
 # 3. Compile and Training
-model.compile(loss='mse', optimizer='adam')
+model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
-earlyStopping = EarlyStopping(monitor='loss', mode='min', patience=32, restore_best_weights=True, verbose=1)
+earlyStopping = EarlyStopping(monitor='accuracy', mode='max', patience=32,
+                              restore_best_weights=True,
+                              verbose=1)
 
-model.fit(x, y, epochs=128, callbacks=[earlyStopping], batch_size=32)
+model.fit(x_train, y_train,
+          epochs=256,
+          batch_size=32,
+          validation_split=0.2,
+          callbacks=[earlyStopping],
+          verbose=1)
 
 
 # 4. Evaluation and Prediction

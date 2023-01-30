@@ -21,8 +21,8 @@ test_datagen = ImageDataGenerator(
 
 xy_train = train_datagen.flow_from_directory(
     './_data/brain/train',
-    target_size=(150, 150),
-    batch_size=1000,
+    target_size=(200, 200),
+    batch_size=10,
     class_mode='binary',
     color_mode='grayscale',
     shuffle='True', # ad, normal data shuffle
@@ -31,8 +31,8 @@ xy_train = train_datagen.flow_from_directory(
 
 xy_test = train_datagen.flow_from_directory(
     './_data/brain/test',
-    target_size=(150, 150),
-    batch_size=1000,
+    target_size=(200, 200),
+    batch_size=10,
     class_mode='binary',
     color_mode='grayscale',
     shuffle='True',
@@ -52,7 +52,7 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Conv2D, Flatten
 
 model = Sequential()
-model.add(Conv2D(64,(2,2), input_shape=(150,150,1)))
+model.add(Conv2D(64,(2,2), input_shape=(200,200,1)))
 model.add(Conv2D(64, (3,3), activation='relu'))
 model.add(Conv2D(64, (3,3), activation='relu'))
 model.add(Flatten())
@@ -65,11 +65,11 @@ model.add(Dense(1, activation='sigmoid')) # result_y: 0 1
 # 3. Compile and Train
 model.compile(loss='binary_crossentropy', optimizer='adam',
               metrics=['acc'])
-hist = model.fit_generator(xy_train, steps_per_epoch=1, epochs=10,
+hist = model.fit_generator(xy_train, steps_per_epoch=16, epochs=10,
                     validation_data=xy_test,
                     validation_steps=4) # x, y, batch_size 끌어오기, 10batch -> 12 훈련
 # steps_per_epoch = total_data/batch_size
-# 데이터 제너레이터를 사용하는 경우 검증 데이터의 배치를 끝없이 반환하므로 얼마나 많은 배치를 추출하여 평가할지 validation_steps 변수에 지정
+# validation_steps: 한 번의 epoch가 돌고 난 후, val_data로 accuracy를 측정할 때, val_data를 몇 번 볼 것이냐
 # image data: gpu로 돌리기
 
 accuracy = hist.history['acc']
@@ -84,12 +84,29 @@ print("Accuracy: ", accuracy[-1])
 print("Val_acc: ", val_acc[-1])
 
 
+
 import matplotlib.pyplot as plt
 
-xy_train_tmp = xy_train[0][0].reshape(160,22500)
-xy_train_tmp2 = xy_train[0][1].reshape(160,1)
+img = xy_train[0] # 1 batch(10개의 image set)을 img에 저장
 
-plt.plot(xy_train_tmp, xy_train_tmp2, color="gray")
+plt.figure(figsize=(20, 10))
+for i, img in enumerate(img[0]): # enumerate: (index, list_element)를 tuple type으로 반환
+    # enumerate(img[0][0])
+    # 루프가 반복될 때마다 변수 i는 현재 요소의 인덱스로 업데이트되고, img는 현재 요소의 값으로 업데이트 됨
+    plt.subplot(1, 10, i+1) # subplot(row, col, Index 지정: 1, 2, ...): 전체 이미지 내에 포함된 내부 이미지 개수
+    plt.axis('off')
+    plt.imshow(img.squeeze()) # 차원(axis) 중, size가 1 인것을 찾아 스칼라 값으로 바꿔 해당차원을 제거
+'''
+x3: array([[[0]],
+           [[1]],
+           [[2]],
+           [[3]],
+           [[4]],
+           [[5]]])
+x3.shape: (6,1,1)
+
+x3.squeeze()
+array([0, 1, 2, 3, 4, 5])
+'''
+plt.tight_layout()
 plt.show()
-
-

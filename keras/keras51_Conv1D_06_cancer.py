@@ -43,17 +43,20 @@ model.add(Dropout(0.2))
 model.add(Conv1D(32, 2, padding='same'))
 model.add(Flatten())
 model.add(Dense(16, activation='relu'))
-model.add(Dense(1))
+model.add(Dense(1, activation='sigmoid'))
 
 
 # 3. Compile and Training
-model.compile(loss='mse', optimizer='adam')
+model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
-earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=32, restore_best_weights=True, verbose=1)
+earlyStopping = EarlyStopping(monitor='accuracy', mode='max', patience=32,
+                              restore_best_weights=True,
+                              verbose=1
+                )
 
 model.fit(x_train, y_train,
           validation_split=0.2,
-          epochs=128,
+          epochs=256,
           callbacks=[earlyStopping],
           batch_size=32)
 
@@ -71,7 +74,7 @@ print("R2: ", r2)
 
 '''
 Result
-loss:  0.018222641199827194
-R2:  0.9239222972668463
+loss:  [0.12571856379508972, 0.9766082167625427]
+R2:  0.9076862301301263
 
 '''

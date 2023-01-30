@@ -51,7 +51,11 @@ earlyStopping = EarlyStopping(monitor='accuracy', mode='max', patience=32,
                               restore_best_weights=True,
                               verbose=1)
 
-model.fit(x_train, y_train, epochs=256, callbacks=[earlyStopping], batch_size=2)
+model.fit(x_train, y_train,
+          epochs=256,
+          callbacks=[earlyStopping],
+          validation_split=0.2,
+          batch_size=32)
 
 
 # 4. Evaluation and Prediction
@@ -68,7 +72,7 @@ print("R2: ", r2)
 
 '''
 Result
-RMSE:  0.525221209471466
-R2:  -0.15167673634083023
+RMSE:  0.18505139839673998
+R2:  0.8570346387434622
 
 '''

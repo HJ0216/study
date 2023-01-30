@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 
+from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.models import Sequential, Model, load_model
 from tensorflow.keras.layers import Dense, SimpleRNN, LSTM, Dropout, Conv2D, Flatten, MaxPooling2D, Conv1D
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
@@ -17,6 +18,8 @@ dataset = load_wine()
 
 x = dataset.data # for training
 y = dataset.target # for predict
+
+y=to_categorical(y)
 
 x_train, x_test, y_train, y_test = train_test_split(
     x, y,
@@ -43,19 +46,22 @@ model.add(Dropout(0.2))
 model.add(Conv1D(32, 2, padding='same'))
 model.add(Flatten())
 model.add(Dense(16, activation='relu'))
-model.add(Dense(1))
+model.add(Dense(3, activation='softmax'))
 
 
 # 3. Compile and Training
-model.compile(loss='mse', optimizer='adam')
+model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
-earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=32, restore_best_weights=True, verbose=1)
+earlyStopping = EarlyStopping(monitor='accuracy', mode='max', patience=32,
+                              restore_best_weights=True,
+                              verbose=1)
 
 model.fit(x_train, y_train,
+          epochs=256,
+          batch_size=32,
           validation_split=0.2,
-          epochs=128,
           callbacks=[earlyStopping],
-          batch_size=32)
+          verbose=1)
 
 
 # 4. Evaluation and Prediction
@@ -71,7 +77,7 @@ print("R2: ", r2)
 
 '''
 Result
-loss:  0.10650572925806046
-R2:  0.8348028238771699
+loss:  [0.2857702374458313, 0.9259259104728699]
+R2:  0.8017791073132353
 
 '''
