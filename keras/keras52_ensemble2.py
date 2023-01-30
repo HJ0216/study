@@ -60,9 +60,9 @@ merge1 = concatenate([output1, output2, output3], name='mg1')
 merge2 = Dense(12, activation='relu', name='mg2')(merge1)
 merge3 = Dense(13, name='mg3')(merge2) # summary에서 별칭
 last_output = Dense(1, name='last')(merge3) # 1 = y_col
+# last_output: 분기1의 input, 분기2의 output
 
 model = Model(inputs=[input1, input2, input3], outputs=last_output)
-
 model.summary()
 
 

@@ -62,6 +62,5 @@ x_train[0]이 가리키는 값은 y_train[0]으로 훈련
 
 import matplotlib.pyplot as plt
 
-
 plt.imshow(x_train[0], 'gray')
 plt.show() # print(x_train[0])

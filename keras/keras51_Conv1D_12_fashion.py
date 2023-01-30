@@ -1,3 +1,5 @@
+# conv1D_fashion.py
+
 import pandas as pd
 import numpy as np
 
@@ -40,9 +42,9 @@ earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=32, resto
 
 model.fit(x_train, y_train,
           validation_split=0.2,
-          epochs=1,
+          epochs=128,
           callbacks=[earlyStopping],
-          batch_size=2024)
+          batch_size=256)
 
 
 # 4. Evaluation and Prediction
@@ -59,9 +61,9 @@ print("R2: ", r2)
 
 
 '''
-Result(epoch 수정하기)
-loss:  0.829742968082428
-accuracy:  0.7304999828338623
-R2:  0.6279151515151515
+Result
+loss:  0.3900017738342285
+accuracy:  0.864799976348877
+R2:  0.7752727272727273
 
 '''

@@ -41,15 +41,17 @@ model.add(Dense(32, activation='relu'))
 model.add(Dense(32, activation='relu'))
 model.add(Dense(16, activation='relu'))
 model.add(Dense(8, activation='relu'))
-model.add(Dense(1))
+model.add(Dense(1, activation='sigmoid'))
 
 
 # 3. Compile and Training
-model.compile(loss='mse', optimizer='adam')
+model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
-earlyStopping = EarlyStopping(monitor='loss', mode='min', patience=32, restore_best_weights=True, verbose=1)
+earlyStopping = EarlyStopping(monitor='accuracy', mode='max', patience=32,
+                              restore_best_weights=True,
+                              verbose=1)
 
-model.fit(x, y, epochs=128, callbacks=[earlyStopping], batch_size=2)
+model.fit(x_train, y_train, epochs=256, callbacks=[earlyStopping], batch_size=2)
 
 
 # 4. Evaluation and Prediction

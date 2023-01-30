@@ -63,9 +63,9 @@ earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=32, resto
 
 model.fit(x_train, y_train,
           validation_split=0.2,
-          epochs=2,
+          epochs=128,
           callbacks=[earlyStopping],
-          batch_size=512)
+          batch_size=32)
 
 
 # 4. Evaluation and Prediction
@@ -85,8 +85,8 @@ submission.to_csv(path+'sampleSubmission_0130.csv')
 
 
 '''
-Result(epoch 수정하기)
-loss:  20402.494140625
-R2:  -1.7631006454406632
+Result
+loss:  2778.77001953125
+R2:  0.6236724046659247
 
 '''
