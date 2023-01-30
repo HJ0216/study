@@ -51,7 +51,7 @@ model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accur
 
 earlyStopping = EarlyStopping(monitor='loss', mode='min', patience=32, restore_best_weights=True, verbose=1)
 
-model.fit(x, y, epochs=2, callbacks=[earlyStopping], batch_size=128)
+model.fit(x, y, epochs=128, callbacks=[earlyStopping], batch_size=256)
 
 
 # 4. Evaluation and Prediction

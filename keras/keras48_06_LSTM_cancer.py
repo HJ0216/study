@@ -49,7 +49,7 @@ model.compile(loss='mse', optimizer='adam')
 
 earlyStopping = EarlyStopping(monitor='loss', mode='min', patience=32, restore_best_weights=True, verbose=1)
 
-model.fit(x, y, epochs=2, callbacks=[earlyStopping], batch_size=2)
+model.fit(x, y, epochs=128, callbacks=[earlyStopping], batch_size=2)
 
 
 # 4. Evaluation and Prediction
@@ -65,8 +65,8 @@ print("R2: ", r2)
 
 
 '''
-Result(epoch 수정하기), (4,2) 안돌아가는 이유 찾기
-RMSE:  0.5477892341380973
-R2:  -0.25277497286472794
+Result
+RMSE:  0.525221209471466
+R2:  -0.15167673634083023
 
 '''

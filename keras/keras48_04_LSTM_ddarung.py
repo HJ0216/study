@@ -60,7 +60,7 @@ model.compile(loss='mse', optimizer='adam')
 
 earlyStopping = EarlyStopping(monitor='loss', mode='min', patience=32, restore_best_weights=True, verbose=1)
 
-model.fit(x, y, epochs=2, callbacks=[earlyStopping], batch_size=2)
+model.fit(x, y, epochs=128, callbacks=[earlyStopping], batch_size=16)
 
 
 # 4. Evaluation and Prediction
@@ -82,13 +82,13 @@ test_csv = test_csv.reshape(715, 9, 1)
 
 y_submit = model.predict(test_csv)
 submission['count'] = y_submit
-submission.to_csv(path+'submission_0127.csv')
+submission.to_csv(path+'submission_0130.csv')
 
 
 
 '''
-Result(epoch 수정하기), (4,2) 안돌아가는 이유 찾기
-RMSE:  142.09162096010374
-R2:  -1.7343264613701161
+Result
+RMSE:  126.18591409130411
+R2:  -1.1564291022078348
 
 '''
