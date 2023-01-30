@@ -43,42 +43,30 @@ model.add(Dense(32, activation='relu'))
 model.add(Dense(32, activation='relu'))
 model.add(Dense(16, activation='relu'))
 model.add(Dense(8, activation='relu'))
-model.add(Dense(1))
+model.add(Dense(7, activation='softmax'))
 
 
 # 3. Compile and Training
-model.compile(loss='mse', optimizer='adam')
+model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
 earlyStopping = EarlyStopping(monitor='loss', mode='min', patience=32, restore_best_weights=True, verbose=1)
 
-model.fit(x, y, epochs=2, callbacks=[earlyStopping], batch_size=1024)
+model.fit(x, y, epochs=2, callbacks=[earlyStopping], batch_size=128)
 
 
 # 4. Evaluation and Prediction
-loss = model.evaluate(x_test,y_test)
+loss, accuracy = model.evaluate(x_test, y_test)
+print("loss: ", loss)
+print("accuracy: ", accuracy)
 
-y_predict = model.predict(x_test) # 확률
-y_predict = np.argmax(y_predict, axis=1) # 가장 높은 값 -> 1
-y_test = np.argmax(y_test, axis=1)
+y_predict = model.predict(x_test)
+y_predict = np.argmax(y_predict, axis=1) # (116203, 7) -> (116203, )
+y_test = np.argmax(y_test, axis=1) # (116203, 7) -> (116203,)
+# data(y): one hot encoding -> shape: (data_num, class)
 
-print(y_test)
-print(y_predict)
-
-def RMSE (y_test, y_predict):
-    return np.sqrt(mean_squared_error(y_test, y_predict))
-print("RMSE: ", RMSE(y_test, y_predict))
-
-r2 = r2_score(y_test, y_predict)
-print("R2: ", r2)
-
-acc = accuracy_score(y_test, y_predict)
-print("accuarcy_score: ", acc)
 
 
 '''
-Result(epoch 수정하기), (4,2) 안돌아가는 이유 찾기
-RMSE:  1.7558992728194476
-R2:  -0.5663698773666586
-accuarcy_score:  0.3641281898292638
+Result
 
 '''
