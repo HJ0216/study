@@ -1,7 +1,7 @@
 import numpy as np
 
 x1_datasets = np.array([range(100), range(301, 401)]).transpose()
-print(x1_datasets.shape) # (100, 2) -> 삼전 시가+고가
+print(x1_datasets.shape) # (100, 2)
 print(x1_datasets)
 '''
 [[  0 301]
@@ -13,9 +13,9 @@ print(x1_datasets)
 '''
 
 x2_datasets = np.array([range(101, 201), range(411, 511), range(150, 250)]).transpose()
-print(x2_datasets.shape) # (100, 3) -> 아모레 시가+고가+종가
+print(x2_datasets.shape) # (100, 3)
 
-y = np.array(range(2001, 2101)) # (100,) -> 삼전 하루 뒤 '종가'
+y = np.array(range(2001, 2101)) # (100,)
 
 from sklearn.model_selection import train_test_split
 x1_train, x1_test, x2_train, x2_test, y_train, y_test = train_test_split(
@@ -32,7 +32,7 @@ from tensorflow.keras.layers import Dense, Input
 
 # 2-1. Model_1
 input1 = Input(shape=(2,))
-dense1 = Dense(11, activation='relu', name='ds11')(input1)
+dense1 = Dense(11, activation='relu', name='ds11')(input1) # summary에서 별칭
 dense2 = Dense(12, activation='relu', name='ds12')(dense1)
 dense3 = Dense(13, activation='relu', name='ds13')(dense2)
 output1 = Dense(11, activation='relu', name='ds14')(dense3)
@@ -47,8 +47,8 @@ output2 = Dense(23, activation='linear', name='ds23')(dense22)
 from tensorflow.keras.layers import concatenate
 merge1 = concatenate([output1, output2], name='mg1')
 merge2 = Dense(12, activation='relu', name='mg2')(merge1)
-merge3 = Dense(13, name='mg3')(merge2) # summary에서 별칭
-last_output = Dense(1, name='last')(merge3) # 1 = y_col
+merge3 = Dense(13, name='mg3')(merge2)
+last_output = Dense(1, name='last')(merge3)
 
 model = Model(inputs=[input1, input2], outputs=last_output)
 
@@ -103,10 +103,12 @@ ________________________________________________________________________________
 # 3. compile and train
 model.compile(loss='mse', optimizer='adam')
 model.fit([x1_train, x2_train], y_train, epochs=10, batch_size=8)
+# 모델 2개를 훈련시켜야하므로 훈련의 입력값도 2개 필요
 
 
 # 4. evaluate and predict
 loss = model.evaluate([x1_test, x2_test], y_test)
+# 모델 2개를 훈련시켰으므로 평가의 입력값도 2개 필요
 print("Loss: ", loss)
 
 

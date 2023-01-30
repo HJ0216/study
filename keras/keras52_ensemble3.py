@@ -1,14 +1,21 @@
+# ensemble_model2.py
+
 import numpy as np
 
+from sklearn.model_selection import train_test_split
+
+from tensorflow.keras.models import Model
+from tensorflow.keras.layers import Dense, Input
+
+
+# 1. Data
 x1_datasets = np.array([range(100), range(301, 401)]).transpose()
 x2_datasets = np.array([range(101, 201), range(411, 511), range(150, 250)]).transpose()
 x3_datasets = np.array([range(100,200), range(1301, 1401)]).transpose()
 
-y1 = np.array(range(2001, 2101)) # (100,) -> 삼전 하루 뒤 '종가'
-y2 = np.array(range(201, 301)) # (100,) -> 삼전 하루 뒤 '종가'
+y1 = np.array(range(2001, 2101)) # (100,)
+y2 = np.array(range(201, 301)) # (100,)
 
-
-from sklearn.model_selection import train_test_split
 x1_train, x1_test, \
     x2_train, x2_test, \
         x3_train, x3_test = train_test_split(
@@ -25,9 +32,6 @@ print(x1_test.shape, x2_test.shape, x3_test.shape) # (30, 2) (30, 3) (30, 2) (30
 
 
 # 2. Model Construction
-from tensorflow.keras.models import Model
-from tensorflow.keras.layers import Dense, Input
-
 # 2-1. Model_1
 input1 = Input(shape=(2,))
 dense1 = Dense(11, activation='relu', name='ds11')(input1)

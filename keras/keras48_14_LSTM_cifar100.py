@@ -56,13 +56,13 @@ model.add(Dense(100, activation='softmax'))
 # 3. Compile and Training
 model.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=['acc'])
 
-earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=32, restore_best_weights=True, verbose=1)
+earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=64, restore_best_weights=True, verbose=1)
 
 model.fit(x_train, y_train,
           validation_split=0.2,
-          epochs=2,
+          epochs=512,
           callbacks=[earlyStopping],
-          batch_size=512)
+          batch_size=256)
 
 
 # 4. Evaluation and Prediction
@@ -79,9 +79,9 @@ print("R2: ", r2)
 
 
 '''
-Result(epoch 수정하기)
-loss:  4.356950283050537
-acc:  0.03530000150203705
-R2:  -0.4656573657365737
+Result
+loss:  3.272155523300171
+acc:  0.21330000460147858
+R2:  -0.6126769876987699
 
 '''
