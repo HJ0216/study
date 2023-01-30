@@ -146,6 +146,7 @@ model.fit([x1_train, x2_train], y_train,
 '''
 from tensorflow.keras.models import load_model
 
+
 model = load_model('./keras/samsumg_open_MCP.hdf5')
 
 # 4. evaluate and predict

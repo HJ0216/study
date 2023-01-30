@@ -9,7 +9,7 @@ from tensorflow.keras.layers import Dense, Input
 
 
 # 1. Data
-x1_datasets = np.array([range(100), range(301, 401)]).transpose()
+x1_datasets = np.array([range(100), range(301, 401)]).transpose() # .transpose() = .T
 x2_datasets = np.array([range(101, 201), range(411, 511), range(150, 250)]).transpose()
 x3_datasets = np.array([range(100,200), range(1301, 1401)]).transpose()
 
@@ -80,7 +80,7 @@ model.summary()
 
 # 3. compile and train
 model.compile(loss='mse', optimizer='adam', metrics=['mae'])
-model.fit([x1_train, x2_train, x3_train], [y1_train, y2_train], epochs=10, batch_size=8)
+model.fit([x1_train, x2_train, x3_train], [y1_train, y2_train], epochs=128, batch_size=8)
 
 
 # 4. evaluate and predict

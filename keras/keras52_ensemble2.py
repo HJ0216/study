@@ -55,8 +55,9 @@ dense33 = Dense(13, activation='relu', name='ds33')(dense32)
 output3 = Dense(11, activation='relu', name='ds34')(dense33)
 
 # 2-4. Model_merge
-from tensorflow.keras.layers import concatenate
+from tensorflow.keras.layers import concatenate, Concatenate
 merge1 = concatenate([output1, output2, output3], name='mg1')
+# merge1 = Concatenate()([output1, output2, output3], name='mg1')
 merge2 = Dense(12, activation='relu', name='mg2')(merge1)
 merge3 = Dense(13, name='mg3')(merge2)
 last_output = Dense(1, name='last')(merge3)
