@@ -66,13 +66,10 @@ x1: xy_train[1][0], y1: xy_train[1][1]
 x15: xy_train[15][0], y15: xy_train[15][1]
 
 print(xy_train[0][0].shape) # data_x: (10, 200, 200, 1)
-
-
+print(xy_train[0][1].shape) # data_y: (10, )
 
 '''
 
-# print(xy_train[0][1]) # data_y: [1. 1. 1. 0. 1.]
-print(xy_train[0][1].shape) # data_y: (10, )
 print(type(xy_train)) # <class 'keras.preprocessing.image.DirectoryIterator'>: tuple(x(numpy),y(numpy))의 집합
 print(type(xy_train[0])) # <class 'tuple'> tuple(x(numpy),y(numpy)): 수정 불가능한 list
 print(type(xy_train[0][0])) # x: <class 'numpy.ndarray'>
