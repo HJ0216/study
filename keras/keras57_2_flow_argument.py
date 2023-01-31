@@ -26,7 +26,8 @@ test_datagen = ImageDataGenerator(
 argument_size = 40000
 randidx = np.random.randint(x_train.shape[0], size=argument_size) # (60,000)
 # 6만 중 랜덤하게 4만 추출
-# 안겹치나????????????????????????????
+# random.randint -> 중복 난수 추출
+# 중복없이 난수 추출하고 싶을 경우, while 문으로 중복값 제거 과정 필요
 
 print(randidx)
 print(len(randidx))
