@@ -1,7 +1,7 @@
 import numpy as np
 
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Conv2D, MaxPooling2D, Dropout, Flatten, Dense, Activation
+from tensorflow.keras.layers import Conv2D, MaxPooling2D, Dropout, Flatten, Dense
 from tensorflow.keras.callbacks import EarlyStopping
 
 
@@ -52,7 +52,7 @@ earlystop = EarlyStopping(monitor='val_acc', mode='max', patience=64,
 
 hist = model.fit(x_train, y_train,
                     epochs=256,
-                    batch_size=32,
+                    batch_size=8,
                     validation_data=(x_val, y_val),
                     callbacks=[earlystop],
                     verbose=1)
