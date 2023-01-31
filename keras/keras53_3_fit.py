@@ -22,7 +22,7 @@ test_datagen = ImageDataGenerator(
 xy_train = train_datagen.flow_from_directory(
     './_data/brain/train',
     target_size=(100, 100),
-    batch_size=1000,
+    batch_size=1000, # len(data_variable)
     class_mode='binary',
     color_mode='grayscale',
     shuffle='True', # ad, normal data shuffle
@@ -39,6 +39,8 @@ xy_test = train_datagen.flow_from_directory(
     )
 # Found 120 images belonging to 2 classes.
 # x,y가 dic 형태로 들어가 있음
+
+# y: 0 1이 각각 80개씩
 
 print(xy_train)
 # <keras.preprocessing.image.DirectoryIterator object at 0x000002134BCFCA60>
@@ -71,9 +73,10 @@ model.compile(loss='binary_crossentropy', optimizer='adam',
 
 hist = model.fit(xy_train[0][0], xy_train[0][1],
                     batch_size=16,
-                    # steps_per_epoch=16,
+                    # steps_per_epoch=10,
                     epochs=10,
                     validation_data=(xy_test[0][0], xy_test[0][1]),
+                    # validation_split: train data에서 나누기
                     # validation_steps=4
                     ) # x, y, batch_size 끌어오기, 10batch -> 12 훈련
 # 통 배치가 되므로 모두 [0][0] [0][1]에 들어감
