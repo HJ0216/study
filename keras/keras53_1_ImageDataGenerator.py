@@ -65,8 +65,8 @@ x1: xy_train[1][0], y1: xy_train[1][1]
 ...
 x15: xy_train[15][0], y15: xy_train[15][1]
 
-print(xy_train[0][0].shape) # data_x: (10, 200, 200, 1)
-print(xy_train[0][1].shape) # data_y: (10, )
+print(xy_train[0][0].shape) # data_x: (10, 200, 200, 1) = (batch_size, target_size_row, target_size_col, color)
+print(xy_train[0][1].shape) # data_y: (10, ) = (batch_size,)
 
 '''
 
