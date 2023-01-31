@@ -1,8 +1,6 @@
-import numpy as np
-
+# 1. Data
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
-# 1. Data
 train_datagen = ImageDataGenerator(
     rescale=1./255.,
     horizontal_flip=True, # 수평
@@ -57,20 +55,25 @@ model.add(Conv2D(64, (3,3), activation='relu'))
 model.add(Flatten())
 model.add(Dense(16, activation='relu'))
 model.add(Dense(16, activation='relu'))
-model.add(Dense(1, activation='sigmoid')) # result_y: 0 1
-# softmax, 2
+model.add(Dense(1, activation='sigmoid'))
 
 
 # 3. Compile and Train
+from tensorflow.keras.callbacks import EarlyStopping
+
 model.compile(loss='binary_crossentropy', optimizer='adam',
               metrics=['acc'])
 
+earlystop = EarlyStopping(monitor='val_acc', mode='max', patience=32,
+                              restore_best_weights=True,
+                              verbose=1)
+
 hist = model.fit(xy_train, # x,y를 하나의 변수에 담아 fit 가능
                     # xy_train[0][0], xy_train[0][1],
-                    batch_size=16,
-                    epochs=10,
-                    # validation_split=0.2,
+                    batch_size=4,
+                    epochs=128,
                     validation_data=(xy_test[0][0], xy_test[0][1]),
+                    # validation_split=0.2,
                     )
 
 accuracy = hist.history['acc']
@@ -87,9 +90,9 @@ print("Val_acc: ", val_acc[-1])
 
 '''
 Result
-Loss:  0.20463219285011292
-Val_Loss:  1.0592530965805054
-Accuracy:  0.8812500238418579
-Val_acc:  0.5666666626930237
+Loss:  0.39585646986961365
+Val_Loss:  0.33949244022369385
+Accuracy:  0.875
+Val_acc:  0.8500000238418579
 
 '''

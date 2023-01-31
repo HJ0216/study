@@ -1,31 +1,31 @@
-import numpy as np
+# 1. Data
+# image training을 위한 이미지 변환
 
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
-
-# 1. Data
 train_datagen = ImageDataGenerator(
     rescale=1./255.,
-    horizontal_flip=True, # 수평
-    vertical_flip=True, # 수직
-    width_shift_range=0.1, # 가로 이동
-    height_shift_range=0.1, # 세로 이동
-    rotation_range=5,# 훈련 시, 과적합 문제를 해결하기 위해 shift, ratatoin 시행
-    zoom_range=1.2, # 20% 확대
-    shear_range=0.7, # 절삭
-    fill_mode='nearest' # 이동 시, 발생하는 빈 칸을 어떻게 채울 것인가
+    horizontal_flip=True,
+    vertical_flip=True,
+    width_shift_range=0.1,
+    height_shift_range=0.1,
+    rotation_range=5,
+    zoom_range=1.2,
+    shear_range=0.7,
+    fill_mode='nearest'
 )
 
 test_datagen = ImageDataGenerator(
     rescale=1./255.
 )
 
+# directory로부터 data training 전 preprocessing
 xy_train = train_datagen.flow_from_directory(
     './_data/brain/train',
     target_size=(100, 100),
-    batch_size=1000, # len(data_variable)
+    batch_size=1000,
     class_mode='binary',
     color_mode='grayscale',
-    shuffle='True', # ad, normal data shuffle
+    shuffle='True', # shuffle: ad, normal
     )
 # Found 160 images belonging to 2 classes.
 
@@ -37,10 +37,10 @@ xy_test = train_datagen.flow_from_directory(
     color_mode='grayscale',
     shuffle='True',
     )
-# Found 120 images belonging to 2 classes.
-# x,y가 dic 형태로 들어가 있음
 
-# y: 0 1이 각각 80개씩
+# Found 120 images belonging to 2 classes.
+# x: image data의 수치화
+# y: class(0 1)이 각각 80개씩
 
 print(xy_train)
 # <keras.preprocessing.image.DirectoryIterator object at 0x000002134BCFCA60>
@@ -57,33 +57,35 @@ model.add(Conv2D(64, (3,3), activation='relu'))
 model.add(Flatten())
 model.add(Dense(16, activation='relu'))
 model.add(Dense(16, activation='relu'))
-model.add(Dense(1, activation='sigmoid')) # result_y: 0 1
-# softmax, 2
+model.add(Dense(1, activation='sigmoid')) # binary classification
+# model.add(Dense(2, activation='softmax')) # binary classification
+# model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc'])
 
 
 # 3. Compile and Train
-model.compile(loss='binary_crossentropy', optimizer='adam',
-              metrics=['acc'])
+from tensorflow.keras.callbacks import EarlyStopping
+
+model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['acc'])
 # hist = model.fit_generator(xy_train, steps_per_epoch=16, epochs=10,
 #                     validation_data=xy_test,
-#                     validation_steps=4) # x, y, batch_size 끌어오기, 10batch -> 12 훈련
-# steps_per_epoch = total_data/batch_size
-# 데이터 제너레이터를 사용하는 경우 검증 데이터의 배치를 끝없이 반환하므로 얼마나 많은 배치를 추출하여 평가할지 validation_steps 변수에 지정
-# image data: gpu로 돌리기
+#                     validation_steps=4)
+
+earlystop = EarlyStopping(monitor='val_acc', mode='max', patience=64,
+                              restore_best_weights=True,
+                              verbose=1)
 
 hist = model.fit(xy_train[0][0], xy_train[0][1],
-                    batch_size=16,
-                    # steps_per_epoch=10,
-                    epochs=10,
+                    batch_size=4,
+                    # iteration=10, fit_generator: steps_per_epoch
+                    epochs=256,
                     validation_data=(xy_test[0][0], xy_test[0][1]),
-                    # validation_split: train data에서 나누기
-                    # validation_steps=4
-                    ) # x, y, batch_size 끌어오기, 10batch -> 12 훈련
-# 통 배치가 되므로 모두 [0][0] [0][1]에 들어감
+                    callbacks=[earlystop],
+                    )
+# batch_size를 키우고 0번째 행에 모든 데이터가 들어갈 수 있도록 한 후,
+# model.fit에서 전체 image data로 훈련
 
-accuracy = hist.history['acc']
+accuracy = hist.history['acc'] # hist의 history의 acc col 내용을 accuracy로 받음
 val_acc = hist.history['val_acc']
-
 loss = hist.history['loss']
 val_loss = hist.history['val_loss']
 
@@ -95,9 +97,9 @@ print("Val_acc: ", val_acc[-1])
 
 '''
 Result
-Loss:  0.20463219285011292
-Val_Loss:  1.0592530965805054
-Accuracy:  0.8812500238418579
-Val_acc:  0.5666666626930237
+Loss:  2.6830884962691925e-05
+Val_Loss:  4.97659158706665
+Accuracy:  1.0
+Val_acc:  0.5416666865348816
 
 '''
