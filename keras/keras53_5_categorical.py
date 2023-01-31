@@ -24,7 +24,7 @@ xy_train = train_datagen.flow_from_directory(
     './_data/brain/train',
     target_size=(200, 200), # data 처리 시, 모든 데이터의 사이즈를 동일하게 맞춤
     batch_size=10,
-    class_mode='binary', # 폴더 라벨링 방식 지정: binary(0 1)
+    class_mode='categorical', # 폴더 라벨링 방식 지정: binary(0 1)
     color_mode='grayscale', # 색상: 흑백
     shuffle='True',
     )
@@ -33,18 +33,40 @@ xy_test = train_datagen.flow_from_directory(
     './_data/brain/test',
     target_size=(200, 200),
     batch_size=10,
-    class_mode='binary',
+    class_mode='categorical',
     color_mode='grayscale',
     shuffle='True',
     )
 # Found 120 images belonging to 2 classes.
 
-print(xy_train)
-print(xy_train[0][0].shape)
-print(xy_train[0][1].shape)
-print(type(xy_train))
-print(type(xy_train[0]))
-print(type(xy_train[0][0]))
-print(type(xy_train[0][1]))
-
 # y: 0 1로 이뤄진 scalar 집합
+
+# print(xy_train)
+# print(xy_train[0][0].shape)
+# print(xy_train[0][1].shape)
+# print(type(xy_train))
+# print(type(xy_train[0]))
+# print(type(xy_train[0][0]))
+# print(type(xy_train[0][1]))
+
+print(xy_train[0][1])
+'''
+class_mode: binary
+shape: (10,)
+[1. 0. 1. 1. 0. 1. 0. 1. 0. 0.]
+
+class_mode: one-hot type
+shape: (10, 2)
+[[0. 1.]
+ [1. 0.]
+ [0. 1.]
+ [1. 0.]
+ [0. 1.]
+ [1. 0.]
+ [1. 0.]
+ [1. 0.]
+ [0. 1.]
+ [1. 0.]]
+'''
+
+
