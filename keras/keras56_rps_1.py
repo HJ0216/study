@@ -68,8 +68,8 @@ earlystop = EarlyStopping(monitor='val_acc', mode='max', patience=64,
                               verbose=1)
 
 hist = model.fit(xy_train[0][0], xy_train[0][1],
-                    epochs=256,
-                    batch_size=16,
+                    epochs=512,
+                    batch_size=8,
                     validation_split=0.2,
                     callbacks=[earlystop],
                     verbose=1)
@@ -90,9 +90,9 @@ print("Val_acc: ", val_acc[-1])
 
 '''
 Result
-Loss:  5.093020263302606e-06
-Val_Loss:  1.6732274293899536
+Loss:  9.018582932185382e-05
+Val_Loss:  1.3695333003997803
 Accuracy:  1.0
-Val_acc:  0.8452380895614624
+Val_acc:  0.8690476417541504
 
 '''

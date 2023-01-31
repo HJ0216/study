@@ -19,21 +19,22 @@ test_datagen = ImageDataGenerator(
     rescale=1./255.
 )
 
-# test는 정확한 평가 하기 위해 data를 처리하지 않음
+# test data: data preprocessing X
 
+# flow_from_directory를 통한 imagegenerator 만들기
 xy_train = train_datagen.flow_from_directory(
-    './_data/brain/train',
-    target_size=(200, 200), # data 처리 시, 모든 데이터의 사이즈를 동일하게 맞춤
+    './_data/brain/train', # data path
+    target_size=(200, 200), # data shape 통일
     batch_size=10,
-    # 총 data: 160 -> batch_size=10개씩 잘라서 훈련 / 1 epoch 당 총 16번 훈련 진행 / model.fit(batch_size) 사용 X
-    # batch_size를 크게 설정하여 데이터셋 범위 알아내기: batch_size가 dataset size로 자동 설정
+    # total data: 160 -> batch_size=10: 160개를 10개씩 잘라서 훈련
+    # 1 epoch 당 총 16번(iteration) 훈련 진행
+    # dataset_scale check: batch_size가 dataset scale로 설정
     class_mode='binary', # 폴더 라벨링 방식 지정: binary(0 1)
-    color_mode='grayscale', # 색상: 흑백
+    color_mode='grayscale', # 색상: 흑백 / 컬러(rgb)
     shuffle='True',
     )
-# Found 160 images belonging to 2 classes : print() 구문없이도 출력
+# Found 160 images belonging to 2 classes
 # total 160장의 이미지가 2 classes(2 dir, folder)에 저장
-# folder로 구분된 image data 가져오기
 # parameter, 가장 마지막에 ','가 있어도 문제 X
 
 xy_test = train_datagen.flow_from_directory(
@@ -48,12 +49,30 @@ xy_test = train_datagen.flow_from_directory(
 
 print(xy_train)
 # <keras.preprocessing.image.DirectoryIterator object at 0x000002134BCFCA60>
-# tuple(x(numpy), y(numpy))의 집합인 datatype
-# print(xy_train[0])
-# batch size만큼 y_class 출력
-print(xy_train[0][0].shape) # data_x: (5, 200, 200, 1)
+# data type: tuple(x(numpy), y(numpy))의 집합
+'''
+print(xy_train[0])
+(array([[[[0.08627451], [0.08627451], ..., [0.0858703 ], [0.08754121]],
+        ...,
+        [[0.3088285 ], [0.22372028], ..., [0.17596895], [0.15582304]]]], dtype=float32),
+array([1., 1., 0., 1., 1., 1., 1., 0., 1., 0.], dtype=float32))
+
+
+total_data: 160
+batch_size: 10
+x0: xy_train[0][0], y0: xy_train[0][1]
+x1: xy_train[1][0], y1: xy_train[1][1]
+...
+x15: xy_train[15][0], y15: xy_train[15][1]
+
+print(xy_train[0][0].shape) # data_x: (10, 200, 200, 1)
+
+
+
+'''
+
 # print(xy_train[0][1]) # data_y: [1. 1. 1. 0. 1.]
-print(xy_train[0][1].shape) # data_y: (5, )
+print(xy_train[0][1].shape) # data_y: (10, )
 print(type(xy_train)) # <class 'keras.preprocessing.image.DirectoryIterator'>: tuple(x(numpy),y(numpy))의 집합
 print(type(xy_train[0])) # <class 'tuple'> tuple(x(numpy),y(numpy)): 수정 불가능한 list
 print(type(xy_train[0][0])) # x: <class 'numpy.ndarray'>
