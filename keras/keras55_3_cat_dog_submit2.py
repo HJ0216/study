@@ -69,11 +69,11 @@ train_generator = train_datagen.flow_from_dataframe(
     batch_size=batch_size
 )
 
-x_train = np.load('D:/_data/dogs-vs-cats/train/cat_dog_x_train.npy')
-y_train = np.load('D:/_data/dogs-vs-cats/train/cat_dog_y_train.npy')
+x_train = np.load('D:/_data/dogs-vs-cats/numpy/cat_dog_x_train.npy')
+y_train = np.load('D:/_data/dogs-vs-cats/numpy/cat_dog_y_train.npy')
 
-x_val = np.load('D:/_data/dogs-vs-cats/train/cat_dog_x_val.npy')
-y_val = np.load('D:/_data/dogs-vs-cats/train/cat_dog_y_val.npy')
+x_val = np.load('D:/_data/dogs-vs-cats/numpy/cat_dog_x_val.npy')
+y_val = np.load('D:/_data/dogs-vs-cats/numpy/cat_dog_y_val.npy')
 
 print(x_train.shape, x_val.shape) # (15, 128, 128, 3) (15, 128, 128, 3)
 print(y_train.shape, y_val.shape) # (15, 2) (15, 2)
@@ -100,10 +100,10 @@ model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Dropout(0.25))
 
 model.add(Flatten())
-model.add(Dense(512, activation='relu'))
+model.add(Dense(32, activation='relu'))
 model.add(Dropout(0.5))
 model.add(Dense(2, activation='softmax'))
-
+model.summary()
 
 # 3. Compile and Train
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc'])

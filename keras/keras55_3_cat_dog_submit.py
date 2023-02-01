@@ -94,7 +94,7 @@ earlystop = EarlyStopping(monitor='val_acc', mode='max', patience=64,
                               verbose=1)
 
 hist = model.fit(x_train, y_train,
-                    epochs=256,
+                    epochs=2,
                     batch_size=64,
                     validation_data=(x_val, y_val),
                     callbacks=[earlystop],
@@ -156,6 +156,8 @@ test_generator = test_gen.flow_from_dataframe(
     batch_size=batch_size,
     shuffle=False
 )
+# generator 거쳐서 image shape이 변화 (128,128,)
+
 
 # for submission
 predict = model.predict_generator(test_generator, steps=np.ceil(nb_samples/batch_size))
@@ -167,8 +169,57 @@ label_map = dict((v,k) for k,v in train_generator.class_indices.items()) # train
 test_df['category'] = test_df['category'].replace(label_map)
 test_df['category'] = test_df['category'].replace({ 'dog': 1, 'cat': 0 })
 
+'''
+print(test_df)
+
+        filename  category
+0          1.jpg         1
+1         10.jpg         0
+2        100.jpg         1
+3       1000.jpg         1
+4      10000.jpg         1
+'''
+
 submission_df = test_df.copy()
 submission_df['id'] = submission_df['filename'].str.split('.').str[0]
 submission_df['label'] = submission_df['category']
+
+'''
+print(submission_df)
+
+        filename  category     id  label
+0          1.jpg         1      1      1
+1         10.jpg         0     10      0
+2        100.jpg         1    100      1
+3       1000.jpg         1   1000      1
+4      10000.jpg         1  10000      1
+...          ...       ...    ...    ...
+12495   9995.jpg         1   9995      1
+12496   9996.jpg         1   9996      1
+12497   9997.jpg         1   9997      1
+12498   9998.jpg         0   9998      0
+12499   9999.jpg         1   9999      1
+'''
+
 submission_df.drop(['filename', 'category'], axis=1, inplace=True)
+# drop: axis=1 -> col, inplace=True (변경된 값을 해당 df에 저장)
+
+'''
+print(submission_df)
+
+          id  label
+0          1      1
+1         10      0
+2        100      1
+3       1000      1
+4      10000      1
+...      ...    ...
+12495   9995      1
+12496   9996      1
+12497   9997      1
+12498   9998      0
+12499   9999      1
+'''
+
 submission_df.to_csv('submission.csv', index=False)
+# df -> csv, idx=false -> idx를 내보내지 않음
