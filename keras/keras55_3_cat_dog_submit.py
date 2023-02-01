@@ -86,32 +86,41 @@ model.add(Dense(2, activation='softmax'))
 model.summary()
 
 
-# # 3. Compile and Train
-# model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc'])
+# 3. Compile and Train
+model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc'])
 
-# earlystop = EarlyStopping(monitor='val_acc', mode='max', patience=64,
-#                               restore_best_weights=True,
-#                               verbose=1)
+earlystop = EarlyStopping(monitor='val_acc', mode='max', patience=64,
+                              restore_best_weights=True,
+                              verbose=1)
 
-# hist = model.fit(x_train, y_train,
-#                     epochs=256,
-#                     batch_size=64,
-#                     validation_data=(x_val, y_val),
-#                     callbacks=[earlystop],
-#                     verbose=1)
+hist = model.fit(x_train, y_train,
+                    epochs=256,
+                    batch_size=64,
+                    validation_data=(x_val, y_val),
+                    callbacks=[earlystop],
+                    verbose=1)
 
 
-# # 4. evaluate and predict
-# accuracy = hist.history['acc']
-# val_acc = hist.history['val_acc']
+# 4. evaluate and predict
+accuracy = hist.history['acc']
+val_acc = hist.history['val_acc']
 
-# loss = hist.history['loss']
-# val_loss = hist.history['val_loss']
+loss = hist.history['loss']
+val_loss = hist.history['val_loss']
 
-# print("Loss: ", loss[-1])
-# print("Val_Loss: ", val_loss[-1])
-# print("Accuracy: ", accuracy[-1])
-# print("Val_acc: ", val_acc[-1])
+print("Loss: ", loss[-1])
+print("Val_Loss: ", val_loss[-1])
+print("Accuracy: ", accuracy[-1])
+print("Val_acc: ", val_acc[-1])
+
+'''
+Result
+Loss:  0.13410215079784393
+Val_Loss:  0.5559490323066711
+Accuracy:  0.9463000297546387
+Val_acc:  0.8547999858856201
+
+'''
 
 
 # 5. Submission
@@ -152,8 +161,9 @@ test_generator = test_gen.flow_from_dataframe(
 predict = model.predict_generator(test_generator, steps=np.ceil(nb_samples/batch_size))
 
 test_df['category'] = np.argmax(predict, axis=-1)
+# axis=-1: 2차원일 때는 y축, 3차원일 때는 z축
 
-label_map = dict((v,k) for k,v in train_generator.class_indices.items())
+label_map = dict((v,k) for k,v in train_generator.class_indices.items()) # train_generator의 class 확인
 test_df['category'] = test_df['category'].replace(label_map)
 test_df['category'] = test_df['category'].replace({ 'dog': 1, 'cat': 0 })
 
