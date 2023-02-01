@@ -54,6 +54,7 @@ plt.show()
 df["category"] = df["category"].replace({0: 'cat', 1: 'dog'}) 
 
 train_df, validate_df = train_test_split(df, test_size=0.20, random_state=42)
+# train: 20,000 / val: 5,000
 
 train_df = train_df.reset_index(drop=True) # Index_reset, drop=true: Idx에서 setting한 col을 df에서 삭제할지 여부
 validate_df = validate_df.reset_index(drop=True)
@@ -80,13 +81,13 @@ df_tmp.reset_index(drop=True)
 
 '''
 
-print(train_df.shape) #(20003, 2)
-total_train = train_df.shape[0] # 20003
+print(train_df.shape) #(20000, 2)
+total_train = train_df.shape[0] # 20000
 
-print(validate_df.shape) #(5001, 2)
-total_validate = validate_df.shape[0] # 5001
+print(validate_df.shape) #(5000, 2)
+total_validate = validate_df.shape[0] # 5000
 
-batch_size=15
+batch_size=25000
 
 train_datagen = ImageDataGenerator(
     rotation_range=15,
@@ -145,13 +146,14 @@ plt.show()
 # print(type(validation_generator)) # <class 'keras.preprocessing.image.DataFrameIterator'>
 # print(type(train_generator[0][0])) # <class 'numpy.ndarray'>
 # print(type(train_generator[0][1])) # <class 'numpy.ndarray'>
-print(train_generator[0][0].shape) # (15, 128, 128, 3)
-print(train_generator[0][1].shape) # (15, 2):  one hot encoding type: class -> col
+print(train_generator[0][0].shape) # (20000, 128, 128, 3)
+print(train_generator[0][1].shape) # (20000, 2):  one hot encoding type: class -> col
+# batch_size를 total image 개수에 맞춰서 train_generator[0]에 모두 담음
 
-np.save('D:/_data/dogs-vs-cats/train/cat_dog_x_train.npy', arr=train_generator[0][0])
-np.save('D:/_data/dogs-vs-cats/train/cat_dog_y_train.npy', arr=train_generator[0][1])
+np.save('D:/_data/dogs-vs-cats/numpy/cat_dog_x_train.npy', arr=train_generator[0][0])
+np.save('D:/_data/dogs-vs-cats/numpy/cat_dog_y_train.npy', arr=train_generator[0][1])
 
-np.save('D:/_data/dogs-vs-cats/train/cat_dog_x_val.npy', arr=validation_generator[0][0])
-np.save('D:/_data/dogs-vs-cats/train/cat_dog_y_val.npy', arr=validation_generator[0][1])
+np.save('D:/_data/dogs-vs-cats/numpy/cat_dog_x_val.npy', arr=validation_generator[0][0])
+np.save('D:/_data/dogs-vs-cats/numpy/cat_dog_y_val.npy', arr=validation_generator[0][1])
 
 # np.save: numpy file로 저장

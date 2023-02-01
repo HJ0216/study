@@ -13,7 +13,6 @@ from sklearn.model_selection import train_test_split
 
 
 # 1. Data
-FAST_RUN = False
 IMAGE_WIDTH=128
 IMAGE_HEIGHT=128
 IMAGE_SIZE=(IMAGE_WIDTH, IMAGE_HEIGHT)
@@ -24,7 +23,7 @@ categories = []
 for filename in filenames:
     category = filename.split('.')[0]
     if category == 'dog':
-        categories.append(1) # dog -> 1 추가
+        categories.append(1)
     else:
         categories.append(0)
 
@@ -41,13 +40,7 @@ validate_df = validate_df.reset_index(drop=True)
 
 total_train = train_df.shape[0]
 total_validate = validate_df.shape[0]
-batch_size=15
-
-FAST_RUN = False
-IMAGE_WIDTH=128
-IMAGE_HEIGHT=128
-IMAGE_SIZE=(IMAGE_WIDTH, IMAGE_HEIGHT)
-IMAGE_CHANNELS=3
+batch_size=64
 
 train_datagen = ImageDataGenerator(
     rotation_range=15,
@@ -69,68 +62,56 @@ train_generator = train_datagen.flow_from_dataframe(
     batch_size=batch_size
 )
 
-x_train = np.load('D:/_data/dogs-vs-cats/train/cat_dog_x_train.npy')
-y_train = np.load('D:/_data/dogs-vs-cats/train/cat_dog_y_train.npy')
+x_train = np.load('D:/_data/dogs-vs-cats/numpy/cat_dog_x_train.npy')
+y_train = np.load('D:/_data/dogs-vs-cats/numpy/cat_dog_y_train.npy')
 
-x_val = np.load('D:/_data/dogs-vs-cats/train/cat_dog_x_val.npy')
-y_val = np.load('D:/_data/dogs-vs-cats/train/cat_dog_y_val.npy')
+x_val = np.load('D:/_data/dogs-vs-cats/numpy/cat_dog_x_val.npy')
+y_val = np.load('D:/_data/dogs-vs-cats/numpy/cat_dog_y_val.npy')
 
-print(x_train.shape, x_val.shape) # (15, 128, 128, 3) (15, 128, 128, 3)
-print(y_train.shape, y_val.shape) # (15, 2) (15, 2)
+print(x_train.shape, x_val.shape) # (20000, 128, 128, 3) (5000, 128, 128, 3)
+print(y_train.shape, y_val.shape) # (20000, 2) (5000, 2)
 
 
 # 2. Model
-FAST_RUN = False
-IMAGE_WIDTH=128
-IMAGE_HEIGHT=128
-IMAGE_SIZE=(IMAGE_WIDTH, IMAGE_HEIGHT)
-IMAGE_CHANNELS=3
-
 model = Sequential()
-model.add(Conv2D(32, (3, 3), activation='relu', input_shape=(IMAGE_WIDTH, IMAGE_HEIGHT, IMAGE_CHANNELS)))
+model.add(Conv2D(64, (3, 3), activation='relu', input_shape=(IMAGE_WIDTH, IMAGE_HEIGHT, IMAGE_CHANNELS)))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Conv2D(32, (3, 3), activation='relu'))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Conv2D(16, (3, 3), activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Dropout(0.25))
-
-model.add(Conv2D(64, (3, 3), activation='relu'))
-model.add(MaxPooling2D(pool_size=(2, 2)))
-model.add(Dropout(0.25))
-
-model.add(Conv2D(128, (3, 3), activation='relu'))
-model.add(MaxPooling2D(pool_size=(2, 2)))
-model.add(Dropout(0.25))
-
 model.add(Flatten())
-model.add(Dense(512, activation='relu'))
-model.add(Dropout(0.5))
 model.add(Dense(2, activation='softmax'))
+model.summary()
 
 
-# 3. Compile and Train
-model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc'])
+# # 3. Compile and Train
+# model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc'])
 
-earlystop = EarlyStopping(monitor='val_acc', mode='max', patience=64,
-                              restore_best_weights=True,
-                              verbose=1)
+# earlystop = EarlyStopping(monitor='val_acc', mode='max', patience=64,
+#                               restore_best_weights=True,
+#                               verbose=1)
 
-hist = model.fit(x_train, y_train,
-                    epochs=256,
-                    batch_size=8,
-                    validation_data=(x_val, y_val),
-                    callbacks=[earlystop],
-                    verbose=1)
+# hist = model.fit(x_train, y_train,
+#                     epochs=256,
+#                     batch_size=64,
+#                     validation_data=(x_val, y_val),
+#                     callbacks=[earlystop],
+#                     verbose=1)
 
 
-# 4. evaluate and predict
-accuracy = hist.history['acc']
-val_acc = hist.history['val_acc']
+# # 4. evaluate and predict
+# accuracy = hist.history['acc']
+# val_acc = hist.history['val_acc']
 
-loss = hist.history['loss']
-val_loss = hist.history['val_loss']
+# loss = hist.history['loss']
+# val_loss = hist.history['val_loss']
 
-print("Loss: ", loss[-1])
-print("Val_Loss: ", val_loss[-1])
-print("Accuracy: ", accuracy[-1])
-print("Val_acc: ", val_acc[-1])
+# print("Loss: ", loss[-1])
+# print("Val_Loss: ", val_loss[-1])
+# print("Accuracy: ", accuracy[-1])
+# print("Val_acc: ", val_acc[-1])
 
 
 # 5. Submission
@@ -139,6 +120,20 @@ test_df = pd.DataFrame({
     'filename': test_filenames
 })
 nb_samples = test_df.shape[0]
+'''
+print(test_df)
+
+        filename
+0          1.jpg
+1         10.jpg
+2        100.jpg
+3       1000.jpg
+4      10000.jpg
+
+print(test_df.shape[0]) # 12500
+print(test_df.shape[1]) # 1
+
+'''
 
 test_gen = ImageDataGenerator(rescale=1./255)
 
