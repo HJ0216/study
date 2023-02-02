@@ -1,7 +1,6 @@
 import numpy as np
 
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
-# 이미지를 데이터로 변경하고 증폭시켜서 훈련을 시키는 역할을 하는 class
 
 # ImageDataGenerator Processing
 train_datagen = ImageDataGenerator(

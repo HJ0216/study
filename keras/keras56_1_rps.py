@@ -1,3 +1,8 @@
+import numpy as np
+import pandas as pd 
+import random
+import os
+
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, Dropout, Flatten, Dense
 from tensorflow.keras.callbacks import EarlyStopping
@@ -5,6 +10,11 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 
 # 1. Data
+IMAGE_WIDTH=128
+IMAGE_HEIGHT=128
+IMAGE_SIZE=(IMAGE_WIDTH, IMAGE_HEIGHT)
+IMAGE_CHANNELS=3
+
 train_datagen = ImageDataGenerator(
     rotation_range=15,
     rescale=1./255,
@@ -30,20 +40,17 @@ print(xy_train[0][1].shape) # y: (2520, 3)
 
 # 2. Model
 model = Sequential()
-model.add(Conv2D(64, (5, 5), activation='relu', input_shape=(300,300,3)))
-model.add(MaxPooling2D(pool_size=(10, 10)))
-model.add(Dropout(0.25))
-
-model.add(Conv2D(64, (5, 5), activation='relu'))
-model.add(MaxPooling2D(pool_size=(10, 10)))
-model.add(Dropout(0.25))
+model.add(Conv2D(32, (5, 5), activation='relu', input_shape=(300,300,3)))
+model.add(MaxPooling2D(pool_size=(5, 5)))
 
 model.add(Conv2D(32, (5, 5), activation='relu'))
-model.add(MaxPooling2D(pool_size=(10, 10)))
+model.add(MaxPooling2D(pool_size=(5, 5)))
+
+model.add(Conv2D(16, (5, 5), activation='relu'))
+model.add(MaxPooling2D(pool_size=(5, 5)))
 
 model.add(Flatten())
-model.add(Dense(16, activation='relu'))
-model.add(Dropout(0.5))
+model.add(Dense(8, activation='relu'))
 model.add(Dense(3, activation='softmax'))
 model.summary()
 
@@ -56,7 +63,7 @@ earlystop = EarlyStopping(monitor='val_acc', mode='max', patience=64,
                               verbose=1)
 
 hist = model.fit(xy_train[0][0], xy_train[0][1],
-                    epochs=512,
+                    epochs=2,
                     batch_size=16,
                     validation_split=0.2,
                     callbacks=[earlystop],
@@ -79,23 +86,28 @@ print("Val_acc: ", val_acc[-1])
 
 '''
 Result
-Loss:  9.018582932185382e-05
-Val_Loss:  1.3695333003997803
-Accuracy:  1.0
-Val_acc:  0.8690476417541504
+Loss:  0.7279602885246277
+Val_Loss:  0.48544442653656006
+Accuracy:  0.6463293433189392
+Val_acc:  0.829365074634552
 
 '''
 
 
 # 5. Submission
-test_filenames = os.listdir("D:/_data/dogs-vs-cats/test1")
+test_filenames = os.listdir("D:/_data/test")
 test_df = pd.DataFrame({
     'filename': test_filenames
 })
-nb_samples = test_df.shape[0]
-'''
+
 print(test_df)
 
+nb_samples = test_df.shape[0]
+
+print(test_df.shape[0])
+print(test_df.shape[1])
+
+'''
         filename
 0          1.jpg
 1         10.jpg
@@ -103,28 +115,26 @@ print(test_df)
 3       1000.jpg
 4      10000.jpg
 
-print(test_df.shape[0]) # 12500
-print(test_df.shape[1]) # 1
-
 '''
 
 test_gen = ImageDataGenerator(rescale=1./255)
 
 test_generator = test_gen.flow_from_dataframe(
     test_df, 
-    "D:/_data/dogs-vs-cats/test1/", 
+    "D:/_data/test/", 
     x_col='filename',
     y_col=None,
-    class_mode=None,
     target_size=IMAGE_SIZE,
-    batch_size=batch_size,
+    batch_size=4,
+    class_mode='categorical',
+    color_mode='rgb',
     shuffle=False
 )
 # generator 거쳐서 image shape이 변화 (128,128,)
 
 
 # for submission
-predict = model.predict_generator(test_generator, steps=np.ceil(nb_samples/batch_size))
+predict = model.predict_generator(test_generator, steps=np.ceil(nb_samples/4))
 
 test_df['category'] = np.argmax(predict, axis=-1)
 # axis=-1: 2차원일 때는 y축, 3차원일 때는 z축
