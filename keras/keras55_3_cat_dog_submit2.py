@@ -147,6 +147,8 @@ test_generator = test_gen.flow_from_dataframe(
 
 # for submission
 predict = model.predict_generator(test_generator, steps=np.ceil(nb_samples/2))
+
+
 # If you have steps=30 and your batch size = 4, you will predict the results for only 120 examples.
 
 test_df['category'] = np.argmax(predict, axis=-1)
