@@ -35,4 +35,4 @@ np.save('D:/_data/rps_numpy/rps_x_train.npy', arr=xy_train[0][0])
 np.save('D:/_data/rps_numpy/rps_y_train.npy', arr=xy_train[0][1])
 
 
-# numpy로 data를 save할 때 원본을 저장하지만, rps 모델 속도 향상을 위해 전처리 데이터 저장
+# numpy로 data를 save할 때 scaling 처리만 된 원본을 저장하지만, rps 모델 속도 향상을 위해 전처리 데이터 저장

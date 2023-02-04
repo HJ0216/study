@@ -40,13 +40,6 @@ xy_train = train_datagen.flow_from_directory(
     )
 # Found 2520 images belonging to 3 classes.
 
-'''
-x_train = np.load('D:/_data/rps_numpy/rps_x_train.npy')
-y_train = np.load('D:/_data/rps_numpy/rps_y_train.npy')
-
-print(x_train.shape) # x: (2520, 300, 300, 3)
-print(y_train.shape) # y: (2520, 3)
-'''
 print(xy_train[0][0].shape) # x: (2520, 300, 300, 3)
 print(xy_train[0][1].shape) # x: (2520, 3)
 

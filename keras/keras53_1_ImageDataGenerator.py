@@ -2,6 +2,7 @@ import numpy as np
 
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
+
 # ImageDataGenerator Processing
 train_datagen = ImageDataGenerator(
     rescale=1./255., # Scaling
