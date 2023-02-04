@@ -47,6 +47,9 @@ y_train = np.load('D:/_data/rps_numpy/rps_y_train.npy')
 print(x_train.shape) # x: (2520, 300, 300, 3)
 print(y_train.shape) # y: (2520, 3)
 '''
+print(xy_train[0][0].shape) # x: (2520, 300, 300, 3)
+print(xy_train[0][1].shape) # x: (2520, 3)
+
 
 # 2. Model
 model = Sequential()
@@ -55,7 +58,6 @@ model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 
 model.add(Conv2D(32, (3, 3), activation='relu'))
-model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 
 model.add(Conv2D(16, (3, 3), activation='relu'))
@@ -75,7 +77,7 @@ earlystop = EarlyStopping(monitor='val_acc', mode='max', patience=64,
                               verbose=1)
 
 hist = model.fit(xy_train[0][0], xy_train[0][1],
-                    epochs=128,
+                    epochs=256,
                     batch_size=16,
                     validation_split=0.2,
                     callbacks=[earlystop],
@@ -146,8 +148,8 @@ predict = model.predict_generator(test_generator, steps=1)
 test_df['category'] = np.argmax(predict, axis=-1)
 # axis=-1: 2차원일 때는 y축, 3차원일 때는 z축
 
-# label_map = dict((v,k) for k,v in xy_train.class_indices.items())
-# test_df['category'] = test_df['category'].replace(label_map)
+label_map = dict((v,k) for k,v in xy_train.class_indices.items())
+test_df['category'] = test_df['category'].replace(label_map)
 # test_df['category'] = test_df['category'].replace({ 'scissors': 2, 'rock': 1, 'paper': 0 })
 
 print(test_df.head())
