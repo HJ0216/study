@@ -104,21 +104,21 @@ hist = model.fit(x_train, y_train,
 # 4. evaluate and predict
 accuracy = hist.history['acc']
 val_acc = hist.history['val_acc']
-
-loss = hist.history['loss']
-val_loss = hist.history['val_loss']
-
-print("Loss: ", loss[-1])
-print("Val_Loss: ", val_loss[-1])
 print("Accuracy: ", accuracy[-1])
 print("Val_acc: ", val_acc[-1])
 
+loss = hist.history['loss']
+val_loss = hist.history['val_loss']
+print("Loss: ", loss[-1])
+print("Val_Loss: ", val_loss[-1])
+
 '''
 Result
-Loss:  0.13410215079784393
-Val_Loss:  0.5559490323066711
 Accuracy:  0.9463000297546387
 Val_acc:  0.8547999858856201
+
+Loss:  0.13410215079784393
+Val_Loss:  0.5559490323066711
 
 '''
 
