@@ -60,8 +60,8 @@ model.add(Dense(16, activation='relu'))
 model.add(Dense(16, activation='relu'))
 model.add(Dense(1, activation='sigmoid'))
 # model.add(Dense(2, activation='softmax')) # class_y: 0 1
-# one_hot_encoding X: model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc'])
-# one_hot_encoding O: model.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=['acc'])
+# one_hot_encoding O: model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc'])
+# one_hot_encoding X: model.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=['acc'])
 
 
 # 3. Compile and Train
@@ -71,7 +71,7 @@ hist = model.fit_generator(xy_train, steps_per_epoch=16, epochs=5,
                     validation_steps=4)
 # fit_generator: x, y, batch_size 참조
 # steps_per_epoch = total_data/batch_size
-# validation_steps: validation data scale/batch_size
+# validation_steps: validation data/batch_size
 
 accuracy = hist.history['acc']
 val_acc = hist.history['val_acc']

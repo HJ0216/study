@@ -28,7 +28,7 @@ xy_train = train_datagen.flow_from_directory(
     batch_size=10,
     # total data: 160 -> batch_size=10: 160개를 10개씩 잘라서 훈련
     # 1 epoch 당 총 16번(iteration) 훈련 진행
-    # dataset_scale check: batch_size가 dataset scale로 설정
+    # dataset_scale check: batch_size를 높게 잡아 dataset scale 확인 가능
     class_mode='binary', # 폴더 라벨링 방식 지정: binary(0 1)
     color_mode='grayscale', # 색상: 흑백 / 컬러(rgb)
     shuffle='True',
