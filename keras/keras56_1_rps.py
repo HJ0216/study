@@ -54,7 +54,7 @@ x_data = x_data.reshape(2520, 270000)
 # xy_train[0][0] 직접 reshape 시, tuple로 인식되므로 변수로 받아서 reshape
 
 x_train, x_test, y_train, y_test = train_test_split(
-    x_data, y_data, train_size=0.7, random_state=1234
+    x_data, y_data, train_size=0.7, random_state=111
 )
 
 x_train = x_train.reshape(1764, 300 ,300, 3)
@@ -64,33 +64,31 @@ x_test = x_test.reshape(756, 300 ,300, 3)
 
 # 2. Model
 model = Sequential()
-model.add(Conv2D(64, (5, 5), activation='relu', input_shape=(IMAGE_WIDTH, IMAGE_HEIGHT, IMAGE_CHANNELS)))
-model.add(MaxPooling2D(pool_size=(2, 2)))
-
-model.add(Conv2D(64, (3, 3), activation='relu'))
+model.add(Conv2D(32, (5, 5), activation='relu', input_shape=(IMAGE_WIDTH, IMAGE_HEIGHT, IMAGE_CHANNELS)))
 model.add(MaxPooling2D(pool_size=(3, 3)))
-model.add(MaxPooling2D(pool_size=(3, 3)))
-model.add(MaxPooling2D(pool_size=(2, 2)))
-model.add(Dropout(0.25))
 
-model.add(Conv2D(32, (3, 3), activation='relu'))
+model.add(Conv2D(32, (5, 5), activation='relu'))
+model.add(MaxPooling2D(pool_size=(3, 3)))
+
+model.add(Conv2D(16, (3, 3), activation='relu'))
+model.add(MaxPooling2D(pool_size=(3, 3)))
 model.add(MaxPooling2D(pool_size=(3, 3)))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 
 model.add(Flatten())
-model.add(Dense(16, activation='relu'))
-model.add(Dropout(0.5))
+model.add(Dense(8, activation='relu'))
 model.add(Dense(3, activation='softmax'))
 model.summary()
-# Total params: 61,859
+# Total params: 32,851
+
 
 # 3. Compile and Train
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc'])
 
 hist = model.fit(x_train, y_train,
-                    epochs=16,
-                    batch_size=8,
-                    validation_split=0.3,
+                    epochs=32,
+                    batch_size=16,
+                    validation_split=0.2,
                     verbose=1)
 
 
