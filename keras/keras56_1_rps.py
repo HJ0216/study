@@ -2,9 +2,10 @@ import numpy as np
 import pandas as pd 
 import os
 
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, Dropout, Flatten, Dense
-from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.callbacks import EarlyStopping
 
 
 # 1. Data
@@ -54,7 +55,7 @@ x_data = x_data.reshape(2520, 270000)
 # xy_train[0][0] 직접 reshape 시, tuple로 인식되므로 변수로 받아서 reshape
 
 x_train, x_test, y_train, y_test = train_test_split(
-    x_data, y_data, train_size=0.7, random_state=111
+    x_data, y_data, train_size=0.7, random_state=444
 )
 
 x_train = x_train.reshape(1764, 300 ,300, 3)
@@ -67,11 +68,10 @@ model = Sequential()
 model.add(Conv2D(32, (5, 5), activation='relu', input_shape=(IMAGE_WIDTH, IMAGE_HEIGHT, IMAGE_CHANNELS)))
 model.add(MaxPooling2D(pool_size=(3, 3)))
 
-model.add(Conv2D(32, (5, 5), activation='relu'))
+model.add(Conv2D(16, (5, 5), activation='relu'))
 model.add(MaxPooling2D(pool_size=(3, 3)))
 
-model.add(Conv2D(16, (3, 3), activation='relu'))
-model.add(MaxPooling2D(pool_size=(3, 3)))
+model.add(Conv2D(8, (3, 3), activation='relu'))
 model.add(MaxPooling2D(pool_size=(3, 3)))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 
@@ -85,10 +85,15 @@ model.summary()
 # 3. Compile and Train
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc'])
 
+earlystop = EarlyStopping(monitor='val_acc', mode='max', patience=16,
+                              restore_best_weights=True,
+                              verbose=1)
+
 hist = model.fit(x_train, y_train,
-                    epochs=32,
-                    batch_size=16,
-                    validation_split=0.2,
+                    epochs=64,
+                    batch_size=32,
+                    validation_split=0.3,
+                    callbacks=[earlystop],
                     verbose=1)
 
 
