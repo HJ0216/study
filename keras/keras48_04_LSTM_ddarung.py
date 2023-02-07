@@ -60,7 +60,7 @@ model.compile(loss='mse', optimizer='adam')
 
 earlyStopping = EarlyStopping(monitor='loss', mode='min', patience=32, restore_best_weights=True, verbose=1)
 
-model.fit(x, y, epochs=128, callbacks=[earlyStopping], batch_size=16)
+model.fit(x_train, y_train, epochs=128, callbacks=[earlyStopping], batch_size=16)
 
 
 # 4. Evaluation and Prediction
@@ -88,7 +88,7 @@ submission.to_csv(path+'submission_0130.csv')
 
 '''
 Result
-RMSE:  126.18591409130411
-R2:  -1.1564291022078348
+RMSE:  52.98995039505182
+R2:  0.6197226542445109
 
 '''
