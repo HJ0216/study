@@ -100,8 +100,8 @@ earlystop = EarlyStopping(monitor='val_acc', mode='max', patience=64,
                               verbose=1)
 
 hist = model.fit(x_train, y_train,
-                    epochs=256,
-                    batch_size=16,
+                    epochs=6,
+                    batch_size=32,
                     validation_data=(x_val, y_val),
                     callbacks=[earlystop],
                     verbose=1)
@@ -162,3 +162,6 @@ submission_df['id'] = submission_df['filename'].str.split('.').str[0]
 submission_df['label'] = submission_df['category']
 submission_df.drop(['filename', 'category'], axis=1, inplace=True)
 submission_df.to_csv('submission2.csv', index=False)
+
+
+print(test_df)
