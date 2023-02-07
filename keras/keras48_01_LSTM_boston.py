@@ -38,19 +38,20 @@ x_test = x_test.reshape(152, 13, 1)
 model = Sequential()
 model.add(LSTM(units=64, input_shape=(13,1)))
 # reshape 시, timesteps*feature가 유지되도록 reshape
-model.add(Dense(32, activation='relu'))
+model.add(Dense(64, activation='relu'))
 model.add(Dense(32, activation='relu'))
 model.add(Dense(16, activation='relu'))
 model.add(Dense(8, activation='relu'))
 model.add(Dense(1))
+model.summary()
 
 
 # 3. Compile and Training
 model.compile(loss='mse', optimizer='adam')
 
-earlyStopping = EarlyStopping(monitor='loss', mode='min', patience=32, restore_best_weights=True, verbose=1)
+earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=32, restore_best_weights=True, verbose=1)
 
-model.fit(x, y, epochs=512, callbacks=[earlyStopping], batch_size=16)
+model.fit(x_train, y_train, epochs=64, callbacks=[earlyStopping], validation_split=0.5, batch_size=8)
 
 
 # 4. Evaluation and Prediction
@@ -67,7 +68,7 @@ print("R2: ", r2)
 
 '''
 Result
-RMSE:  21.002980488736824
-R2:  -4.457572735948721
+RMSE:  4.848290913688558
+R2:  0.7091861963163169
 
 '''

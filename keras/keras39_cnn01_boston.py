@@ -90,18 +90,18 @@ earlyStopping = EarlyStopping(monitor='val_loss', mode='min', patience=32,
                               restore_best_weights=True,
                               verbose=1)
 
-modelCheckPoint = ModelCheckpoint(monitor='val_loss', mode='auto', verbose=1,
-                                   save_best_only=True,
-                                   filepath='MCP/keras39_1_boston_MCP.hdf5')
+# modelCheckPoint = ModelCheckpoint(monitor='val_loss', mode='auto', verbose=1,
+#                                    save_best_only=True,
+#                                    filepath='MCP/keras39_1_boston_MCP.hdf5')
 
 model.fit(x_train, y_train,
           epochs=256,
           batch_size=64,
           validation_split=0.2,
-          callbacks=[earlyStopping, modelCheckPoint],
+          callbacks=[earlyStopping],
           verbose=1)
 
-model.save(path+'keras39_1_boston_save_model.h5') # 가중치 및 모델 세이브
+# model.save(path+'keras39_1_boston_save_model.h5') # 가중치 및 모델 세이브
 
 
 # 4. evaluate and predict
