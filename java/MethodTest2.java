@@ -10,11 +10,6 @@ public class MethodTest2 {
 		// static method는 instance method와 달리 객체 생성 과정이 필요 없음
 		// static method 호출 시, 호출하는 class의 method에 속하지 않을 때는 해당 method를 갖고있는 class 명시 필요
 		
-		Random r  = new Random(); 
-		// java가 알고 있는 기본 pkg는 java.lang 밖에 없음
-		// 다른 pkg에 해당하는 경우에는 import 필요
-		double d = r.nextDouble();
-		System.out.println("Random: " + d);
 		
 //		int ar; // 정수형 변수
 		int[] ar = new int[5]; // 배열도 memory 할당 필요 -> 5개의 memory 할당
