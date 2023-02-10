@@ -1,37 +1,43 @@
 public class SungJuk {
 
-	public static void main(String[] args) {
-		char name = 'L';
-		int kor = 85;
-		int eng = 78;
-		int math = 100;
-		
-		int total = kor + eng + math;
-		float avg = total / 3.0f;
-		
-		System.out.println("	***" + name + " Score ***");
-		System.out.print("kor\teng\tmath\ttotal\tavg\n");
-		System.out.print(kor + "\t" + eng + "\t" + math + "\t" + total + "\t" + String.format("%.2f", avg) + "\n");
-		// double, float 모두 형식 지정자: %f
-		
+	private String name;
+	private int kor, eng, math, total; // 동일한 type: 같은 행에 선언
+	private double avg;
+	private char grade;
+	
+	public void setData(String name, int i, int i2, int i3) {
+		this.name = name;
+		// lv와 field를 구분하기 위해서 this. 사용
+//		name = n;
+		kor = i;
+		eng = i2;
+		math = i3;
 	}
+	
+	public String getName() {return name;}
+	public int getKor() {return kor;}
+	public int getEng() {return eng;}
+	public int getMath() {return math;}
 
+	// 1. calc()를 통해서 계산 후에 return만 반환하는 method() 만들기
+	// 2. calc와 return method를 합쳐서 하나로 만들기
+	public void calc() { // return 없이 계산만
+		total = (kor + eng + math);
+		
+		avg = total/3.;
+
+		if(avg>=90) {grade='A';}
+		else if(avg>=80) {grade='B';}
+		else if(avg>=70) {grade='C';}
+		else if(avg>=60) {grade='D';}
+		else {grade='F';}
+
+		}
+	// 산식은 method 내에서만 정의 가능
+	
+	public int getTotal()  {return total;}
+	public String getAvg() {return String.format("%.2f", avg);}
+	public char getGrade() {return grade;}
+	// return은 void or 1개만 가능하므로 data type의 섞여서는 안됨
+	
 }
-
-/*
-[문제] 성적 계산 (소수이하 2째자리까지 출력)
-이름(name): L
-국어(kor): 85
-영어(eng): 78
-수학(math): 100
-
-총점(total) = 국어 + 영어 + 수학
-평균(avg) = 총점 / 과목수
-
-[실행 결과]
-	***L Score ***
-kor  eng  math  total  avg
-85   78   100   263   87.67
-
-\n, \t 활용
-*/
