@@ -13,7 +13,7 @@ public class SungJukService {
 	Scanner scan = new Scanner(System.in);
 
 	int no;	
-	SungJuk sungJuk = null; // Initialize
+	SungJukInter sungJuk = null; // Initialize
 	
 	public void menu() {
 		while(true) {
