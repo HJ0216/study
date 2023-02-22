@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class MemberService {
-	private MemberDTO[] ar = new MemberDTO[2]; // Object Arr
+	private MemberDTO_IO[] ar = new MemberDTO_IO[2]; // Object Arr
 	// -> 객체 생성이 아닌 배열 생성이므로 객체 생성 절차 필요
 	// MemberDTO가 아닌 다른 객체 생성 불가
 
@@ -58,7 +58,7 @@ public class MemberService {
 
 		for(i=0; i<ar.length; i++) {
 			if(ar[i]==null) {
-				ar[i] = new MemberDTO(name, age, phone, address);
+				ar[i] = new MemberDTO_IO(name, age, phone, address);
 				break;}	
 		} // for
 		
@@ -68,12 +68,12 @@ public class MemberService {
 
 	public void list() {
 		System.out.println("이름\t나이\t핸드폰\t주소");
-		for(MemberDTO dto: ar) {
+		for(MemberDTO_IO dto: ar) {
 			if(dto != null) { // dto.name: private variable에 접근X
 				// nullPointexcepiton 방지
 				System.out.println(dto.getName() + "\t"
 								 + dto.getAge() + "\t"
-								 + dto.getPhone() + "\t"
+								 + dto.getPhone_num() + "\t"
 								 + dto.getAddress());
 			} // if
 		} // for
@@ -83,13 +83,13 @@ public class MemberService {
 		System.out.print("핸드폰 번호 입력: ");
 		String phone = scan.next();
 		
-		for(MemberDTO dto: ar) {
-			if(dto != null && dto.getPhone().equals(phone)) {
+		for(MemberDTO_IO dto: ar) {
+			if(dto != null && dto.getPhone_num().equals(phone)) {
 				// String은 ==가 아닌 equals 사용
 				System.out.println("\n이름\t나이\t핸드폰\t주소");
 				System.out.println(dto.getName() + "\t"
 								 + dto.getAge() + "\t"
-								 + dto.getPhone() + "\t"
+								 + dto.getPhone_num() + "\t"
 								 + dto.getAddress());
 				
 				System.out.print("\n수정 할 이름 입력 : ");
@@ -102,7 +102,7 @@ public class MemberService {
 				String readdress = scan.next();
 				
 				dto.setName(rename);
-				dto.setPhone(rephone);
+				dto.setPhone_num(rephone);
 				dto.setAddress(readdress);
 				
 				System.out.println("1 row(s) updated");
@@ -127,7 +127,7 @@ public class MemberService {
 		
 		int i;		
 		for(i=0; i<ar.length; i++) {
-			if(ar[i] != null && phone.equals(ar[i].getPhone())) {
+			if(ar[i] != null && phone.equals(ar[i].getPhone_num())) {
 					ar[i] = null;
 					
 					System.out.println("1 row(s) deleted");
