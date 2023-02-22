@@ -1,0 +1,115 @@
+<html>
+
+	<head>
+	<!-- 작업 탭 -->
+	<!-- <> tag(태그) -->
+	<!-- </> close tag(닫는 태그)-->
+
+		<!-- 작업 탭 이름 -->
+		<title>HTML</title> 
+
+		<!-- 파일 관련 설정 -->
+		<meta charset="UTF-8">
+
+		<!-- style -->
+		<style>
+			div {border: 1px dotted blue;}
+			p	{border: 1px dashed green;}
+		</style> <!--모든 div tag에 대한 style 적용, 같은 내용의 중복 방지-->
+	</head>
+
+ <!-- 웹페이지 내용 -->
+	<body><marquee>HELLO WORLD, Hyunji!</marquee><br/>
+				<h1>안녕하세요!</h1> <!-- h1: 글자 크기 최대, 자동 줄바꿈 가능 -->
+				<h2>안녕하세요!</h2>
+				<h3>안녕하세요!</h3>
+				<h4>안녕하세요!</h4>
+				<h5>안녕하세요!</h5>
+				<h6>안녕하세요!</h6>
+
+				<font size="1" color="red"><strong>반갑습니다.</strong></font><br/> <!-- font size(attribute: 속성) -->
+				<font size="2" color="#F9D537">반갑습니다.</font><br/> <!-- font size: 1 최소, 자동 줄바꿈 X -->
+				<font size="3" color="#00ff00">반갑습니다.</font><br/>
+				<font size="4" color="00B5E3">반갑습니다.</font><br/>
+				<font size="5" color="7963AB">반갑습니다.</font><br/>
+				<font size="6"><strong>반갑습니다.</strong></font><br/>
+				<font size="7">반갑습니다.</font><br/><br/> <!-- size:1~7 -->
+
+
+				<!--반응형 웹 <span>
+				<span></span>:
+				입력된 글자 수만큼 영역 출력
+				자동 줄바꿈 X-->
+
+				<span style="border : red solid 1px;">SPAN</span><br/>
+				<!-- 이름 : 값; -->
+				<span style="border : red solid 1px;">CSS</span><br/>
+				<span style="border : red solid 1px;">FRONT</span><br/><br/>
+
+
+				<!-- 반응형 웹 <div:division>
+				<div></div>:
+				하나의 문단으로 출력
+				화면의 크기 연동
+				줄바꿈간 간격X -->
+
+				<div>Tiger</div> <!--화면의 한 줄 잡기, 화면이 늘면 같이 늘어나고 줄면 같이 줄어듬, 줄바꿈이 붙어있음-->
+				<div>Lion</div>
+				<div>Giraffe</div>
+				<br/><br/>
+
+
+				<!-- 반응형 웹 <p: paragraph>
+				<p></p>:
+				하나의 문단으로 출력
+				화면의 크기 연동,
+				줄바꿈간 간격O -->
+
+				<p>Apple</p>
+				<p>StrawBerry</p>
+				<p>Grape</p>
+
+				
+				<br/>
+				<table border="1"> <!-- \t 사용 불가 -> table로 대체 -->
+					<tr> <!-- tr: row(행, 줄) -->
+						<td width="100">123</td> <!-- td: column(열, 칸) -->
+						<!-- width 설정 시, 전체 테이블에 적용 -->
+						<td>456</td>
+					</tr>
+
+					<tr>
+						<td>가나다</td>
+						<td>라마바사아자</td>
+					</tr>
+
+					<tr>
+						<td colspan="2" align="center">HTML</td>
+						<!-- 2 * 2 table에서 1개만 입력할 경우, 나머지가 빈칸으로 생성-> 병합 처리 -->
+						<!-- align="left(Default) or center or right" -->
+
+					</tr>
+
+					<tr>
+						<td rowspan="2" valign="top">
+						<!--valign="top or middle(Default) or bottom"-->
+							한 칸<br/>
+							<img src="http://localhost:8080/tomcat.svg" alt="tomcat" width="100" height="100">
+							<!--source code 오류: 이미지 로드 X, alt=이미지 이름 기재-->
+							<!--alt 사용 시, 이미지 엑박과 함께 이름 표시-->
+							<!--http://localhost:8080/생략됨-->
+						</td>
+						<!--rowspan: 아래 행과 병합-->
+						<!--만일 해당 칸에 값 존재 시, 아래 행의 값들이 왼쪽으로 밀림-->
+						<td>두 칸</td>
+					</tr>
+
+					<tr>
+						<td>세 칸</td>
+					</tr>
+
+				</table>
+
+
+	</body>
+</html>
